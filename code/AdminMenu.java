@@ -35,8 +35,7 @@ public class AdminMenu {
                 do {
                     if (firstCheck)
                         System.out.println("Incorrect Credentials Entered!!! \nPlease Try Again.\n\n");
-                    System.out.println("Please enter your Username: ");
-                    
+                    System.out.println("Please enter your Username: "); 
                     String loginAdmin = in.nextLine();
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
