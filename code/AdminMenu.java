@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class AdminMenu {
 
-    private static final String jdbcURL = "jdbc:oracle:oci:classdb2.csc.ncsu.edu:3306:xe";
+    private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
     private static final String user = "amanend";
     private static final String password = "ahnv8011";
 
@@ -23,7 +23,7 @@ public class AdminMenu {
     public static void AdminLogin(){
         try {
 
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("oracle.jdbc.OracleDriver");
 
             try {
                 System.out.println("Connecting to database...");
