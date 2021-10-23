@@ -80,8 +80,7 @@ public class BrandsMenu {
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tWelcome to Customer Loyalty Program:\n\n");
-
-        
+                sc.nextLine();
                 System.out.println("Please enter your username: ");
                 String User = sc.nextLine();
                 System.out.println("Please enter your password: ");
