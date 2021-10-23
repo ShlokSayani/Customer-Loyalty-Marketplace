@@ -102,8 +102,8 @@ CREATE TABLE PURCHASE(
 	wallet_id FOREIGN KEY REFERENCES Wallet(wallet_id),
 );
 
-CREATE TABLE AdminUser(username VARCHAR2(10),password VARCHAR2(10));
+CREATE TABLE AdminUser(username VARCHAR2(10),pass VARCHAR2(10));
 
-CREATE TABLE BrandUsers(username VARCHAR2(10), password VARCHAR2(10));
+CREATE TABLE BrandUsers(username VARCHAR2(10), pass VARCHAR2(10));
 
-CREATE TABLE CustomerHome(username VARCHAR2(10),password VARCHAR2(10));
+CREATE TABLE CustomerHome(username VARCHAR2(10),pass VARCHAR2(10));

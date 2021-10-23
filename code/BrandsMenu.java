@@ -41,8 +41,8 @@ public class BrandsMenu {
                     System.out.println("Please enter your password: ");
                     String Pwd = sc.nextLine();
 
-                    String checkcred = "select username,password from BrandUsers where username=  '" + User
-                            + "' and password='" + Pwd + "'";
+                    String checkcred = "select username,pass from BrandUsers where username=  '" + User
+                            + "' and pass='" + Pwd + "'";
 
 
                     result = statement.executeQuery(checkcred);
@@ -86,7 +86,7 @@ public class BrandsMenu {
                 System.out.println("Please enter your password: ");
                 String Pwd = sc.nextLine();
 
-                String checkcred = "INSERT INTO BrandUsers(username,password) VALUES ('"+User+"','"+Pwd+"')" ;
+                String checkcred = "INSERT INTO BrandUsers(username,pass) VALUES ('"+User+"','"+Pwd+"')" ;
 
 
                 statement.executeQuery(checkcred);

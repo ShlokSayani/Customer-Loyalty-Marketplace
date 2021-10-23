@@ -39,8 +39,8 @@ public class CustomerMenu {
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
 
-                    String sqlCred = "select username,password from CustomerHome where username = '" + loginCustomer
-                            + "' and password='" + loginPassword + "';";
+                    String sqlCred = "select username,pass from CustomerHome where username = '" + loginCustomer
+                            + "' and pass='" + loginPassword + "'";
 
                     // System.out.println(sqlCred);
                     result = statement.executeQuery(sqlCred);
@@ -84,7 +84,7 @@ public class CustomerMenu {
                 System.out.println("Please enter your Password: ");
                 String signUpPassword = in.nextLine();
 
-                String sqlCred = "INSERT INTO CustomerUsers( username , password) VALUES ('"+signUpUsername+"','"+signUpPassword+"');";
+                String sqlCred = "INSERT INTO CustomerUsers( username , pass) VALUES ('"+signUpUsername+"','"+signUpPassword+"');";
 
                 result = statement.executeQuery(sqlCred);
 
