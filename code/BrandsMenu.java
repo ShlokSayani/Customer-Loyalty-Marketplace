@@ -87,8 +87,6 @@ public class BrandsMenu {
                 String Pwd = sc.nextLine();
 
                 String checkcred = "INSERT INTO BrandUsers(username,pass) VALUES ('"+User+"','"+Pwd+"')" ;
-
-
                 statement.executeQuery(checkcred);
                 
                 System.out.println("SignUp successful!!! \n");
