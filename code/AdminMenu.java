@@ -10,7 +10,7 @@ import java.sql.*;
 public class AdminMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "sdsayani@orcl01";
+    private static final String user = "sdsayani";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -35,8 +35,8 @@ public class AdminMenu {
                 do {
                     if (firstCheck)
                         System.out.println("Incorrect Credentials Entered!!! \nPlease Try Again.\n\n");
-                    System.out.println("Please enter your Username: ");
-                    
+                    in.nextLine();
+                    System.out.println("Please enter you Username: ");
                     String loginAdmin = in.nextLine();
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
