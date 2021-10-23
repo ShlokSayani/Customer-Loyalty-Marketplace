@@ -9,9 +9,9 @@ import java.sql.*;
 
 public class AdminMenu {
 
-    private static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-    private static final String user = "amanend";
-    private static final String password = "ahnv8011";
+    private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
+    private static final String user = "hpatel28";
+    private static final String password = "abcd1234";
 
     public static Connection connection = null;
     public static Statement statement = null;
@@ -23,7 +23,7 @@ public class AdminMenu {
     public static void AdminLogin(){
         try {
 
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("oracle.jdbc.OracleDriver");
 
             try {
                 System.out.println("Connecting to database...");
@@ -35,8 +35,8 @@ public class AdminMenu {
                 do {
                     if (firstCheck)
                         System.out.println("Incorrect Credentials Entered!!! \nPlease Try Again.\n\n");
-                    System.out.println("Please enter your Username: ");
-                    
+                    in.nextLine();
+                    System.out.println("Please enter you Username: ");
                     String loginAdmin = in.nextLine();
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
