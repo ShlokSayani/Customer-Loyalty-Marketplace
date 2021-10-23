@@ -10,7 +10,7 @@ import java.sql.*;
 public class AdminMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "sdsayani";
+    private static final String user = "hpatel28";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -40,7 +40,7 @@ public class AdminMenu {
                     String loginAdmin = in.nextLine();
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
-                    
+
                     String sqlCred = "select username,password from AdminUser where username = '" + loginAdmin
                             + "' and password='" + loginPassword + "';";
 
