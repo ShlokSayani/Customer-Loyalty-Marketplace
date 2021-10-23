@@ -34,6 +34,7 @@ public class CustomerMenu {
                 do {
                     if (firstCheck)
                         System.out.println("Incorrect Credentials Entered!!! \nPlease Try Again.\n\n");
+                    in.nextLine();
                     System.out.println("Please enter your Username: ");
                     String loginCustomer = in.nextLine();
                     System.out.println("Please enter your Password: ");
