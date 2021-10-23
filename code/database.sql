@@ -106,4 +106,4 @@ CREATE TABLE AdminUser(username VARCHAR2(10),pass VARCHAR2(10));
 
 CREATE TABLE BrandUsers(username VARCHAR2(10), pass VARCHAR2(10));
 
-CREATE TABLE CustomerHome(username VARCHAR2(10),pass VARCHAR2(10));
+CREATE TABLE CustomerUsers(username VARCHAR2(10),pass VARCHAR2(10));
