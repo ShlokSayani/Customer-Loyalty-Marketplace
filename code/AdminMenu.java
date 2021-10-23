@@ -41,8 +41,8 @@ public class AdminMenu {
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
 
-                    String sqlCred = "select username,password from AdminUser where username = '" + loginAdmin
-                            + "' and pass='" + loginPassword+"'";
+                    String sqlCred = "select username,pass from AdminUser where username = '" + loginAdmin
+                            + "' and pass='" + loginPassword + "'";
 
                     // System.out.println(sqlCred);
                     result = statement.executeQuery(sqlCred);
