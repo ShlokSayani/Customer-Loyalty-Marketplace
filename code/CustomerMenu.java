@@ -9,7 +9,7 @@ import java.sql.*;
 public class CustomerMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "sdsayani";
+    private static final String user = "hpatel28";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -34,7 +34,7 @@ public class CustomerMenu {
                 do {
                     if (firstCheck)
                         System.out.println("Incorrect Credentials Entered!!! \nPlease Try Again.\n\n");
-                    
+                    in.nextLine();
                     System.out.println("Please enter your Username: ");
                     String loginCustomer = in.nextLine();
                     System.out.println("Please enter your Password: ");
@@ -78,7 +78,7 @@ public class CustomerMenu {
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tWelcome to Customer Sign Up\n\n");
-                
+                in.nextLine();
                 System.out.println("Please enter your Username: ");
                 Scanner in = new Scanner(System.in);
                 String signUpUsername = in.nextLine();

@@ -9,7 +9,7 @@ import java.sql.*;
 public class BrandsMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "sdsayani";
+    private static final String user = "hpatel28";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -42,10 +42,7 @@ public class BrandsMenu {
                     System.out.println("Please enter your password: ");
                     String Pwd = sc.nextLine();
 
-                    String checkcred = "select username,pass from BrandUsers where username=  '" + User
-                            + "' and pass='" + Pwd + "'";
-
-
+                    String checkcred = "select username,pass from BrandUsers where username=  '" + User + "' and pass='" + Pwd + "'";
                     result = statement.executeQuery(checkcred);
                     checkLogin = true;
                 } while (!result.next());
@@ -86,7 +83,7 @@ public class BrandsMenu {
                 System.out.println("Please enter your password: ");
                 String Pwd = sc.nextLine();
 
-                String checkcred = "INSERT INTO BrandUsers(username,pass) VALUES ('"+User+"','"+Pwd+"')" ;
+                String checkcred = "INSERT INTO BrandUsers VALUES ('"+User+"','"+Pwd+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("SignUp successful!!! \n");
