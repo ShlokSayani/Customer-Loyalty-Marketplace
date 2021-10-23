@@ -84,7 +84,7 @@ public class CustomerMenu {
                 System.out.println("Please enter your Password: ");
                 String signUpPassword = in.nextLine();
 
-                String sqlCred = "INSERT INTO CustomerUsers( username , pass) VALUES ('"+signUpUsername+"','"+signUpPassword+"');";
+                String sqlCred = "INSERT INTO CustomerUsers( username , pass) VALUES ('"+signUpUsername+"','"+signUpPassword+"')";
 
                 result = statement.executeQuery(sqlCred);
 
