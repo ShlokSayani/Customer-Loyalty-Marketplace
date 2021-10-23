@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class BrandsMenu {
 
-    private static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+    private static final String jdbcURL = "jdbc:oracle:oci:classdb2.csc.ncsu.edu:3306:xe";
     private static final String user = "amanend";
     private static final String password = "ahnv8011";
 
@@ -24,7 +24,7 @@ public class BrandsMenu {
 
         try {
 
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
 
             try {
                 System.out.println("Connecting to database...");
@@ -71,7 +71,7 @@ public class BrandsMenu {
             
         try {
 
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
 
             try {
                 System.out.println("Connecting to database...");
