@@ -40,7 +40,7 @@ public class CustomerMenu {
                     System.out.println("Please enter your Password: ");
                     String loginPassword = in.nextLine();
 
-                    String sqlCred = "select username,pass from CustomerHome where username = '" + loginCustomer
+                    String sqlCred = "select username,pass from CustomerUsers where username = '" + loginCustomer
                             + "' and pass='" + loginPassword + "'";
 
                     // System.out.println(sqlCred);

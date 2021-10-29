@@ -22,7 +22,7 @@ CREATE TABLE Reward_Type(
 );
 
 CREATE TABLE RRRules(
-    RR_rule_code VARCHAR2(6),
+    RR_rule_code VARCHAR2(6)n,
     tier VARCHAR2(10),
     version int,
     Brandid int) FOREIGN KEY REFERENCES Brand(brand_id),
