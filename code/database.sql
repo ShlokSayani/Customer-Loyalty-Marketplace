@@ -1,14 +1,23 @@
-CREATE TABLE Customers(
+CREATE TABLE Customer(
     customer_id int PRIMARY KEY,
 	customer_name VARCHAR2(10),
 	customer_address VARCHAR2(10),
-	phone_number int
+	phone_number int, 
+    customer_password VARCHAR2(10),
+    wallet_id FOREIGN KEY REFERENCES Wallet(wallet_id)
 );
 
 CREATE TABLE Brand( 
     brand_id int PRIMARY KEY,
+    brand_name VARCHAR2(10),
     brand_address VARCHAR2(10),
-    join_date DATE
+    join_date DATE,
+    brand_password VARCHAR2(10),
+    loyalty_program_name VARCHAR2(10),
+    tier VARCHAR2(30),
+    multiplier VARCHAR2(10),
+    points_required VARCHAR2(20),
+    loyaltyid int FOREIGN KEY REFERENCES Loyalty_program(loyalty_id),
 );
 
 CREATE TABLE Activity_Type(
@@ -23,16 +32,22 @@ CREATE TABLE Reward_Type(
 
 CREATE TABLE RRRules(
     RR_rule_code VARCHAR2(6),
-    tier VARCHAR2(10),
-    version int,
+    tier VARCHAR2(30),
+    rr_rule_version int,
+    reward_code VARCHAR2(10),
+    reward_name VARCHAR2(10)),
+    reward_instances int,
+    redeem_points int,
     Brandid int) FOREIGN KEY REFERENCES Brand(brand_id),
     (RR_rule_code, Brandid) PRIMARY KEY)
 );
 
 CREATE TABLE RERules(
     RE_rule_code VARCHAR2(6),
-    tier VARCHAR2(10),
-    version int,
+    re_rule_version int,
+    activity_code VARCHAR2(10),
+    activity_name VARCHAR2(10),
+    activity_points VARCHAR2(10),
     Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
     (RE_rule_code,Brandid)  PRIMARY KEY)
 );
@@ -53,7 +68,7 @@ CREATE TABLE Reward_GiftCard(
 
 CREATE TABLE Loyalty_program( 
     loyalty_id int PRIMARY KEY,
-    tier int,
+    tier VARCHAR2(30),
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(10),
     reward_code VARCHAR2(10),
@@ -71,12 +86,13 @@ CREATE TABLE Enroll_Loyalty(
 CREATE TABLE Wallet(
 	wallet_id VARCHAR2(4) PRIMARY_KEY,
 	tier VARCHAR2(10),
-	Date DATE NOT_NULL,
+	transaction_date DATE NOT_NULL,
 	ActivityType VARCHAR2(10) NOT_NULL,
-	Points int NOT_NULL,
+	redeem_points int,
+    gained_points int,
 	LoyaltyProgramCode int NOT_NULL,
-	RECode int NOT_NULL,
-	BrandID int FOREIGN KEY REFERENCES Brand(brand_id)
+	reward_code int,
+	Brandid int FOREIGN KEY REFERENCES Brand(brand_id)
 );
 
 CREATE TABLE REVIEWS(
@@ -95,7 +111,7 @@ CREATE TABLE REFER(
 );
 
 CREATE TABLE PURCHASE(
-	BrandID int FOREIGN KEY REFERENCES Brand(brand_id),
+	Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
 	Amount int,
 	purchasedate DATE,
 	GiftcardCode int,
@@ -104,6 +120,6 @@ CREATE TABLE PURCHASE(
 
 CREATE TABLE AdminUser(username VARCHAR2(10),pass VARCHAR2(10));
 
-CREATE TABLE BrandUsers(username VARCHAR2(10), pass VARCHAR2(10));
+-- CREATE TABLE BrandUsers(username VARCHAR2(10), pass VARCHAR2(10));
 
-CREATE TABLE CustomerUsers(username VARCHAR2(10),pass VARCHAR2(10));
+-- CREATE TABLE CustomerUsers(username VARCHAR2(10),pass VARCHAR2(10));
