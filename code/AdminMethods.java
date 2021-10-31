@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
 import java.sql.*;
+import java.text.*;
 
 public class AdminMethods {
 
@@ -19,7 +20,7 @@ public class AdminMethods {
     static Scanner sc = new Scanner(System.in);
     static int selection = 0;
 
-    public static void AddBrand(int brand_id, String brand_address, String joining_date){
+    public static void AddBrand(){
        try {
 
             Class.forName("oracle.jdbc.OracleDriver");
@@ -29,15 +30,23 @@ public class AdminMethods {
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
-                // System.out.println("\t\tEnter the details to add a brand:\n\n");
-                // sc.nextLine();
-                // System.out.println("Enter brand id: ");
-                // int brand_id = sc.nextInt();
-                // System.out.println("Enter brand address: ");
-                // String brand_address = sc.nextLine();
+                System.out.println("\t\tEnter the details to add a brand:\n\n");
+                sc.nextLine();
+                System.out.println("Enter brand id: ");
+                int brand_id = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Enter brand address: ");
+                String brand_address = sc.nextLine();
                 // System.out.println("Enter Joining Date: ");
-                // String joining_date = sc.nextLine();
-                String checkcred = "INSERT INTO Brand VALUES ('"+brand_id+"','"+brand_address+"','"+joining_date+"')";
+                // String date1 = sc.nextLine();
+                // java.util.Date joining_date = new SimpleDateFormat("yyyy/MM/DD").format(date1); 
+                // // java.util.Date joining_date = (java.util.Date)formatter.parse(date1);
+                // System.out.println(joining_date);
+                
+                long millis=System.currentTimeMillis();  
+                java.sql.Date joining_date = new java.sql.Date(millis);  
+                
+                String checkcred = "INSERT INTO Brand VALUES ("+brand_id+",'"+brand_address+"',DATE '"+joining_date+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Brand added successfully!!! \n");
@@ -45,10 +54,11 @@ public class AdminMethods {
                 BrandsMenu.main(null);
 
             } finally {
-                close(result);
-                close(statement);
-                close(connection);
+                //close(result);
+                //close(statement);
+                //close(connection);
             }
+            
         }
 
         catch (Throwable oops) {
@@ -70,23 +80,24 @@ public class AdminMethods {
                 sc.nextLine();
                 System.out.println("Enter Customer id: ");
                 int customer_id = sc.nextInt();
+                sc.nextLine();
                 System.out.println("Enter Customer name : ");
                 String customer_name = sc.nextLine();
                 System.out.println("Enter Customer address : ");
                 String customer_address = sc.nextLine();
                 System.out.println("Enter Phone number: ");
                 int phone_number = sc.nextInt();
-                String checkcred = "INSERT INTO Customers VALUES ('"+customer_id+"','"+customer_name+"','"+customer_address+"','"+phone_number+"')";
+                String checkcred = "INSERT INTO Customer VALUES ("+customer_id+",'"+customer_name+"','"+customer_address+"',"+phone_number+")";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Customer added successfully!!! \n");
 
-                BrandsMenu.main(null);
+                CustomerMenu.main(null);
 
             } finally {
-                close(result);
-                close(statement);
-                close(connection);
+                //close(result);
+                //close(statement);
+                //close(connection);
             }
         }
 
@@ -96,11 +107,77 @@ public class AdminMethods {
     }
 
     public static void DisplayBrandInfo(){
+        try {
 
+            Class.forName("oracle.jdbc.OracleDriver");
+
+            try {
+                System.out.println("Connecting to Customer Module...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                // Runtime.getRuntime().exec("clear");
+                
+                String checkcred = "SELECT * FROM Customer";
+                statement.executeQuery(checkcred);
+                
+                System.out.println("Displayed Customer Details \n");
+                while (checkcred.next()) {
+                    int brand_id = checkcred.getInt(1);
+                    String c_name = checkcred.getString("brand_name");
+                    String c_address = checkcred.getString("brand_address");
+                    int phone = checkcred.getInt(4);
+                    System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name + ", Customer Address: " + c_address+ ", Phone Number: " + phone);
+                }
+
+                CustomerMenu.main(null);
+
+            } finally {
+                //close(result);
+                //close(statement);
+                //close(connection);
+            }
+        }
+
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void DisplayCustomerInfo(){
+        try {
 
+            Class.forName("oracle.jdbc.OracleDriver");
+
+            try {
+                System.out.println("Connecting to Customer Module...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                // Runtime.getRuntime().exec("clear");
+                
+                String checkcred = "SELECT * FROM Customer";
+                statement.executeQuery(checkcred);
+                
+                System.out.println("Displayed Customer Details \n");
+                while (checkcred.next()) {
+                    int c_id = checkcred.getInt(1);
+                    String c_name = checkcred.getString("customer_id");
+                    String c_address = checkcred.getString("customer_name");
+                    int phone = checkcred.getInt(4);
+                    System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name + ", Customer Address: " + c_address+ ", Phone Number: " + phone);
+                }
+
+                CustomerMenu.main(null);
+
+            } finally {
+                //close(result);
+                //close(statement);
+                //close(connection);
+            }
+        }
+
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void AddActivityType(){
@@ -112,26 +189,14 @@ public class AdminMethods {
     }
 
     public static void addBrand(){
-        
-
-        System.out.println("\t\tEnter the details to add a brand:\n\n");
-        sc.nextLine();
-        System.out.println("Enter brand id: ");
-        int brand_id = sc.nextInt();
-        System.out.println("Enter brand address: ");
-        String brand_address = sc.nextLine();
-        System.out.println("Enter Joining Date: ");
-        String joining_date = sc.nextLine();
-
-
+    
         System.out.println("1. Press 1 to add Brand");
         System.out.println("2. Go Back");
         selection = sc.nextInt();
 
-
         switch(selection){
             case 1:
-                AddBrand(brand_id,brand_address,joining_date);
+                AddBrand();
                 break;
             case 2:
                 AdminHomeMenu.main(null);
