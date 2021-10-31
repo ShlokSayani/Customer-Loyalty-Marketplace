@@ -41,8 +41,10 @@ CREATE TABLE RRRules(
     reward_instances int,
     redeem_points int,
     brand_id int,
-    constraint br_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
-    PRIMARY KEY (RR_rule_code, brand_id) 
+    loyalty_id int,
+    constraint rrrule_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    constraint rrrule_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
+    PRIMARY KEY (RR_rule_code, brand_id,loyalty_id) 
 );
 
 CREATE TABLE RERules(
@@ -52,8 +54,10 @@ CREATE TABLE RERules(
     activity_name VARCHAR2(10),
     activity_points VARCHAR2(10),
     brand_id int,
-    constraint b_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
-    PRIMARY KEY (RE_rule_code,brand_id) 
+    loyalty_id int,
+    constraint rerule_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    constraint rerule_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
+    PRIMARY KEY (RE_rule_code,brand_id,loyalty_id) 
 );
 
 CREATE TABLE Reward_Product(
@@ -79,18 +83,10 @@ CREATE TABLE Loyalty_program(
     activity_name VARCHAR2(10),
     reward_code VARCHAR2(10),
     reward_name VARCHAR2(10),
-    loyalty_points int
-);
-
-CREATE TABLE Enroll_Loyalty(
-    activity_code VARCHAR2(10),
-    reward_code VARCHAR2(10),
-    brand_id int, 
-    loyalty_id int, 
+    brand_id int,  
     constraint el_activity_code FOREIGN KEY (activity_code) REFERENCES Activity_Type(activity_code),
     constraint el_reward_code FOREIGN KEY (reward_code) REFERENCES Reward_Type(reward_code),
-    constraint el_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
-    constraint el_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id)
+    constraint el_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
 );
 
 CREATE TABLE Wallet(
