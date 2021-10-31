@@ -3,8 +3,9 @@ CREATE TABLE Customer(
 	customer_name VARCHAR2(10),
 	customer_address VARCHAR2(10),
 	phone_number int, 
+    wallet_id int,
     customer_password VARCHAR2(10),
-    wallet_id FOREIGN KEY REFERENCES Wallet(wallet_id)
+    constraint wall_id FOREIGN KEY (wallet_id) REFERENCES Wallet(wallet_id)
 );
 
 CREATE TABLE Brand( 
@@ -17,7 +18,8 @@ CREATE TABLE Brand(
     tier VARCHAR2(30),
     multiplier VARCHAR2(10),
     points_required VARCHAR2(20),
-    loyaltyid int FOREIGN KEY REFERENCES Loyalty_program(loyalty_id),
+    loyalty_id int,
+    constraint loyal_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id)
 );
 
 CREATE TABLE Activity_Type(
@@ -35,11 +37,12 @@ CREATE TABLE RRRules(
     tier VARCHAR2(30),
     rr_rule_version int,
     reward_code VARCHAR2(10),
-    reward_name VARCHAR2(10)),
+    reward_name VARCHAR2(10),
     reward_instances int,
     redeem_points int,
-    Brandid int) FOREIGN KEY REFERENCES Brand(brand_id),
-    (RR_rule_code, Brandid) PRIMARY KEY)
+    brand_id int,
+    constraint br_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    PRIMARY KEY (RR_rule_code, brand_id) 
 );
 
 CREATE TABLE RERules(
@@ -48,22 +51,25 @@ CREATE TABLE RERules(
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(10),
     activity_points VARCHAR2(10),
-    Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
-    (RE_rule_code,Brandid)  PRIMARY KEY)
+    brand_id int,
+    constraint b_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    PRIMARY KEY (RE_rule_code,brand_id) 
 );
 
 CREATE TABLE Reward_Product(
     product_name VARCHAR2(6),
-    Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
-    (Brandid,product_name) PRIMARY KEY)
+    brand_id int, 
+    constraint rp_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    PRIMARY KEY (brand_id,product_name) 
 );
 
 CREATE TABLE Reward_GiftCard(
     giftcard_code VARCHAR2(6),
     expiry_date DATE,
     value int,
-    Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
-    (Brand_id,giftcard_code) PRIMARY KEY)
+    brand_id int,
+    constraint rg_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    PRIMARY KEY (brand_id,giftcard_code) 
 );
 
 CREATE TABLE Loyalty_program( 
@@ -72,50 +78,60 @@ CREATE TABLE Loyalty_program(
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(10),
     reward_code VARCHAR2(10),
-    reward_name VARCHAR2(10)),
+    reward_name VARCHAR2(10),
     loyalty_points int
 );
 
 CREATE TABLE Enroll_Loyalty(
-    activitycode VARCHAR2(10) FOREIGN KEY REFERENCES Activity_Type(activity_code),
-    rewardcode VARCHAR2(10) FOREIGN KEY REFERENCES Reward_Type(reward_code),
-    Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
-    loyaltyid int FOREIGN KEY REFERENCES Loyalty_program(loyalty_id)
+    activity_code VARCHAR2(10),
+    reward_code VARCHAR2(10),
+    brand_id int, 
+    loyalty_id int, 
+    constraint el_activity_code FOREIGN KEY (activity_code) REFERENCES Activity_Type(activity_code),
+    constraint el_reward_code FOREIGN KEY (reward_code) REFERENCES Reward_Type(reward_code),
+    constraint el_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+    constraint el_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id)
 );
 
 CREATE TABLE Wallet(
-	wallet_id VARCHAR2(4) PRIMARY_KEY,
-	tier VARCHAR2(10),
-	transaction_date DATE NOT_NULL,
-	ActivityType VARCHAR2(10) NOT_NULL,
+	wallet_id int PRIMARY KEY,
+	tier VARCHAR2(30),
+	transaction_date DATE NOT NULL,
+	ActivityType VARCHAR2(10) NOT NULL,
 	redeem_points int,
     gained_points int,
-	LoyaltyProgramCode int NOT_NULL,
+	LoyaltyProgramCode int NOT NULL,
 	reward_code int,
-	Brandid int FOREIGN KEY REFERENCES Brand(brand_id)
+    brand_id int, 
+	constraint bran_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
 );
 
 CREATE TABLE REVIEWS(
-	ReviewID int PRIMARY_KEY,
+	ReviewID int PRIMARY KEY,
 	LoyaltyID int,
 	ReviewDate DATE,
 	Review VARCHAR2(100),
-	wallet_id FOREIGN KEY REFERENCES Wallet(wallet_id),
+    wallet_id int, 
+	constraint rev_wallet_id FOREIGN KEY (wallet_id) REFERENCES Wallet(wallet_id)
 );
 
 CREATE TABLE REFER(
-	NewCustomerID int FOREIGN_KEY REFERENCES Customers(customer_id),
-	LoyaltyID int,
+    LoyaltyID int,
 	ReferDate DATE,
-	wallet_id FOREIGN KEY REFERENCES Wallet(wallet_id),
+    customer_id int, 
+    wallet_id int, 
+	constraint refer_nc_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+	constraint refer_wallet_id FOREIGN KEY (wallet_id) REFERENCES Wallet(wallet_id)
 );
 
 CREATE TABLE PURCHASE(
-	Brandid int FOREIGN KEY REFERENCES Brand(brand_id),
-	Amount int,
+    Amount int,
 	purchasedate DATE,
 	GiftcardCode int,
-	wallet_id FOREIGN KEY REFERENCES Wallet(wallet_id),
+    brand_id int,
+    wallet_id int,
+	constraint pur_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
+	constraint pur_wallet_id FOREIGN KEY (wallet_id) REFERENCES Wallet(wallet_id)
 );
 
 CREATE TABLE AdminUser(username VARCHAR2(10),pass VARCHAR2(10));
