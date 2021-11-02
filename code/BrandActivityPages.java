@@ -11,7 +11,9 @@ public class BrandActivityPages{
     static int select = 0;
 
     public static void ActivityTypes(int flag,String BrandId){
+        
 
+        
         System.out.println("1. Purchase");
         System.out.println("2. Leave a Review");
         System.out.println("3. Refer a Friend");
@@ -51,6 +53,10 @@ public class BrandActivityPages{
         String LoyaltyId = "";
         LoyaltyId = sc.next();
 
+        System.out.println("Enter Loyalty_Program_Name");
+        String lpname = "";
+        lpname = sc.next();
+
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
         final String user = "dmehta3";
         final String password = "abcd1234";
@@ -70,10 +76,14 @@ public class BrandActivityPages{
 
 
                     String getactivitycode = "Select activity_code from ActivityType where activity_name='Purchase'";
+
+                    result = statement.executeQuery(getactivitycode);
+                    activity_code = result.getString("activity_code");
                        
-
-                    String addRE = "INSERT INTO RERules Values('"+ brandRERule +"','"+ Version +"','"+ ActivityType +"','"+ ActivityName +"','"+ number_of_points +"','"+ BrandId +",'"+ LoyaltyId +"')";
-
+                    if(flag==0)
+                    {
+                        String addActivity = "INSERT INTO Loyalty_program Values('"+ LoyaltyId +"','"+ lpname +"','"+ ActivityType +"','"+ ActivityName +"','"+ number_of_points +"','"+ BrandId +",'"+ LoyaltyId +"')";
+                    }
                     
                     statement.executeQuery(addRE);
         
