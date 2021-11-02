@@ -75,6 +75,15 @@ public class BrandActivityPages{
                     statement = connection.createStatement();
 
 
+                    String getstatus = "Select COUNT(*) from Loyalty program where loyalty_id = '"+ LoyaltyId +"'";
+                    result1 = statement.executeQuery(getstatus);
+
+                    if(result1.getInt(1) >= 3)
+                        lpstatus = "active";
+                    else
+                        lpstatus = "inactive";
+
+
                     String getactivitycode = "Select activity_code from ActivityType where activity_name='Purchase'";
 
                     result = statement.executeQuery(getactivitycode);
@@ -82,13 +91,30 @@ public class BrandActivityPages{
                        
                     if(flag==0)
                     {
-                        String addActivity = "INSERT INTO Loyalty_program Values('"+ LoyaltyId +"','"+ lpname +"','""')";
+                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement pstmt = con.prepareStatement(query);
+                        pstmt.setString(1, LoyaltyId);
+                        pstmt.setString(2, lpname);
+                        pstmt.setNull(3,Types.NULL);
+                        pstmt.setNull(4,Types.NULL);
+                        pstmt.setNull(5,Types.NULL);
+                        pstmt.setString(6,activity_code)
+                        pstmt.setString(7,"Purchase");
+                        pstmt.setNull(8, Types.NULL);
+                        pstmt.setNull(9,Types.NULL);
+                        pstmt.setString(10,BrandId);
+                        pstmt.setString(11,lpstatus)
+                        pstmt.execute();
+                    }
+                    else
+                    {
+                        
                     }
                     
-                    statement.executeQuery(addRE);
+                    
         
                     
-                    System.out.println("RE Rule Addition successful!!! \n");
+                    System.out.println("Activity Added to loyalty program \n");
 
                 } finally {
                     close(result);
