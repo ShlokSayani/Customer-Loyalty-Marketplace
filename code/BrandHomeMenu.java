@@ -22,29 +22,29 @@ public class BrandHomeMenu {
 
     }
 
-    public static void main (String args[])
+    public static void main (String args[],String BrandId)
     {
         BrandMenuoptions();
 
         select = sc.nextInt();
         switch(select){
             case 1:
-                BrandMethods.LoyaltyProgram();
+                BrandMethods.LoyaltyProgram(BrandId);
                 break;
             case 2:
-                BrandMethods.AddRERule();
+                BrandMethods.AddRERule(BrandId);
                 break;
             case 3:
-                BrandMethods.UpdateRERule();
+                BrandMethods.UpdateRERule(BrandId);
                 break;
             case 4:
-                BrandMethods.AddRRRule();
+                BrandMethods.AddRRRule(BrandId);
                 break;
             case 5:
-                BrandMethods.UpdateRRRule();
+                BrandMethods.UpdateRRRule(BrandId);
                 break;
             case 6:
-                BrandMethods.ValidateLoyaltyProgram();
+                BrandMethods.ValidateLoyaltyProgram(BrandId);
                 break;
             case 7:
                 HomePage.main(null);
@@ -52,7 +52,7 @@ public class BrandHomeMenu {
             
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                BrandHomeMenu.main(null);
+                BrandHomeMenu.main(null,BrandId);
         }
     }
 }

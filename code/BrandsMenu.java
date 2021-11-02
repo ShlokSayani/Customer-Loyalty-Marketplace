@@ -50,8 +50,9 @@ public class BrandsMenu {
                  * { System.out.println("Incorrect Credentials Entered!!! "); }
                  */
                 System.out.println("Login successful!!! \n");
-
-                BrandHomeMenu.main(null);
+                System.out.println("Enter Brand Id");
+                String BrandId = sc.next();
+                BrandHomeMenu.main(null,BrandId);
 
             } finally {
                 close(result);
