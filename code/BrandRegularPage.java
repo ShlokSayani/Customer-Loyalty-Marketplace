@@ -11,7 +11,7 @@ public class BrandRegularPage{
     static Scanner sc = new Scanner(System.in);
     static int select = 0;
 
-    public static void Regular(){
+    public static void Regular(String BrandId){
         System.out.println("1. Loyalty Points");
         System.out.println("2. Activity Types");
         System.out.println("2. Reward Types");

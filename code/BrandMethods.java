@@ -11,7 +11,7 @@ public class BrandMethods{
     static Scanner sc = new Scanner(System.in);
     static int select = 0;
 
-    public static void LoyaltyProgram(){
+    public static void LoyaltyProgram(String BrandId){
         
         System.out.println("1. Regular");
         System.out.println("2. Tier");
@@ -21,10 +21,10 @@ public class BrandMethods{
 
         switch(select){
             case 1:
-                BrandRegularPage.Regular();
+                BrandRegularPage.Regular(BrandId);
                 break;
             case 2:
-                BrandTierPage.Tier();
+                BrandTierPage.Tier(BrandId);
                 break;
             case 3:
                 BrandHomeMenu.main(null);
@@ -36,40 +36,51 @@ public class BrandMethods{
 
     }
 
-    public static void AddRERule(){
+    public static void AddRERule(String BrandId){
+        do
+        {
+            System.out.println("Enter Brand Reward Rule Code: \n");
+            String brandRERule = "";
+            brandRERule = sc.next();
 
-        System.out.println("Enter Brand Reward Rule Code: \n");
-        String brandRERule = "";
-        brandRERule = sc.next();
+            System.out.println("Enter Number of Points: \n");
+            int number_of_points = 0;
+            number_of_points = sc.nextInt();
 
-        System.out.println("Enter Number of Points: \n");
-        int number_of_points = 0;
-        number_of_points = sc.nextInt();
+            System.out.println(("Enter Activity Category: \n"));
+            String ActivityType = "";
+            ActivityType = sc.next();
 
-        System.out.println(("Enter Activity Category: \n"));
-        String ActivityType = "";
-        ActivityType = sc.next();
+            System.out.println(("Enter Activity Name: \n"));
+            String ActivityName = "";
+            ActivityName = sc.next();
 
-        System.out.println("Enter Version number: \n");
-        int Version = sc.nextInt();
+            System.out.println(("Enter Loyalty Id: \n"));
+            String LoyaltyId = "";
+            LoyaltyId = sc.next();
+
+            System.out.println("Enter Version number: \n");
+            int Version = sc.nextInt();
 
 
-        System.out.println("1. Add RE Rule");
-        System.out.println("2. Go Back");
+            System.out.println("1. Add RE Rule");
+            System.out.println("2. Go Back");
 
-        select = sc.nextInt();
+            select = sc.nextInt();
 
-        switch(select){
-            case 1:
-                RERule(number_of_points,ActivityType,Version,brandRERule);
-                break;
-            case 2:
-                BrandHomeMenu.main(null);
-                break;
-            default:
-                System.out.println("Invalid Input. Enter your choice again");
-                AddRERule();
+            switch(select){
+                case 1:
+                    RERule(number_of_points,ActivityType,Version,brandRERule,ActivityName,BrandId,LoyaltyId);
+                    break;
+                case 2:
+                    BrandHomeMenu.main(null);
+                    break;
+                default:
+                    System.out.println("Invalid Input. Enter your choice again");
+                    AddRERule();
         }
+        }
+        while(select!=2)
     }
 
     public static void AddRRRule(){
@@ -195,11 +206,11 @@ public class BrandMethods{
         }
     }
 
-    public static void RERule(int number_of_points,String ActivityType, int Version, String brandRERule){
+    public static void RERule(int number_of_points,String ActivityType, int Version, String brandRERule,String ActivityName,String BrandId,String LoyaltyId){
 
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-        final String user = "amanend";
-        final String password = "ahnv8011";
+        final String user = "hpatel28";
+        final String password = "abcd1234";
 
         Connection connection = null;
         Statement statement = null;
@@ -217,7 +228,7 @@ public class BrandMethods{
                     System.out.println("\t\tNow RE Rule will be added:\n\n");
                        
 
-                    String addRE = "";
+                    String addRE = "INSERT INTO RERules Values('"+ brandRERule +"','"+ Version +"','"+ ActivityType +"','"+ ActivityName +"','"+ number_of_points +"','"+ BrandId +",'"+ LoyaltyId +"')";
 
                     
                    statement.executeQuery(addRE);

@@ -26,16 +26,15 @@ CREATE TABLE Brand(
     brand_name VARCHAR2(10),
     brand_address VARCHAR2(10),
     join_date DATE,
-    brand_password VARCHAR2(10),
-    loyalty_program_name VARCHAR2(10),
-    tier VARCHAR2(30),
-    multiplier VARCHAR2(10),
-    points_required VARCHAR2(20)
+    brand_password VARCHAR2(10)
 );
 
 CREATE TABLE Loyalty_program( 
     loyalty_id int PRIMARY KEY,
+    loyalty_program_name VARCHAR2(10),
     tier VARCHAR2(30),
+    multiplier VARCHAR2(10),
+    points_required VARCHAR2(20)
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(10),
     reward_code VARCHAR2(10),
