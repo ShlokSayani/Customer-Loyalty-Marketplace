@@ -17,7 +17,7 @@ CREATE TABLE Reward_Type(
 );
 
 CREATE TABLE AdminUser(
-    username VARCHAR2(10),
+    username VARCHAR2(10) PRIMARY KEY,
     pass VARCHAR2(10)
 );
 

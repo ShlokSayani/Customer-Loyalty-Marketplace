@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 import java.sql.*;
 
-public class LoginPage{
+public class LoginMenu{
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
     private static final String user = "hpatel28";
@@ -43,7 +43,7 @@ public class LoginPage{
                     result = statement.executeQuery(sqlCred);
                     if(result.next){
                         System.out.println("Login successful!!! \n");
-                        AdminMenu.main(null);
+                        AdminHomeMenu.main(null);
                         break;
                     }
                     String sqlBrandCred = "select brand_id,brand_password from CustomerUsers where brand_id = '" + userID
@@ -51,7 +51,7 @@ public class LoginPage{
                     result = statement.executeQuery(sqlCred);
                     if(result.next){
                         System.out.println("Login successful!!! \n");
-                        BrandMenu.main(null);
+                        BrandHomeMenu.main(null);
                         break;
                     }
                     String sqlCustomerCred = "select customer_id,customer_password from CustomerUsers where customer_id = '" + userID
@@ -59,7 +59,7 @@ public class LoginPage{
                     result = statement.executeQuery(sqlCred);
                     if(result.next){
                         System.out.println("Login successful!!! \n");
-                        CustomerMenu.main(null);
+                        CustomerHomeMenu.main(null);
                         break;
                     }
                     System.out.println("Enter Valid Credentials!!");
@@ -84,7 +84,6 @@ public class LoginPage{
                  */
 
                 // customerHomeMenu.main(null);
-
 
             } finally {
                 close(result);
