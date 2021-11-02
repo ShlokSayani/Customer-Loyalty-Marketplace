@@ -82,7 +82,7 @@ public class BrandActivityPages{
                        
                     if(flag==0)
                     {
-                        String addActivity = "INSERT INTO Loyalty_program Values('"+ LoyaltyId +"','"+ lpname +"','"+ ActivityType +"','"+ ActivityName +"','"+ number_of_points +"','"+ BrandId +",'"+ LoyaltyId +"')";
+                        String addActivity = "INSERT INTO Loyalty_program Values('"+ LoyaltyId +"','"+ lpname +"','""')";
                     }
                     
                     statement.executeQuery(addRE);
