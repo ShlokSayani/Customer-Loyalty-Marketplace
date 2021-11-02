@@ -78,9 +78,9 @@ public class BrandMethods{
                 default:
                     System.out.println("Invalid Input. Enter your choice again");
                     AddRERule();
+            }
         }
-        }
-        while(select!=2)
+        while(select!=2);
     }
 
     public static void AddRRRule(){
