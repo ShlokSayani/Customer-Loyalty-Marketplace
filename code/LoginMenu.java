@@ -19,7 +19,7 @@ public class LoginMenu{
     static Scanner sc = new Scanner(System.in);
     static int selection = 0;
 
-    public static  void CustomerLogin(){
+    public static void UserLogin(){
         try {
 
             Class.forName("oracle.jdbc.OracleDriver");
@@ -108,7 +108,7 @@ public class LoginMenu{
                 UserLogin();
                 break;
             case 3:
-                HomeMenu.main(null);
+                HomePage.main(null);
                 break;
         }
     } 
