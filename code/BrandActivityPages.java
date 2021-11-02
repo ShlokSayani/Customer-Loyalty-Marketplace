@@ -46,7 +46,7 @@ public class BrandActivityPages{
     }
 
     public static void Purchase(){
-
+        
     }
 
     public static void LeaveaReview(){

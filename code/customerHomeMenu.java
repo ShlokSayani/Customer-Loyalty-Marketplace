@@ -13,9 +13,9 @@ public class customerHomeMenu {
 
     public static void CustomerMenuOptions(){
         System.out.println("Select below options: ");
-        System.out.println("1. Enroll in Brand's ");
-        System.out.println("2. View Wallet ");
-        System.out.println("3. Customer Activities");
+        System.out.println("1. Enroll in Loyalty Program");
+        System.out.println("2. Reward Activities");
+        System.out.println("3. View Wallet");
         System.out.println("4. Redeem points");
         System.out.println("5. Go Back");
     } 
@@ -31,10 +31,10 @@ public class customerHomeMenu {
                 customerMethods.enrollment();
                 break;
             case 2:
-                customerMethods.viewWallet();
+                customerMethods.customerActivitiesCall();
                 break;
             case 3:
-                customerMethods.customerActivitiesCall();
+                customerMethods.viewWallet();
                 break;
             case 4:
                 customerMethods.redeemPoints();
