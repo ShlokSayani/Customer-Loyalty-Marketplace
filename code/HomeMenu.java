@@ -20,7 +20,7 @@ public class HomePage{
         System.out.println();
         switch(selection){
             case 1: 
-                LoginPage.main(null);
+                LoginMenu.main(null);
                 break;
             case 2: 
                 SignUpMenu.main(null);

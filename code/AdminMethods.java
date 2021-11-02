@@ -112,15 +112,15 @@ public class AdminMethods {
             Class.forName("oracle.jdbc.OracleDriver");
 
             try {
-                System.out.println("Connecting to Customer Module...");
+                System.out.println("Fetching Brand details...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 
-                String checkcred = "SELECT * FROM Customer";
+                String checkcred = "SELECT * FROM Brand";
                 statement.executeQuery(checkcred);
                 
-                System.out.println("Displayed Customer Details \n");
+                System.out.println("\t Brand Details: \n");
                 while (checkcred.next()) {
                     int brand_id = checkcred.getInt(1);
                     String c_name = checkcred.getString("brand_name");
