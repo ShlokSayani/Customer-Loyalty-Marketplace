@@ -188,17 +188,84 @@ public class AdminMethods {
     }
 
     public static void AddActivityType(){
+        try {
 
+            Class.forName("oracle.jdbc.OracleDriver");
+
+            try {
+                System.out.println("Connecting to Adding Activity Type Module...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                // Runtime.getRuntime().exec("clear");
+                System.out.println("\t\tEnter the details to add a Activity Type:\n\n");
+                sc.nextLine();
+                System.out.println("Enter activity code: ");
+                String activity_code = sc.nextLine();
+                System.out.println("Enter activity_name: ");
+                String activity_name = sc.nextLine();
+
+                String checkcred = "INSERT INTO Activity_Type(activity_code, activity_name) VALUES ('"+activity_code+"','"+activity_name+"'";
+                statement.executeQuery(checkcred);
+                
+                System.out.println("Activity Type added successfully!!! \n");
+
+                AdminHomeMenu.main(null);
+
+            } finally {
+                //close(result);
+                //close(statement);
+                //close(connection);
+            }
+            
+        }
+
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void AddRewardType(){
+        try {
 
+            Class.forName("oracle.jdbc.OracleDriver");
+
+            try {
+                System.out.println("Connecting to Adding Reward Type Module...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                // Runtime.getRuntime().exec("clear");
+                System.out.println("\t\tEnter the details to add a Reward Type:\n\n");
+                sc.nextLine();
+                System.out.println("Enter Reward code: ");
+                String reward_code = sc.nextLine();
+                System.out.println("Enter Reward name: ");
+                String reward_name = sc.nextLine();
+
+                String checkcred = "INSERT INTO Reward_Type(reward_code, reward_name) VALUES ('"+reward_code+"','"+reward_name+"'";
+                statement.executeQuery(checkcred);
+                
+                System.out.println("Reward Type added successfully!!! \n");
+
+                AdminHomeMenu.main(null);
+
+            } finally {
+                //close(result);
+                //close(statement);
+                //close(connection);
+            }
+            
+        }
+
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void addBrand(){
-    
-        System.out.println("1. Press 1 to add Brand");
+        
+        System.out.println("1. Add Brand");
         System.out.println("2. Go Back");
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -217,7 +284,7 @@ public class AdminMethods {
     public static void addCustomer(){
         System.out.println("1. Add Customer");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -236,7 +303,7 @@ public class AdminMethods {
     public static void displayBrandInfo(){
         System.out.println("1. Display Brand's Information");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -255,7 +322,7 @@ public class AdminMethods {
     public static void displayCustomerInfo(){
         System.out.println("1. Display Customer's Information");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -274,7 +341,7 @@ public class AdminMethods {
     public static void addActivityType(){
         System.out.println("1. Add Activity Type");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -293,7 +360,7 @@ public class AdminMethods {
     public static void addRewardType(){
         System.out.println("1. Add Reward Type");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
