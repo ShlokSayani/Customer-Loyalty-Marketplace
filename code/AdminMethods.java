@@ -35,8 +35,11 @@ public class AdminMethods {
                 System.out.println("Enter brand id: ");
                 int brand_id = sc.nextInt();
                 sc.nextLine();
+                System.out.println("Enter brand name: ");
+                int brand_name = sc.nextLine();
                 System.out.println("Enter brand address: ");
                 String brand_address = sc.nextLine();
+            
                 // System.out.println("Enter Joining Date: ");
                 // String date1 = sc.nextLine();
                 // java.util.Date joining_date = new SimpleDateFormat("yyyy/MM/DD").format(date1); 
@@ -44,9 +47,11 @@ public class AdminMethods {
                 // System.out.println(joining_date);
                 
                 long millis=System.currentTimeMillis();  
-                java.sql.Date joining_date = new java.sql.Date(millis);  
-                
-                String checkcred = "INSERT INTO Brand VALUES ("+brand_id+",'"+brand_address+"',DATE '"+joining_date+"')";
+                java.sql.Date join_date = new java.sql.Date(millis);  
+
+                System.out.println("Enter brand password: ");
+                String brand_password = sc.nextLine();
+                String checkcred = "INSERT INTO Brand(brand_id, brand_name, brand_address, join_date, brand_password) VALUES ('"+brand_id+"','"+brand_name+"','"+brand_address+"',DATE '"+join_date+"','"+brand_password+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Brand added successfully!!! \n");
