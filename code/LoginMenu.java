@@ -86,9 +86,9 @@ public class LoginMenu{
                 // customerHomeMenu.main(null);
 
             } finally {
-                close(result);
-                close(statement);
-                close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
 
