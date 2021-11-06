@@ -256,7 +256,7 @@ public class BrandRewardPages{
                         pstmt.setString(8, reward_code);
                         pstmt.setString(9,"Free Product");
                         pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus)
+                        pstmt.setString(11,lpstatus);
                         pstmt.execute();
 
 
@@ -266,9 +266,9 @@ public class BrandRewardPages{
                     System.out.println("Activity Added to loyalty program \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 

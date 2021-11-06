@@ -9,7 +9,7 @@ import java.sql.*;
 public class BrandsMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "hpatel28";
+    private static final String user = "dmehta3";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;

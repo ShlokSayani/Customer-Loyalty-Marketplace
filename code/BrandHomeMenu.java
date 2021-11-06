@@ -22,7 +22,7 @@ public class BrandHomeMenu {
 
     }
 
-    public static void main (String args[],String BrandId)
+    public static void main (String args[])
     {
         BrandMenuoptions();
 

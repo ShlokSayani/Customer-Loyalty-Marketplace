@@ -240,7 +240,7 @@ public class BrandMethods{
     public static void RERule(int number_of_points,String ActivityType, int Version, String brandRERule,String BrandId,String LoyaltyId){
 
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-        final String user = "hpatel28";
+        final String user = "dmehta3";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -272,9 +272,9 @@ public class BrandMethods{
                     System.out.println("RE Rule Addition successful!!! \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
@@ -286,8 +286,8 @@ public class BrandMethods{
 
     public static void RRRule(String brandRRRule,String Tier,String RewardType,int redeempoints,int instances,String LoyaltyId,int Version,String BrandId){
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-        final String user = "amanend";
-        final String password = "ahnv8011";
+        final String user = "dmehta3";
+        final String password = "abcd1234";
 
         Connection connection = null;
         Statement statement = null;
@@ -326,9 +326,10 @@ public class BrandMethods{
                     System.out.println("RR Rule Addition successful!!! \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    pstmt.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
@@ -339,7 +340,7 @@ public class BrandMethods{
 
     public static void RERuleupdate(int number_of_points,String ActivityType, int Version, String brandRERule,String BrandId,String LoyaltyId){
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-        final String user = "hpatel28";
+        final String user = "dmehta3";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -371,9 +372,9 @@ public class BrandMethods{
                     System.out.println("RE Rule Updated successful!!! \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
@@ -384,8 +385,8 @@ public class BrandMethods{
 
     public static void RRRuleupdate(int number_of_points,String RewardType, int Version,String brandRRRule){
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-        final String user = "amanend";
-        final String password = "ahnv8011";
+        final String user = "dmehta3";
+        final String password = "abcd1234";
 
         Connection connection = null;
         Statement statement = null;
@@ -424,9 +425,10 @@ public class BrandMethods{
                     System.out.println("RR Rule Addition successful!!! \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    pstmt.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
@@ -438,12 +440,14 @@ public class BrandMethods{
     public static void Validate(){
         
         final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
-        final String user = "hpatel28";
+        final String user = "dmehta3";
         final String password = "abcd1234";
 
         Connection connection = null;
         Statement statement = null;
         ResultSet result = null;
+        ResultSet result1 = null;
+        ResultSet result2 = null;
 
         try {
 
@@ -500,9 +504,11 @@ public class BrandMethods{
                     }
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    result1.close();
+                    result2.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
