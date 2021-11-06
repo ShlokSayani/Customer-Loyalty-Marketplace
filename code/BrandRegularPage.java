@@ -12,8 +12,7 @@ public class BrandRegularPage{
     static int select = 0;
 
     public static void Regular(String BrandId){
-        System.out.println("1. Loyalty Points");
-        System.out.println("2. Activity Types");
+        System.out.println("1. Activity Types");
         System.out.println("2. Reward Types");
         System.out.println("3. Go Back");
 
@@ -21,15 +20,12 @@ public class BrandRegularPage{
 
         switch(select){
             case 1:
-                BrandLoyaltyPoints.LoyaltyPoints(0);
+                BrandActivityPages.ActivityTypes(0,BrandId);
                 break;
             case 2:
-                BrandActivityPages.ActivityTypes(0);
+                BrandRewardPages.RewardTypes(0,BrandId);
                 break;
             case 3:
-                BrandRewardPages.RewardTypes(0);
-                break;
-            case 4:
                 BrandMethods.LoyaltyProgram();
                 break;
             default:

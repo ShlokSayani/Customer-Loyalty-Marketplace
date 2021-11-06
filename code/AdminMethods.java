@@ -35,7 +35,7 @@ public class AdminMethods {
                 System.out.println("Enter brand id: ");
                 String brand_id = sc.nextLine();
                 System.out.println("Enter brand name: ");
-                int brand_name = sc.nextLine();
+                String brand_name = sc.nextLine();
                 System.out.println("Enter brand address: ");
                 String brand_address = sc.nextLine();
                 
@@ -52,9 +52,9 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
             
         }
@@ -79,7 +79,7 @@ public class AdminMethods {
                 System.out.println("Enter customer id: ");
                 String customer_id = sc.nextLine();
                 System.out.println("Enter customer name: ");
-                int customer_name = sc.nextLine();
+                String customer_name = sc.nextLine();
                 System.out.println("Enter customer address: ");
                 String csutomer_address = sc.nextLine();
                 System.out.println("Enter customer phone number: ");
@@ -95,9 +95,9 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
             
         }
@@ -136,9 +136,9 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
 
@@ -176,9 +176,9 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
 
@@ -212,9 +212,9 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
             
         }
@@ -249,9 +249,9 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
             
         }
