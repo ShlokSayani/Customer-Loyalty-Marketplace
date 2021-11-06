@@ -66,9 +66,9 @@ public class LoginMenu{
                 }
 
             } finally {
-                close(result);
-                close(statement);
-                close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
         catch (Throwable oops) {

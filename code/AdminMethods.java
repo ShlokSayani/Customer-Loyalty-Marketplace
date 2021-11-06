@@ -33,18 +33,11 @@ public class AdminMethods {
                 System.out.println("\t\tEnter the details to add a brand:\n\n");
                 sc.nextLine();
                 System.out.println("Enter brand id: ");
-                int brand_id = sc.nextInt();
-                sc.nextLine();
+                String brand_id = sc.nextLine();
                 System.out.println("Enter brand name: ");
-                int brand_name = sc.nextLine();
+                String brand_name = sc.nextLine();
                 System.out.println("Enter brand address: ");
                 String brand_address = sc.nextLine();
-            
-                // System.out.println("Enter Joining Date: ");
-                // String date1 = sc.nextLine();
-                // java.util.Date joining_date = new SimpleDateFormat("yyyy/MM/DD").format(date1); 
-                // // java.util.Date joining_date = (java.util.Date)formatter.parse(date1);
-                // System.out.println(joining_date);
                 
                 long millis=System.currentTimeMillis();  
                 java.sql.Date join_date = new java.sql.Date(millis);  
@@ -56,12 +49,12 @@ public class AdminMethods {
                 
                 System.out.println("Brand added successfully!!! \n");
 
-                BrandsMenu.main(null);
+                AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
             
         }
@@ -83,27 +76,30 @@ public class AdminMethods {
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tEnter the details to add a Customer:\n\n");
                 sc.nextLine();
-                System.out.println("Enter Customer id: ");
-                int customer_id = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Enter Customer name : ");
+                System.out.println("Enter customer id: ");
+                String customer_id = sc.nextLine();
+                System.out.println("Enter customer name: ");
                 String customer_name = sc.nextLine();
-                System.out.println("Enter Customer address : ");
+                System.out.println("Enter customer address: ");
                 String customer_address = sc.nextLine();
-                System.out.println("Enter Phone number: ");
-                int phone_number = sc.nextInt();
-                String checkcred = "INSERT INTO Customer VALUES ("+customer_id+",'"+customer_name+"','"+customer_address+"',"+phone_number+")";
+                System.out.println("Enter customer phone number: ");
+                String phone_number = sc.nextLine();
+                System.out.println("Enter customer password: ");
+                String customer_password = sc.nextLine();
+
+                String checkcred = "INSERT INTO Customer(customer_id, customer_name, customer_address, phone_number, customer_password) VALUES ('"+customer_id+"','"+customer_name+"','"+customer_address+"','"+phone_number+"','"+customer_password+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Customer added successfully!!! \n");
 
-                CustomerMenu.main(null);
+                AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
+            
         }
 
         catch (Throwable oops) {
@@ -121,25 +117,28 @@ public class AdminMethods {
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
-                
-                String checkcred = "SELECT * FROM Brand";
+
+                System.out.println("Enter Brand ID to fetch Brand Details\n");
+                int selection = sc.nextInt();
+
+                String checkcred = "SELECT * FROM Brand WHERE brand_id = "+selection;
                 statement.executeQuery(checkcred);
                 
                 System.out.println("\t Brand Details: \n");
                 while (checkcred.next()) {
-                    int brand_id = checkcred.getInt(1);
-                    String c_name = checkcred.getString("brand_name");
-                    String c_address = checkcred.getString("brand_address");
-                    int phone = checkcred.getInt(4);
-                    System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name + ", Customer Address: " + c_address+ ", Phone Number: " + phone);
+                    String b_id = checkcred.getString("brand_id");
+                    String b_name = checkcred.getString("brand_name");
+                    String b_address = checkcred.getString("brand_address");
+                    Date date = checkcred.getDate("join_date");
+                    System.out.println("Brand Id: " + b_id + ", Customer Name: " + b_name + ", Customer Address: " + b_address+ ", Joining date: " + date);
                 }
 
-                CustomerMenu.main(null);
+                AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
 
@@ -154,29 +153,32 @@ public class AdminMethods {
             Class.forName("oracle.jdbc.OracleDriver");
 
             try {
-                System.out.println("Connecting to Customer Module...");
+                System.out.println("Fetching Customer details...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 
-                String checkcred = "SELECT * FROM Customer";
+                System.out.println("Enter Customer ID to fetch Customer Details\n");
+                int selection = sc.nextInt();
+
+                String checkcred = "SELECT * FROM Customer WHERE customer_id = "+selection;
                 statement.executeQuery(checkcred);
                 
-                System.out.println("Displayed Customer Details \n");
+                System.out.println("\tCustomer details: \n");
                 while (checkcred.next()) {
-                    int c_id = checkcred.getInt(1);
-                    String c_name = checkcred.getString("customer_id");
-                    String c_address = checkcred.getString("customer_name");
-                    int phone = checkcred.getInt(4);
+                    String c_id = checkcred.getString("customer_id");
+                    String c_name = checkcred.getString("customer_name");
+                    String c_address = checkcred.getString("customer_address");
+                    String phone = checkcred.getString("phone_number");
                     System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name + ", Customer Address: " + c_address+ ", Phone Number: " + phone);
                 }
 
-                CustomerMenu.main(null);
+                AdminHomeMenu.main(null);
 
             } finally {
-                //close(result);
-                //close(statement);
-                //close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
 
@@ -186,17 +188,84 @@ public class AdminMethods {
     }
 
     public static void AddActivityType(){
+        try {
 
+            Class.forName("oracle.jdbc.OracleDriver");
+
+            try {
+                System.out.println("Connecting to Adding Activity Type Module...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                // Runtime.getRuntime().exec("clear");
+                System.out.println("\t\tEnter the details to add a Activity Type:\n\n");
+                sc.nextLine();
+                System.out.println("Enter activity code: ");
+                String activity_code = sc.nextLine();
+                System.out.println("Enter activity_name: ");
+                String activity_name = sc.nextLine();
+
+                String checkcred = "INSERT INTO Activity_Type(activity_code, activity_name) VALUES ('"+activity_code+"','"+activity_name+"'";
+                statement.executeQuery(checkcred);
+                
+                System.out.println("Activity Type added successfully!!! \n");
+
+                AdminHomeMenu.main(null);
+
+            } finally {
+                result.close();
+                statement.close();
+                connection.close();
+            }
+            
+        }
+
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void AddRewardType(){
+        try {
 
+            Class.forName("oracle.jdbc.OracleDriver");
+
+            try {
+                System.out.println("Connecting to Adding Reward Type Module...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                // Runtime.getRuntime().exec("clear");
+                System.out.println("\t\tEnter the details to add a Reward Type:\n\n");
+                sc.nextLine();
+                System.out.println("Enter Reward code: ");
+                String reward_code = sc.nextLine();
+                System.out.println("Enter Reward name: ");
+                String reward_name = sc.nextLine();
+
+                String checkcred = "INSERT INTO Reward_Type(reward_code, reward_name) VALUES ('"+reward_code+"','"+reward_name+"'";
+                statement.executeQuery(checkcred);
+                
+                System.out.println("Reward Type added successfully!!! \n");
+
+                AdminHomeMenu.main(null);
+
+            } finally {
+                result.close();
+                statement.close();
+                connection.close();
+            }
+            
+        }
+
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void addBrand(){
-    
-        System.out.println("1. Press 1 to add Brand");
+        
+        System.out.println("1. Add Brand");
         System.out.println("2. Go Back");
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -215,7 +284,7 @@ public class AdminMethods {
     public static void addCustomer(){
         System.out.println("1. Add Customer");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -234,7 +303,7 @@ public class AdminMethods {
     public static void displayBrandInfo(){
         System.out.println("1. Display Brand's Information");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -253,7 +322,7 @@ public class AdminMethods {
     public static void displayCustomerInfo(){
         System.out.println("1. Display Customer's Information");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -272,7 +341,7 @@ public class AdminMethods {
     public static void addActivityType(){
         System.out.println("1. Add Activity Type");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
@@ -291,7 +360,7 @@ public class AdminMethods {
     public static void addRewardType(){
         System.out.println("1. Add Reward Type");
         System.out.println("2. Go Back");
-
+        System.out.println("Select from above option:\n");
         selection = sc.nextInt();
 
         switch(selection){
