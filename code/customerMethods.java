@@ -32,6 +32,16 @@ public class customerMethods {
                 result = statement.executeQuery(programList);
 
                 System.out.println("\t\tCustomer Successfully Enrolled");
+
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
+                result = statement.executeQuery(customerWallet);
+
+                if(!result.next){
+                    System.out.println("Adding Customer Wallet...");
+                    String createWallet = "insert into Wallet values ('" + customerID + "')";
+                    System.out.println("Wallet created Successfully for Customer");
+                }
+
                 CustomerHomeMenu.main(customerID);
 
             } finally {
