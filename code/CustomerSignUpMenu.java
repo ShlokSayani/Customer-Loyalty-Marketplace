@@ -52,9 +52,9 @@ public class CustomerSignUpMenu {
                 LoginMenu.main(null);
 
             } finally {
-                close(result);
-                close(statement);
-                close(connection);
+                result.close();
+                statement.close();
+                connection.close();
             }
         }
 
