@@ -131,8 +131,8 @@ public class AdminMethods {
                 // Runtime.getRuntime().exec("clear");
 
                 System.out.println("Enter Brand ID to fetch Brand Details\n");
+                sc.nextLine();
                 String selection = sc.nextLine();
-
                 String checkcred = "SELECT * FROM Brand WHERE brand_id = '"+selection+"'";
                 result = statement.executeQuery(checkcred);
                 
@@ -144,7 +144,7 @@ public class AdminMethods {
                     java.sql.Date date = result.getDate("join_date");
                     System.out.println("Brand Id: " + b_id + ", Customer Name: " + b_name + ", Customer Address: " + b_address+ ", Joining date: " + date);
                 }
-
+                System.out.println();
                 AdminHomeMenu.main(null);
 
             } finally {
@@ -171,9 +171,10 @@ public class AdminMethods {
                 // Runtime.getRuntime().exec("clear");
                 
                 System.out.println("Enter Customer ID to fetch Customer Details\n");
+                sc.nextLine();
                 String selection = sc.nextLine();
 
-                String checkcred = "SELECT customer_id,customer_name FROM Customer WHERE customer_id = '"+selection+"'";
+                String checkcred = "SELECT * FROM Customer WHERE customer_id = '"+selection+"'";
                 result = statement.executeQuery(checkcred);
                 
                 System.out.println("\tCustomer details: \n");
@@ -184,7 +185,7 @@ public class AdminMethods {
                     String phone = result.getString("phone_number");
                     System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name + ", Customer Address: " + c_address+ ", Phone Number: " + phone);
                 }
-
+                System.out.println();
                 AdminHomeMenu.main(null);
 
             } finally {
