@@ -131,9 +131,9 @@ public class AdminMethods {
                 // Runtime.getRuntime().exec("clear");
 
                 System.out.println("Enter Brand ID to fetch Brand Details\n");
-                int selection = sc.nextInt();
+                String selection = sc.nextLine();
 
-                String checkcred = "SELECT * FROM Brand WHERE brand_id = "+selection;
+                String checkcred = "SELECT * FROM Brand WHERE brand_id = '"+selection+"'";
                 result = statement.executeQuery(checkcred);
                 
                 System.out.println("\t Brand Details: \n");
@@ -171,9 +171,9 @@ public class AdminMethods {
                 // Runtime.getRuntime().exec("clear");
                 
                 System.out.println("Enter Customer ID to fetch Customer Details\n");
-                int selection = sc.nextInt();
+                String selection = sc.nextLine();
 
-                String checkcred = "SELECT customer_id,customer_name FROM Customer WHERE customer_id = "+selection;
+                String checkcred = "SELECT customer_id,customer_name FROM Customer WHERE customer_id = '"+selection+"'";
                 result = statement.executeQuery(checkcred);
                 
                 System.out.println("\tCustomer details: \n");
