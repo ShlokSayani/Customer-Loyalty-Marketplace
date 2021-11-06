@@ -21,7 +21,7 @@ public class BrandTierPage{
     
             switch(select){
             case 1:
-                BrandTierSetUp.TierSetUp(BrandId);
+                BrandTierSetUp.TierSetUp(BrandId,1);
                 break;
             case 2:
                 BrandActivityPages.ActivityTypes(1,BrandId);
@@ -30,11 +30,11 @@ public class BrandTierPage{
                 BrandRewardPages.RewardTypes(1,BrandId);
                 break;
             case 4:
-                BrandMethods.LoyaltyProgram();
+                BrandMethods.LoyaltyProgram(BrandId);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                Tier();
+                Tier(BrandId);
             }
         }
 }

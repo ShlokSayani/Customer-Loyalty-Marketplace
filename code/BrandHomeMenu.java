@@ -26,6 +26,9 @@ public class BrandHomeMenu {
     {
         BrandMenuoptions();
 
+        System.out.println("Enter BrandId");
+        String BrandId = sc.next();
+
         select = sc.nextInt();
         switch(select){
             case 1:
@@ -52,7 +55,7 @@ public class BrandHomeMenu {
             
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                BrandHomeMenu.main(null,BrandId);
+                BrandHomeMenu.main(null);
         }
     }
 }

@@ -29,7 +29,7 @@ public class HomePage{
                 ShowQueries.main(null);
                 break;
             case 4:
-                system.exit();
+                System.exit();
                 break;
         }
    } 

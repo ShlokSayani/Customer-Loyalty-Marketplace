@@ -25,7 +25,7 @@ public class SignUpMenu{
                 CustomerSignUpMenu.CustomerSignUp();
                 break;
             case 3:
-                HomeMenu.main(null);
+                HomePage.main(null);
                 break;
         }
     } 

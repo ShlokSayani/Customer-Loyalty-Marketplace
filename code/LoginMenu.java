@@ -33,31 +33,31 @@ public class LoginMenu{
                 boolean firstCheck = false;
                 
                 while(true){
-                    in.nextLine();
+                    sc.nextLine();
                     System.out.println("Please enter your User ID: ");
-                    String userID = in.nextLine();
+                    String userID = sc.nextLine();
                     System.out.println("Please enter your Password: ");
-                    String userPassword = in.nextLine();
+                    String userPassword = sc.nextLine();
                     String sqlAdminCred = "select admin_id,admin_password from AdminUser where admin_id = '" + userID
                         + "' and admin_password='" + userPassword + "'";
-                    result = statement.executeQuery(sqlCred);
-                    if(result.next){
+                    result = statement.executeQuery(sqlAdminCred);
+                    if(result.next()){
                         System.out.println("Login successful!!! \n");
                         AdminHomeMenu.main(null);
                         break;
                     }
                     String sqlBrandCred = "select brand_id,brand_password from CustomerUsers where brand_id = '" + userID
                         + "' and brand_password='" + userPassword + "'";
-                    result = statement.executeQuery(sqlCred);
-                    if(result.next){
+                    result = statement.executeQuery(sqlBrandCred);
+                    if(result.next()){
                         System.out.println("Login successful!!! \n");
                         BrandHomeMenu.main(null);
                         break;
                     }
                     String sqlCustomerCred = "select customer_id,customer_password from CustomerUsers where customer_id = '" + userID
                         + "' and customer_password='" + userPassword + "'";
-                    result = statement.executeQuery(sqlCred);
-                    if(result.next){
+                    result = statement.executeQuery(sqlCustomerCred);
+                    if(result.next()){
                         System.out.println("Login successful!!! \n");
                         CustomerHomeMenu.main(null);
                         break;
