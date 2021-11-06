@@ -114,9 +114,10 @@ public class BrandTierSetUp{
                     System.out.println("Activity Added to loyalty program \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                    result.close();
+                    pstmt.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 

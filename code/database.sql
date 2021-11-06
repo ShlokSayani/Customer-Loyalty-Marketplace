@@ -34,7 +34,7 @@ CREATE TABLE Loyalty_program(
     loyalty_program_name VARCHAR2(10),
     tier VARCHAR2(30),
     multiplier VARCHAR2(10),
-    points_required VARCHAR2(20)
+    points_required VARCHAR2(20),
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(10),
     reward_code VARCHAR2(10),
@@ -129,7 +129,8 @@ CREATE TABLE Reward_GiftCard(
 CREATE TABLE Customer_Redeem(
     transaction_id VARCHAR2(15),
     redeem_id VARCHAR2(15) PRIMARY KEY,
-    reward_instances VARCHAR2(15)
+    reward_instances VARCHAR2(15),
+    constraint rd_transaction_id FOREIGN KEY (transaction_id) REFERENCES Customer_Transaction(transaction_id)
 );
 
 CREATE TABLE Customer_Reviews(

@@ -139,12 +139,12 @@ public class BrandActivityPages{
                         pstmt.setString(3,Tier);
                         pstmt.setString(4,ansmulti);
                         pstmt.setString(5,anspoints);
-                        pstmt.setString(6,activity_code)
+                        pstmt.setString(6,activity_code);
                         pstmt.setString(7,"Purchase");
                         pstmt.setNull(8, Types.NULL);
                         pstmt.setNull(9,Types.NULL);
                         pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus)
+                        pstmt.setString(11,lpstatus);
                         pstmt.execute();
 
 
@@ -216,12 +216,12 @@ public class BrandActivityPages{
                         pstmt.setNull(3,Types.NULL);
                         pstmt.setNull(4,Types.NULL);
                         pstmt.setNull(5,Types.NULL);
-                        pstmt.setString(6,activity_code)
+                        pstmt.setString(6,activity_code);
                         pstmt.setString(7,"Leave a Review");
                         pstmt.setNull(8, Types.NULL);
                         pstmt.setNull(9,Types.NULL);
                         pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus)
+                        pstmt.setString(11,lpstatus);
                         pstmt.execute();
                     }
                     else
@@ -257,12 +257,12 @@ public class BrandActivityPages{
                         pstmt.setString(3,Tier);
                         pstmt.setString(4,ansmulti);
                         pstmt.setString(5,anspoints);
-                        pstmt.setString(6,activity_code)
+                        pstmt.setString(6,activity_code);
                         pstmt.setString(7,"Leave a Review");
                         pstmt.setNull(8, Types.NULL);
                         pstmt.setNull(9,Types.NULL);
                         pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus)
+                        pstmt.setString(11,lpstatus);
                         pstmt.execute();
 
 
@@ -272,9 +272,10 @@ public class BrandActivityPages{
                     System.out.println("Activity Added to loyalty program \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                     result.close();
+                     pstmt.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
@@ -335,12 +336,12 @@ public class BrandActivityPages{
                         pstmt.setNull(3,Types.NULL);
                         pstmt.setNull(4,Types.NULL);
                         pstmt.setNull(5,Types.NULL);
-                        pstmt.setString(6,activity_code)
+                        pstmt.setString(6,activity_code);
                         pstmt.setString(7,"Refer a Friend");
                         pstmt.setNull(8, Types.NULL);
                         pstmt.setNull(9,Types.NULL);
                         pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus)
+                        pstmt.setString(11,lpstatus);
                         pstmt.execute();
                     }
                     else
@@ -376,12 +377,12 @@ public class BrandActivityPages{
                         pstmt.setString(3,Tier);
                         pstmt.setString(4,ansmulti);
                         pstmt.setString(5,anspoints);
-                        pstmt.setString(6,activity_code)
+                        pstmt.setString(6,activity_code);
                         pstmt.setString(7,"Refer a Friend");
                         pstmt.setNull(8, Types.NULL);
                         pstmt.setNull(9,Types.NULL);
                         pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus)
+                        pstmt.setString(11,lpstatus);
                         pstmt.execute();
 
 
@@ -391,9 +392,10 @@ public class BrandActivityPages{
                     System.out.println("Activity Added to loyalty program \n");
 
                 } finally {
-                    close(result);
-                    close(statement);
-                    close(connection);
+                     result.close();
+                     pstmt.close();
+                    statement.close();
+                    connection.close();
                 }
             }
 
