@@ -173,7 +173,7 @@ public class AdminMethods {
                 System.out.println("Enter Customer ID to fetch Customer Details\n");
                 int selection = sc.nextInt();
 
-                String checkcred = "SELECT * FROM Customer WHERE customer_id = "+selection;
+                String checkcred = "SELECT customer_id,customer_name FROM Customer WHERE customer_id = "+selection;
                 result = statement.executeQuery(checkcred);
                 
                 System.out.println("\tCustomer details: \n");
@@ -216,7 +216,7 @@ public class AdminMethods {
                 System.out.println("Enter activity_name: ");
                 String activity_name = sc.nextLine();
 
-                String checkcred = "INSERT INTO Activity_Type(activity_code, activity_name) VALUES ('"+activity_code+"','"+activity_name+"'";
+                String checkcred = "INSERT INTO Activity_Type(activity_code, activity_name) VALUES ('"+activity_code+"','"+activity_name+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Activity Type added successfully!!! \n");
@@ -253,7 +253,7 @@ public class AdminMethods {
                 System.out.println("Enter Reward name: ");
                 String reward_name = sc.nextLine();
 
-                String checkcred = "INSERT INTO Reward_Type(reward_code, reward_name) VALUES ('"+reward_code+"','"+reward_name+"'";
+                String checkcred = "INSERT INTO Reward_Type(reward_code, reward_name) VALUES ('"+reward_code+"','"+reward_name+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Reward Type added successfully!!! \n");
