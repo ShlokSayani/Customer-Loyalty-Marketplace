@@ -123,7 +123,7 @@ public class BrandMethods{
                     System.out.println("Invalid Input. Enter your choice again");
                     AddRRRule(BrandId);
             }
-        }while(select!=2)
+        }while(select!=2);
     }
     public static void UpdateRERule(String BrandId){
         do
@@ -211,9 +211,9 @@ public class BrandMethods{
                     break;
                 default:
                     System.out.println("Invalid Input. Enter your choice again");
-                    RRRuleupdate(BrandId);
+                    UpdateRRRule(BrandId);
             }
-        }while(select!=2)
+        }while(select!=2);
 
     }
 
@@ -226,20 +226,20 @@ public class BrandMethods{
 
         switch(select){
             case 1:
-                Validate(String BrandId);
+                Validate(BrandId);
                 break;
             case 2:
                 BrandHomeMenu.main(null);
                 break;
             default:
                System.out.println("Invalid Input. Enter your choice again");
-                ValidateLoyaltyProgram(String BrandId);
+                ValidateLoyaltyProgram(BrandId);
         }
     }
 
     public static void RERule(int number_of_points,String ActivityType, int Version, String brandRERule,String BrandId,String LoyaltyId){
 
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -249,7 +249,7 @@ public class BrandMethods{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
@@ -260,16 +260,23 @@ public class BrandMethods{
 
                     String getactivity = "Select activity_name from Activity_Type where activity_code='"+ ActivityType +"'";
                     result = statement.executeQuery(getactivity);
-
-                    String ActivityName = result.getString("activity_name");   
-                    
-                    String addRE = "INSERT INTO RERules Values('"+ brandRERule +"','"+ Version +"','"+ ActivityType +"','"+ ActivityName +"','"+ number_of_points +"','"+ BrandId +",'"+ LoyaltyId +"')";
-
-                    
-                    statement.executeQuery(addRE);
-        
+                    String ActivityName = "";
+                    if(result.next())
+                        ActivityName = result.getString("activity_name");   
+                    System.out.println(ActivityName);
+                    String addRE = "INSERT INTO RERules Values(?,?,?,?,?,?,?)";
+                    PreparedStatement pstmt = connection.prepareStatement(addRE);
+                    pstmt.setString(1,brandRERule);
+                    pstmt.setInt(2,Version);
+                    pstmt.setString(3,ActivityType);
+                    pstmt.setString(4,ActivityName);
+                    pstmt.setString(5,number_of_points);
+                    pstmt.setString(6,BrandId);
+                    pstmt.setString(7,LoyaltyId);
+                    pstmt.executeQuery();
                     
                     System.out.println("RE Rule Addition successful!!! \n");
+                    AddRERule(BrandId);
 
                 } finally {
                     result.close();
@@ -285,7 +292,7 @@ public class BrandMethods{
     }
 
     public static void RRRule(String brandRRRule,String Tier,String RewardType,int redeempoints,int instances,String LoyaltyId,int Version,String BrandId){
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -295,8 +302,7 @@ public class BrandMethods{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
-
+                Class.forName("oracle.jdbc.OracleDriver");
                 try {
                     System.out.println("Connecting to database...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
@@ -311,7 +317,7 @@ public class BrandMethods{
                        
 
                     String addRR = "INSERT INTO RRRules VALUES(?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement pstmt = con.prepareStatement(addRR);
+                    PreparedStatement pstmt = connection.prepareStatement(addRR);
                     pstmt.setString(1,brandRRRule);
                     pstmt.setString(2,Tier);
                     pstmt.setInt(3,Version);
@@ -324,10 +330,10 @@ public class BrandMethods{
                     pstmt.executeQuery();
                     
                     System.out.println("RR Rule Addition successful!!! \n");
+                    AddRRRule(BrandId);
 
                 } finally {
                     result.close();
-                    pstmt.close();
                     statement.close();
                     connection.close();
                 }
@@ -339,7 +345,7 @@ public class BrandMethods{
     }
 
     public static void RERuleupdate(int number_of_points,String ActivityType, int Version, String brandRERule,String BrandId,String LoyaltyId){
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -349,7 +355,7 @@ public class BrandMethods{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
@@ -370,6 +376,7 @@ public class BrandMethods{
         
                     
                     System.out.println("RE Rule Updated successful!!! \n");
+                    UpdateRERule(BrandId);
 
                 } finally {
                     result.close();
@@ -383,8 +390,8 @@ public class BrandMethods{
             }
     }
 
-    public static void RRRuleupdate(int number_of_points,String RewardType, int Version,String brandRRRule){
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+    public static void RRRuleupdate(String brandRRRule,String Tier,String RewardType,int redeempoints,int instances,String LoyaltyId,int Version,String BrandId){
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -394,7 +401,7 @@ public class BrandMethods{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
@@ -410,7 +417,7 @@ public class BrandMethods{
                        
 
                     String updateRR = "INSERT INTO RRRules VALUES(?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement pstmt = con.prepareStatement(updateRR);
+                    PreparedStatement pstmt = connection.prepareStatement(updateRR);
                     pstmt.setString(1,brandRRRule);
                     pstmt.setString(2,Tier);
                     pstmt.setInt(3,Version);
@@ -423,10 +430,10 @@ public class BrandMethods{
                     pstmt.executeQuery();
                     
                     System.out.println("RR Rule Addition successful!!! \n");
+                    UpdateRRRule(BrandId);
 
                 } finally {
                     result.close();
-                    pstmt.close();
                     statement.close();
                     connection.close();
                 }
@@ -437,9 +444,9 @@ public class BrandMethods{
             }
     }
 
-    public static void Validate(){
+    public static void Validate(String BrandId){
         
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -451,42 +458,44 @@ public class BrandMethods{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                
-                    getactivitytuples = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND activity_code IS NOT NULL";
+                    String getactivitytuples = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND activity_code IS NOT NULL";
                     result = statement.executeQuery(getactivitytuples);
+                    
+                    int act = result.getRow();
+                    System.out.println(act);
 
-                    int act = result.getInt(1);
-
-                    getrewardtuples = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND reward_code IS NOT NULL";
+                    String getrewardtuples = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND reward_code IS NOT NULL";
                     result1 = statement.executeQuery(getrewardtuples);
-
-                    int rew = result.getInt(1);
+            
+                    int rew = result1.getRow();
+                    System.out.println(rew);
                     
                     System.out.println("Is your program tiered? y or n:");
                     String ans = sc.next();
 
                     if(ans.equals("y"))
                     {
-                        getTier = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND tier IS NOT NULL";
+                        String getTier = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND tier IS NOT NULL";
                         result2 = statement.executeQuery(getTier);
 
-                        int tier = result2.getInt(1);
+                        int tier = result2.getRow();
 
                         if((rew+act+tier)>=3)
                         {
                             System.out.println("Your program is active");
-                            BrandHomeMenu.main(null,BrandId);
+                            BrandHomeMenu.main(null);
                         }
                         else
                         {
                             System.out.println("Your program is inactive");
-                            BrandHomeMenu.main(null,BrandId);
+                            BrandHomeMenu.main(null);
                         }
                     }
                     else if(ans.equals("n"))
@@ -494,12 +503,12 @@ public class BrandMethods{
                         if((rew+act)>=2)
                         {
                             System.out.println("Your program is active");
-                            BrandHomeMenu.main(null,BrandId);
+                            BrandHomeMenu.main(null);
                         }
                         else
                         {
                             System.out.println("Your program is inactive");
-                            BrandHomeMenu.main(null,BrandId);
+                            BrandHomeMenu.main(null);
                         }
                     }
 

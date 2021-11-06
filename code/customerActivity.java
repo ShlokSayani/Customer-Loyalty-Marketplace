@@ -34,7 +34,7 @@ public class customerActivity {
                 Purchase();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -53,7 +53,7 @@ public class customerActivity {
                 LeaveAReview();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -72,7 +72,7 @@ public class customerActivity {
                 ReferAFriend();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -100,7 +100,7 @@ public class customerActivity {
                 referAFriend();
                 break;
             case 4: 
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");

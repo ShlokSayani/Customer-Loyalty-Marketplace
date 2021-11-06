@@ -168,7 +168,7 @@ public class customerMethods {
                 System.out.println("\t\tLeave a Review!\n\n");
                 
                 String reviewContent = sc.nextLine();
-                
+
 
                 String enrollCustomer = "insert into Customer_program values('" + customerID + "','" + programID + "')";
                 result = statement.executeQuery(programList);
@@ -276,7 +276,7 @@ public class customerMethods {
                 ViewWallet();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -394,7 +394,7 @@ public class customerMethods {
                 RedeemPoints();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");

@@ -21,10 +21,10 @@ public class BrandTierSetUp{
                 Setup(BrandId);
                 break;
             case 2:
-                BrandTierPage.Tier(flag,BrandId);
+                BrandTierPage.Tier(BrandId);
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                TierSetUp();
+                TierSetUp(BrandId,flag);
         }
 
     }
@@ -38,7 +38,7 @@ public class BrandTierSetUp{
         String lpname = "";
         lpname = sc.next();
 
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -48,7 +48,7 @@ public class BrandTierSetUp{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
@@ -65,7 +65,7 @@ public class BrandTierSetUp{
                         System.out.println("Enter Tier:"+ i+1);
                         String temp = sc.next();
                         if(i>=1)
-                            Tier = Tier.concat(',');
+                            Tier = Tier.concat(",");
                         Tier = Tier.concat(temp);
                         i++;
                     }
@@ -78,7 +78,7 @@ public class BrandTierSetUp{
                         System.out.println("Enter Multiplier:"+ i+1);
                         String temp = sc.next();
                         if(i>=2)
-                            multilplier = multilplier.concat(',');
+                            multilplier = multilplier.concat(",");
                         multilplier = multilplier.concat(temp);
                         i++;
                     }
@@ -91,31 +91,32 @@ public class BrandTierSetUp{
                         System.out.println("Enter Points:"+ i+1);
                         String temp = sc.next();
                         if(i>=2)
-                            points = points.concat(',');
+                            points = points.concat(",");
                         points = points.concat(temp);
                         i++;
                     }
 
                     String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                    PreparedStatement pstmt = con.prepareStatement(query);
+                    PreparedStatement pstmt = connection.prepareStatement(query);
                     pstmt.setString(1, LoyaltyId);
                     pstmt.setString(2, lpname);
                     pstmt.setString(3,Tier);
                     pstmt.setString(4,multilplier);
                     pstmt.setString(5,points);
-                    pstmt.setNull(6,Types.NULL)
+                    pstmt.setNull(6,Types.NULL);
                     pstmt.setNull(7,Types.NULL);
                     pstmt.setNull(8, Types.NULL);
                     pstmt.setNull(9,Types.NULL);
                     pstmt.setString(10,BrandId);
-                    pstmt.setNull(11,Types.NULL)
+                    pstmt.setNull(11,Types.NULL);
                     pstmt.execute();
              
                     System.out.println("Activity Added to loyalty program \n");
 
+                    BrandHomeMenu.main(null);
+
                 } finally {
-                    result.close();
-                    pstmt.close();
+                    //result.close();
                     statement.close();
                     connection.close();
                 }
