@@ -59,31 +59,11 @@ public class LoginMenu{
                     result = statement.executeQuery(sqlCred);
                     if(result.next){
                         System.out.println("Login successful!!! \n");
-                        CustomerHomeMenu.main(null);
+                        CustomerHomeMenu.main(userID);
                         break;
                     }
                     System.out.println("Enter Valid Credentials!!");
                 }
-                // do {
-                //     if (firstCheck)
-                //         System.out.println("Incorrect Credentials Entered!!! \nPlease Try Again.\n\n");
-                //     // in.nextLine();
-                //     // System.out.println("Please enter your User ID: ");
-                //     // String userID = in.nextLine();
-                //     // System.out.println("Please enter your Password: ");
-                //     // String userPassword = in.nextLine();
-
-                //     String sqlAdminCred = "select username,pass from CustomerUsers where username = '" + loginCustomer
-                //             + "' and pass='" + loginPassword + "'";
-
-                //     result = statement.executeQuery(sqlCred);
-                //     firstCheck = true;
-                // } while (!result.next());
-                /*
-                 * { System.out.println("Incorrect Credentials Entered!!! "); }
-                 */
-
-                // customerHomeMenu.main(null);
 
             } finally {
                 close(result);
@@ -91,7 +71,6 @@ public class LoginMenu{
                 close(connection);
             }
         }
-
         catch (Throwable oops) {
             oops.printStackTrace();
         }
