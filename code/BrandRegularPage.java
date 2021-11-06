@@ -26,11 +26,11 @@ public class BrandRegularPage{
                 BrandRewardPages.RewardTypes(0,BrandId);
                 break;
             case 3:
-                BrandMethods.LoyaltyProgram();
+                BrandMethods.LoyaltyProgram(BrandId);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                Regular();
+                Regular(BrandId);
         }
     }
 }
