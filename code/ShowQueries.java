@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 import java.sql.*;
 
-public class HomePage{
+public class ShowQueries{
    
     static Scanner sc = new Scanner(System.in);
     static int selection = 0;

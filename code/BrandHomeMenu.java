@@ -9,6 +9,7 @@ import java.sql.*;
 public class BrandHomeMenu {
     static Scanner sc = new Scanner(System.in);
     static int select = 0;
+    
     public static void BrandMenuoptions() {
 
         System.out.println("1. Add Loyalty Program");
@@ -19,17 +20,16 @@ public class BrandHomeMenu {
         System.out.println("6. validate Loyalty Program");
         System.out.println("7. Go Back");
         System.out.println("Choose from above options");
-
+        
     }
 
     public static void main (String args[])
     {
         BrandMenuoptions();
-
+        select = sc.nextInt();
         System.out.println("Enter BrandId");
         String BrandId = sc.next();
-
-        select = sc.nextInt();
+        
         switch(select){
             case 1:
                 BrandMethods.LoyaltyProgram(BrandId);

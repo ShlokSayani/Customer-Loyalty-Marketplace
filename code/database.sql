@@ -66,7 +66,7 @@ CREATE TABLE RERules(
     re_rule_version int,
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(20),
-    activity_points VARCHAR2(10),
+    activity_points int,
     brand_id VARCHAR2(15),
     loyalty_id VARCHAR2(15),
     constraint rerule_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),

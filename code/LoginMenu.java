@@ -9,7 +9,7 @@ import java.sql.*;
 public class LoginMenu{
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "hpatel28";
+    private static final String user = "dmehta3";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -38,25 +38,28 @@ public class LoginMenu{
                     String userID = sc.nextLine();
                     System.out.println("Please enter your Password: ");
                     String userPassword = sc.nextLine();
-                    String sqlAdminCred = "select admin_id,admin_password from AdminUser where admin_id = '" + userID
-                        + "' and admin_password='" + userPassword + "'";
+                    String sqlAdminCred = "select username,pass from AdminUser where username = '" + userID
+                        + "' and pass='" + userPassword + "'";
                     result = statement.executeQuery(sqlAdminCred);
+                    System.out.println(sqlAdminCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
                         AdminHomeMenu.main(null);
                         break;
                     }
-                    String sqlBrandCred = "select brand_id,brand_password from CustomerUsers where brand_id = '" + userID
+                    String sqlBrandCred = "select brand_id,brand_password from Brand where brand_id = '" + userID
                         + "' and brand_password='" + userPassword + "'";
                     result = statement.executeQuery(sqlBrandCred);
+                    System.out.println(sqlBrandCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
                         BrandHomeMenu.main(null);
                         break;
                     }
-                    String sqlCustomerCred = "select customer_id,customer_password from CustomerUsers where customer_id = '" + userID
+                    String sqlCustomerCred = "select customer_id,customer_password from Customer where customer_id = '" + userID
                         + "' and customer_password='" + userPassword + "'";
                     result = statement.executeQuery(sqlCustomerCred);
+                    System.out.println(sqlCustomerCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
                         CustomerHomeMenu.main(null);
@@ -83,10 +86,10 @@ public class LoginMenu{
                  * { System.out.println("Incorrect Credentials Entered!!! "); }
                  */
 
-                // customerHomeMenu.main(null);
+                // CustomerHomeMenu.main(null);
 
             } finally {
-                result.close();
+                //result.close();
                 statement.close();
                 connection.close();
             }
