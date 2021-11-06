@@ -81,7 +81,7 @@ public class AdminMethods {
                 System.out.println("Enter customer name: ");
                 String customer_name = sc.nextLine();
                 System.out.println("Enter customer address: ");
-                String csutomer_address = sc.nextLine();
+                String customer_address = sc.nextLine();
                 System.out.println("Enter customer phone number: ");
                 String phone_number = sc.nextLine();
                 System.out.println("Enter customer password: ");

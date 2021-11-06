@@ -43,7 +43,7 @@ public class AdminHomeMenu {
                 break;
             case 7:
                 System.out.println("You have been successfully Logged out.");
-                HomePage.main(null);
+                //HomePage.main(null);
             case 8:
                 System.out.println("Invalid Input. Enter your choice again");
         }
