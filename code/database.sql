@@ -84,6 +84,7 @@ CREATE TABLE Reward_Product(
 CREATE TABLE Customer_program(
     customer_id VARCHAR2(15),
     loyalty_id VARCHAR2(15), 
+    brand_id VARCHAR2(15), 
     customer_points int,
     customer_tier VARCHAR2(30),
     constraint cp_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),

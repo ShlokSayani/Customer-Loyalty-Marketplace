@@ -27,7 +27,7 @@ public class customerHomeMenu {
                 customerMethods.showPrograms(customerID);
                 break;
             case 2:
-                customerMethods.customerActivitiesCall();
+                customerMethods.rewardActivities(customerID);
                 break;
             case 3:
                 customerMethods.viewWallet();
