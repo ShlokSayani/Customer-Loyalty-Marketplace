@@ -157,6 +157,45 @@ public class customerMethods {
             oops.printStackTrace();
         }
     }
+
+    public static void review(customerID, programID){
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+            try {
+                System.out.println("Connecting to database...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                System.out.println("\t\tLeave a Review!\n\n");
+                
+                String reviewContent = sc.nextLine();
+                
+
+                String enrollCustomer = "insert into Customer_program values('" + customerID + "','" + programID + "')";
+                result = statement.executeQuery(programList);
+
+                System.out.println("\t\tCustomer Successfully Enrolled");
+
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
+                result = statement.executeQuery(customerWallet);
+
+                if(!result.next){
+                    System.out.println("Adding Customer Wallet...");
+                    String createWallet = "insert into Wallet values ('" + customerID + "')";
+                    System.out.println("Wallet created Successfully for Customer");
+                }
+
+                CustomerHomeMenu.main(customerID);
+
+            } finally {
+                close(result);
+                close(statement);
+                close(connection);
+            }
+        }
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
+    }
     
     public static void ViewWallet(){
         
@@ -318,6 +357,9 @@ public class customerMethods {
                 if(map.get(choice) == "Purchase"){
                     purchase(customerID, programID);
                 }
+                else if(map.get(choice) == "Review"){
+                    review(customerID, programID);
+                }
                 
                 String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
                 result = statement.executeQuery(customerWallet);
@@ -338,18 +380,6 @@ public class customerMethods {
         }
         catch (Throwable oops) {
             oops.printStackTrace();
-        }        
-
-        switch(selection){
-            case 1:
-                rewardActivities();
-                break;
-            case 2:
-                customerHomeMenu.main(null);
-                break;
-            default:
-                System.out.println("Invalid Input. Enter your choice again");
-                customerActivitiesCall();
         }
     }
 
