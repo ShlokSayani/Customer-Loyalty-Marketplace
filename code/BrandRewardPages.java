@@ -51,7 +51,7 @@ public class BrandRewardPages{
         String lpname = "";
         lpname = sc.next();
 
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -62,7 +62,7 @@ public class BrandRewardPages{
 
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
@@ -171,7 +171,7 @@ public class BrandRewardPages{
         String lpname = "";
         lpname = sc.next();
 
-        final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/amanend";
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
@@ -181,7 +181,7 @@ public class BrandRewardPages{
         ResultSet result1 = null;
         try {
 
-                Class.forName("org.mariadb.jdbc.Driver");
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");

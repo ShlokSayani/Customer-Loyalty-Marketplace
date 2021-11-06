@@ -38,7 +38,7 @@ public class customerMethods {
                 Enrollment();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -57,7 +57,7 @@ public class customerMethods {
                 ViewWallet();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -76,7 +76,7 @@ public class customerMethods {
                 CustomerActivitiesCall();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -95,7 +95,7 @@ public class customerMethods {
                 RedeemPoints();
                 break;
             case 2:
-                customerHomeMenu.main(null);
+                CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");

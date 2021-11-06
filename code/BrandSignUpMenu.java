@@ -9,7 +9,7 @@ import java.sql.*;
 public class BrandSignUpMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "hpatel28";
+    private static final String user = "dmehta3";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -30,27 +30,27 @@ public class BrandSignUpMenu {
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tWelcome to Brand Sign Up\n\n");
-                in.nextLine();
                 System.out.println("Please enter your Brand ID: ");
-                Scanner in = new Scanner(System.in);
                 String brandID = in.nextLine();
                 System.out.println("Please enter your Brand Name: ");
                 String brandName = in.nextLine();
                 System.out.println("Please enter your Brand Address: ");
                 String brandAddress = in.nextLine();
+                System.out.println("Enter Joining Date: ");
+                String join_date = in.nextLine();
                 System.out.println("Please enter your new Password: ");
                 String brandPassword = in.nextLine();
 
-                String sqlCred = "INSERT INTO Brand(brand_id, brand_name, brand_address, brand_password) VALUES ('"+brandID+"','"+brandName+"','"+brandAddress+"','"+brandPassword+"')";
+                String sqlCred = "INSERT INTO Brand(brand_id, brand_name, brand_address,join_date, brand_password) VALUES ('"+brandID+"','"+brandName+"','"+brandAddress+"',TO_DATE('"+join_date+"','mm/dd/yyyy'),'"+brandPassword+"')";
 
-                result = statement.executeQuery(sqlCred);
+                statement.executeQuery(sqlCred);
 
                 System.out.println("SignUp successful!!! \n");
 
                 LoginMenu.main(null);
 
             } finally {
-                result.close();
+                //result.close();
                 statement.close();
                 connection.close();
             }
