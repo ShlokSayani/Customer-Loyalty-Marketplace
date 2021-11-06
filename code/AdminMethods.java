@@ -39,12 +39,24 @@ public class AdminMethods {
                 System.out.println("Enter brand address: ");
                 String brand_address = sc.nextLine();
                 
-                long millis=System.currentTimeMillis();  
-                java.sql.Date join_date = new java.sql.Date(millis);  
+                //long millis=System.currentTimeMillis();  
+                //java.sql.Date join_date = new java.sql.Date(millis);  
+                //System.out.println(join_date);
+                System.out.println("Enter Joining Date: ");
+                String join_date = sc.nextLine();
+                // SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                // java.util.Date join_date=null;
+                // try {
+                //     //Parsing the String
+                //     join_date = dateFormat.parse(date);
+                // } catch (ParseException e) {
+                //     // TODO Auto-generated catch block
+                //     e.printStackTrace();
+                // }
 
                 System.out.println("Enter brand password: ");
                 String brand_password = sc.nextLine();
-                String checkcred = "INSERT INTO Brand(brand_id, brand_name, brand_address, join_date, brand_password) VALUES ('"+brand_id+"','"+brand_name+"','"+brand_address+"',DATE '"+join_date+"','"+brand_password+"')";
+                String checkcred = "INSERT INTO Brand(brand_id, brand_name, brand_address, join_date, brand_password) VALUES ('"+brand_id+"','"+brand_name+"','"+brand_address+"',TO_DATE('"+join_date+"','mm/dd/yyyy'),'"+brand_password+"')";
                 statement.executeQuery(checkcred);
                 
                 System.out.println("Brand added successfully!!! \n");
@@ -52,7 +64,7 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                result.close();
+                //result.close();
                 statement.close();
                 connection.close();
             }
@@ -95,7 +107,7 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                result.close();
+                //result.close();
                 statement.close();
                 connection.close();
             }
@@ -122,14 +134,14 @@ public class AdminMethods {
                 int selection = sc.nextInt();
 
                 String checkcred = "SELECT * FROM Brand WHERE brand_id = "+selection;
-                statement.executeQuery(checkcred);
+                result = statement.executeQuery(checkcred);
                 
                 System.out.println("\t Brand Details: \n");
-                while (checkcred.next()) {
-                    String b_id = checkcred.getString("brand_id");
-                    String b_name = checkcred.getString("brand_name");
-                    String b_address = checkcred.getString("brand_address");
-                    Date date = checkcred.getDate("join_date");
+                while (result.next()) {
+                    String b_id = result.getString("brand_id");
+                    String b_name = result.getString("brand_name");
+                    String b_address = result.getString("brand_address");
+                    java.sql.Date date = result.getDate("join_date");
                     System.out.println("Brand Id: " + b_id + ", Customer Name: " + b_name + ", Customer Address: " + b_address+ ", Joining date: " + date);
                 }
 
@@ -162,14 +174,14 @@ public class AdminMethods {
                 int selection = sc.nextInt();
 
                 String checkcred = "SELECT * FROM Customer WHERE customer_id = "+selection;
-                statement.executeQuery(checkcred);
+                result = statement.executeQuery(checkcred);
                 
                 System.out.println("\tCustomer details: \n");
-                while (checkcred.next()) {
-                    String c_id = checkcred.getString("customer_id");
-                    String c_name = checkcred.getString("customer_name");
-                    String c_address = checkcred.getString("customer_address");
-                    String phone = checkcred.getString("phone_number");
+                while (result.next()) {
+                    String c_id = result.getString("customer_id");
+                    String c_name = result.getString("customer_name");
+                    String c_address = result.getString("customer_address");
+                    String phone = result.getString("phone_number");
                     System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name + ", Customer Address: " + c_address+ ", Phone Number: " + phone);
                 }
 
@@ -212,7 +224,7 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                result.close();
+                //result.close();
                 statement.close();
                 connection.close();
             }
@@ -249,7 +261,7 @@ public class AdminMethods {
                 AdminHomeMenu.main(null);
 
             } finally {
-                result.close();
+                //result.close();
                 statement.close();
                 connection.close();
             }
