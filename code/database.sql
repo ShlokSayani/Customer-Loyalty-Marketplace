@@ -1,44 +1,44 @@
 CREATE TABLE Customer(
-    customer_id VARCHAR2(15) PRIMARY KEY,
-	customer_name VARCHAR2(10),
+    customer_id VARCHAR2(25) PRIMARY KEY,
+	customer_name VARCHAR2(50),
 	customer_address VARCHAR2(50),
 	phone_number VARCHAR2(10), 
-    customer_password VARCHAR2(10)
+    customer_password VARCHAR2(20)
 );
 
 CREATE TABLE Activity_Type(
     activity_code VARCHAR2(10) PRIMARY KEY,
-    activity_name VARCHAR2(10)
+    activity_name VARCHAR2(20)
 );
 
 CREATE TABLE Reward_Type(
     reward_code VARCHAR2(10) PRIMARY KEY,
-    reward_name VARCHAR2(10)
+    reward_name VARCHAR2(20)
 );
 
 CREATE TABLE AdminUser(
     username VARCHAR2(10) PRIMARY KEY,
-    pass VARCHAR2(10)
+    pass VARCHAR2(20)
 );
 
 CREATE TABLE Brand( 
     brand_id VARCHAR2(15) PRIMARY KEY,
-    brand_name VARCHAR2(10),
+    brand_name VARCHAR2(50),
     brand_address VARCHAR2(50),
     join_date DATE,
-    brand_password VARCHAR2(10)
+    brand_password VARCHAR2(20)
 );
 
 CREATE TABLE Loyalty_program( 
     loyalty_id VARCHAR2(15) PRIMARY KEY,
-    loyalty_program_name VARCHAR2(10),
+    loyalty_program_name VARCHAR2(50),
     tier VARCHAR2(30),
-    multiplier VARCHAR2(10),
+    multiplier VARCHAR2(50),
     points_required VARCHAR2(20),
     activity_code VARCHAR2(10),
-    activity_name VARCHAR2(10),
+    activity_name VARCHAR2(20),
     reward_code VARCHAR2(10),
-    reward_name VARCHAR2(10),
+    reward_name VARCHAR2(20),
     brand_id VARCHAR2(15),  
     lp_status VARCHAR2(10),
     constraint el_activity_code FOREIGN KEY (activity_code) REFERENCES Activity_Type(activity_code),
@@ -51,7 +51,7 @@ CREATE TABLE RRRules(
     tier VARCHAR2(30),
     rr_rule_version int,
     reward_code VARCHAR2(10),
-    reward_name VARCHAR2(10),
+    reward_name VARCHAR2(20),
     reward_instances int,
     redeem_points int,
     brand_id VARCHAR2(15),
@@ -65,7 +65,7 @@ CREATE TABLE RERules(
     RE_rule_code VARCHAR2(6),
     re_rule_version int,
     activity_code VARCHAR2(10),
-    activity_name VARCHAR2(10),
+    activity_name VARCHAR2(20),
     activity_points VARCHAR2(10),
     brand_id VARCHAR2(15),
     loyalty_id VARCHAR2(15),
@@ -75,7 +75,7 @@ CREATE TABLE RERules(
 );
 
 CREATE TABLE Reward_Product(
-    product_name VARCHAR2(10),
+    product_name VARCHAR2(50),
     brand_id VARCHAR2(15), 
     constraint rp_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
     PRIMARY KEY (brand_id,product_name) 
