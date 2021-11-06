@@ -1,7 +1,7 @@
 CREATE TABLE Customer(
     customer_id VARCHAR2(15) PRIMARY KEY,
 	customer_name VARCHAR2(10),
-	customer_address VARCHAR2(10),
+	customer_address VARCHAR2(50),
 	phone_number VARCHAR2(10), 
     customer_password VARCHAR2(10)
 );
@@ -24,7 +24,7 @@ CREATE TABLE AdminUser(
 CREATE TABLE Brand( 
     brand_id VARCHAR2(15) PRIMARY KEY,
     brand_name VARCHAR2(10),
-    brand_address VARCHAR2(10),
+    brand_address VARCHAR2(50),
     join_date DATE,
     brand_password VARCHAR2(10)
 );
