@@ -11,7 +11,7 @@ public class BrandTierPage{
     static Scanner sc = new Scanner(System.in);
     static int select = 0;
 
-    public static void Tier(String BrandId){
+    public static void Tier(String LoyaltyId,String BrandId){
             System.out.println("1. Tier Set Up");   
             System.out.println("2. Activity Types");
             System.out.println("3. Reward Types");
@@ -21,20 +21,20 @@ public class BrandTierPage{
     
             switch(select){
             case 1:
-                BrandTierSetUp.TierSetUp(BrandId,1);
+                BrandTierSetUp.TierSetUp(BrandId,1,LoyaltyId);
                 break;
             case 2:
-                BrandActivityPages.ActivityTypes(1,BrandId);
+                BrandActivityPages.ActivityTypes(1,LoyaltyId,BrandId);
                 break;
             case 3:
-                BrandRewardPages.RewardTypes(1,BrandId);
+                BrandRewardPages.RewardTypes(1,LoyaltyId,BrandId);
                 break;
             case 4:
                 BrandMethods.LoyaltyProgram(BrandId);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                Tier(BrandId);
+                Tier(LoyaltyId,BrandId);
             }
         }
 }

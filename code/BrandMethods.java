@@ -12,6 +12,12 @@ public class BrandMethods{
     static int select = 0;
 
     public static void LoyaltyProgram(String BrandId){
+
+        String LoyaltyId = EnrollLoyaltyProgram(BrandId);
+
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
         
         System.out.println("1. Regular");
         System.out.println("2. Tier");
@@ -21,13 +27,13 @@ public class BrandMethods{
 
         switch(select){
             case 1:
-                BrandRegularPage.Regular(BrandId);
+                BrandRegularPage.Regular(LoyaltyId,BrandId);
                 break;
             case 2:
-                BrandTierPage.Tier(BrandId);
+                BrandTierPage.Tier(LoyaltyId,BrandId);
                 break;
             case 3:
-                BrandHomeMenu.main(null);
+                BrandHomeMenu.main(args);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
@@ -36,189 +42,188 @@ public class BrandMethods{
 
     }
 
-    public static void AddRERule(String BrandId){
-        do
+    public static void AddRERule(String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        if(LoyaltyId.equals(null))
         {
-            System.out.println("Enter Brand Reward Rule Code: \n");
-            String brandRERule = "";
-            brandRERule = sc.next();
-
-            System.out.println("Enter Number of Points: \n");
-            int number_of_points = 0;
-            number_of_points = sc.nextInt();
-
-            System.out.println(("Enter Activity Category: \n"));
-            String ActivityType = "";
-            ActivityType = sc.next();
-
-            System.out.println(("Enter Loyalty Id: \n"));
-            String LoyaltyId = "";
-            LoyaltyId = sc.next();
-
-            System.out.println("Enter Version number: \n");
-            int Version = sc.nextInt();
-
-
-            System.out.println("1. Add RE Rule");
-            System.out.println("2. Go Back");
-
-            select = sc.nextInt();
-
-            switch(select){
-                case 1:
-                    RERule(number_of_points,ActivityType,Version,brandRERule,BrandId,LoyaltyId);
-                    break;
-                case 2:
-                    BrandHomeMenu.main(null);
-                    break;
-                default:
-                    System.out.println("Invalid Input. Enter your choice again");
-                    AddRERule(BrandId);
-            }
+            System.out.println("Please Enroll in Loyalty Program first");
         }
-        while(select!=2);
-    }
-
-    public static void AddRRRule(String BrandId){
-        do{
-            System.out.println("Enter Brand Reward Rule Code: \n");
-            String brandRRRule = "";
-            brandRRRule = sc.next();
-            
-            System.out.println("Enter Tier for adding rule: \n");
-            String Tier = "";
-            Tier = sc.next();
-
-            System.out.println(("Enter Reward Category: \n"));
-            String RewardType = "";
-            RewardType = sc.next();
-
-            System.out.println("Enter Number of Points: \n");
-            int redeempoints = 0;
-            redeempoints = sc.nextInt();
-
-            System.out.println("Enter Reward Quantity: \n");
-            int instances = sc.nextInt();
-
-            System.out.println(("Enter Loyalty Id: \n"));
-            String LoyaltyId = "";
-            LoyaltyId = sc.next();
-
-            System.out.println("Enter Version number: \n");
-            int Version = sc.nextInt();
-
-            System.out.println("1. Add RR Rule");
-            System.out.println("2. Go Back");
-
-            select = sc.nextInt();
-
-            switch(select){
-                case 1:
-                    RRRule(brandRRRule,Tier,RewardType,redeempoints,instances,LoyaltyId,Version,BrandId);
-                    break;
-                case 2:
-                    BrandHomeMenu.main(null);
-                    break;
-                default:
-                    System.out.println("Invalid Input. Enter your choice again");
-                    AddRRRule(BrandId);
-            }
-        }while(select!=2);
-    }
-    public static void UpdateRERule(String BrandId){
-        do
+        else
         {
-            System.out.println("Enter Brand Reward Rule Code: \n");
-            String brandRERule = "";
-            brandRERule = sc.next();
+            do
+            {
+                System.out.println("Enter Brand Reward Rule Code: \n");
+                String brandRERule = "";
+                brandRERule = sc.next();
 
-            System.out.println("Enter Number of Points: \n");
-            int number_of_points = 0;
-            number_of_points = sc.nextInt();
+                System.out.println("Enter Number of Points: \n");
+                int number_of_points = 0;
+                number_of_points = sc.nextInt();
 
-            System.out.println(("Enter Activity Category: \n"));
-            String ActivityType = "";
-            ActivityType = sc.next();
+                System.out.println(("Enter Activity Category: \n"));
+                String ActivityType = "";
+                ActivityType = sc.next();
 
-            System.out.println(("Enter Loyalty Id: \n"));
-            String LoyaltyId = "";
-            LoyaltyId = sc.next();
+                System.out.println("1. Add RE Rule");
+                System.out.println("2. Go Back");
 
-            System.out.println("Enter Version number: \n");
-            int Version = sc.nextInt();
+                select = sc.nextInt();
 
-
-            System.out.println("1. Add RE Rule");
-            System.out.println("2. Go Back");
-
-            select = sc.nextInt();
-
-            switch(select){
-                case 1:
-                    RERuleupdate(number_of_points,ActivityType,Version,brandRERule,BrandId,LoyaltyId);
-                    break;
-                case 2:
-                    BrandHomeMenu.main(null);
-                    break;
-                default:
-                    System.out.println("Invalid Input. Enter your choice again");
-                    UpdateRERule(BrandId);
+                switch(select){
+                    case 1:
+                        RERule(number_of_points,ActivityType,brandRERule,BrandId,LoyaltyId);
+                        break;
+                    case 2:
+                        BrandHomeMenu.main(args);
+                        break;
+                    default:
+                        System.out.println("Invalid Input. Enter your choice again");
+                        AddRERule(BrandId,LoyaltyId);
+                }
             }
+            while(select!=2);
         }
-        while(select!=2);
-
     }
-    public static void UpdateRRRule(String BrandId){
 
-        do{
-            System.out.println("Enter Brand Reward Rule Code: \n");
-            String brandRRRule = "";
-            brandRRRule = sc.next();
+    public static void AddRRRule(String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        if(LoyaltyId.equals(null))
+        {
+            System.out.println("Please Enroll in Loyalty Program first");
+        }
+        else
+        {
+            do{
+                System.out.println("Enter Brand Reward Rule Code: \n");
+                String brandRRRule = "";
+                brandRRRule = sc.next();
             
-            System.out.println("Enter Tier for adding rule: \n");
-            String Tier = "";
-            Tier = sc.next();
+                System.out.println(("Enter Reward Category: \n"));
+                String RewardType = "";
+                RewardType = sc.next();
 
-            System.out.println(("Enter Reward Category: \n"));
-            String RewardType = "";
-            RewardType = sc.next();
+                System.out.println("Enter Number of Points: \n");
+                int redeempoints = 0;
+                redeempoints = sc.nextInt();
 
-            System.out.println("Enter Number of Points: \n");
-            int redeempoints = 0;
-            redeempoints = sc.nextInt();
+                System.out.println("1. Add RR Rule");
+                System.out.println("2. Go Back");
 
-            System.out.println("Enter Reward Quantity: \n");
-            int instances = sc.nextInt();
+                select = sc.nextInt();
 
-            System.out.println(("Enter Loyalty Id: \n"));
-            String LoyaltyId = "";
-            LoyaltyId = sc.next();
+                switch(select){
+                    case 1:
+                        RRRule(brandRRRule,RewardType,redeempoints,BrandId,LoyaltyId);
+                        break;
+                    case 2:
+                        BrandHomeMenu.main(args);
+                        break;
+                    default:
+                        System.out.println("Invalid Input. Enter your choice again");
+                        AddRRRule(BrandId,LoyaltyId);
+                }
+            }while(select!=2);
+        }
+    }
 
-            System.out.println("Enter Version number: \n");
-            int Version = sc.nextInt();
+    public static void UpdateRERule(String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        if(LoyaltyId.equals(null))
+        {
+            System.out.println("Please Enroll in Loyalty Program first");
+        }
+        else
+        {
+            do
+            {
+                System.out.println("Enter Brand Reward Rule Code: \n");
+                String brandRERule = "";
+                brandRERule = sc.next();
 
-            System.out.println("1. Add RR Rule");
-            System.out.println("2. Go Back");
+                System.out.println("Enter Number of Points: \n");
+                int number_of_points = 0;
+                number_of_points = sc.nextInt();
 
-            select = sc.nextInt();
+                System.out.println(("Enter Activity Category: \n"));
+                String ActivityType = "";
+                ActivityType = sc.next();
 
-            switch(select){
-                case 1:
-                    RRRuleupdate(brandRRRule,Tier,RewardType,redeempoints,instances,LoyaltyId,Version,BrandId);
-                    break;
-                case 2:
-                    BrandHomeMenu.main(null);
-                    break;
-                default:
-                    System.out.println("Invalid Input. Enter your choice again");
-                    UpdateRRRule(BrandId);
+                System.out.println("1. Add RE Rule");
+                System.out.println("2. Go Back");
+
+                select = sc.nextInt();
+
+                switch(select){
+                    case 1:
+                        RERuleupdate(number_of_points,ActivityType,brandRERule,BrandId,LoyaltyId);
+                        break;
+                    case 2:
+                        BrandHomeMenu.main(args);
+                        break;
+                    default:
+                        System.out.println("Invalid Input. Enter your choice again");
+                        UpdateRERule(BrandId,LoyaltyId);
+                }
             }
-        }while(select!=2);
+            while(select!=2);
+        }
+
+    }
+    public static void UpdateRRRule(String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        if(LoyaltyId.equals(null))
+        {
+            System.out.println("Please Enroll in Loyalty Program first");
+        }
+        else
+        {
+            do{
+                System.out.println("Enter Brand Reward Rule Code: \n");
+                String brandRRRule = "";
+                brandRRRule = sc.next();
+
+                System.out.println(("Enter Reward Category: \n"));
+                String RewardType = "";
+                RewardType = sc.next();
+
+                System.out.println("Enter Number of Points: \n");
+                int redeempoints = 0;
+                redeempoints = sc.nextInt();
+
+                System.out.println("1. Add RR Rule");
+                System.out.println("2. Go Back");
+
+                select = sc.nextInt();
+
+                switch(select){
+                    case 1:
+                        RRRuleupdate(brandRRRule,RewardType,redeempoints,BrandId,LoyaltyId);
+                        break;
+                    case 2:
+                        BrandHomeMenu.main(args);
+                        break;
+                    default:
+                        System.out.println("Invalid Input. Enter your choice again");
+                        UpdateRRRule(BrandId,LoyaltyId);
+                }
+            }while(select!=2);
+        }
 
     }
 
 
-    public static void ValidateLoyaltyProgram(String BrandId){
+    public static void ValidateLoyaltyProgram(String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
         System.out.println("1. Validate Loyalty Program");
         System.out.println("2. Go Back");
 
@@ -226,19 +231,18 @@ public class BrandMethods{
 
         switch(select){
             case 1:
-                Validate(BrandId);
+                Validate(LoyaltyId,BrandId);
                 break;
             case 2:
-                BrandHomeMenu.main(null);
+                BrandHomeMenu.main(args);
                 break;
             default:
                System.out.println("Invalid Input. Enter your choice again");
-                ValidateLoyaltyProgram(BrandId);
+                ValidateLoyaltyProgram(BrandId,LoyaltyId);
         }
     }
 
-    public static void RERule(int number_of_points,String ActivityType, int Version, String brandRERule,String BrandId,String LoyaltyId){
-
+    public static String EnrollLoyaltyProgram(String BrandId){
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
@@ -255,31 +259,42 @@ public class BrandMethods{
                     System.out.println("Connecting to database...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
-               
-                    System.out.println("\t\tNow RE Rule will be added:\n\n");
+                    System.out.println("\t\t Check if Program already exists Enrolled:\n\n");
 
-                    String getactivity = "Select activity_name from Activity_Type where activity_code='"+ ActivityType +"'";
-                    result = statement.executeQuery(getactivity);
-                    String ActivityName = "";
+                    String gettuples = "Select * from Loyalty_program where brand_id='"+ BrandId +"'";
+                    result = statement.executeQuery(gettuples);
+                    String LoyaltyId = "";
+
                     if(result.next())
-                        ActivityName = result.getString("activity_name");   
-                    System.out.println(ActivityName);
-                    String addRE = "INSERT INTO RERules Values(?,?,?,?,?,?,?)";
-                    PreparedStatement pstmt = connection.prepareStatement(addRE);
-                    pstmt.setString(1,brandRERule);
-                    pstmt.setInt(2,Version);
-                    pstmt.setString(3,ActivityType);
-                    pstmt.setString(4,ActivityName);
-                    pstmt.setInt(5,number_of_points);
-                    pstmt.setString(6,BrandId);
-                    pstmt.setString(7,LoyaltyId);
-                    pstmt.executeQuery();
-                    
-                    System.out.println("RE Rule Addition successful!!! \n");
-                    AddRERule(BrandId);
+                    {
+                        System.out.println("Program is already there");
+                        LoyaltyId = result.getString("loyalty_id");
+                        return LoyaltyId;
+                    }
+                    else
+                    {
+
+                        System.out.println("\t\tYour Program will be Enrolled:\n\n");
+
+                        System.out.println("Enter Loyalty Id:");
+                        LoyaltyId = sc.next();
+                        System.out.println("Enter Loyalty Program Name:");
+                        String Loyalty_Program_Name = sc.next();
+                        
+                        String addprogram = "INSERT INTO Loyalty_program Values(?,?,?,?)";
+                        PreparedStatement pstmt = connection.prepareStatement(addprogram);
+                        pstmt.setString(1,LoyaltyId);
+                        pstmt.setString(2,Loyalty_Program_Name);
+                        pstmt.setString(3,BrandId);
+                        pstmt.setString(4,"inactive");
+                        pstmt.executeQuery();
+                        
+                        System.out.println("Enrolled in Loyalty Program \n");
+                        return LoyaltyId;
+                    }
 
                 } finally {
-                    result.close();
+                    //result.close();
                     statement.close();
                     connection.close();
                 }
@@ -288,234 +303,346 @@ public class BrandMethods{
             catch (Throwable oops) {
                 oops.printStackTrace();
             }
-        
+        return "";
     }
 
-    public static void RRRule(String brandRRRule,String Tier,String RewardType,int redeempoints,int instances,String LoyaltyId,int Version,String BrandId){
+    public static void RERule(int number_of_points,String ActivityType,String brandRERule,String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
 
         Connection connection = null;
         Statement statement = null;
-        ResultSet result = null;
-
-        try {
-
-                Class.forName("oracle.jdbc.OracleDriver");
-                try {
-                    System.out.println("Connecting to database...");
-                    connection = DriverManager.getConnection(jdbcURL, user, password);
-                    statement = connection.createStatement();
-               
-                    System.out.println("\t\tNow RR Rule will be added:\n\n");
-
-                    String getrewardname = "Select reward_name from Reward_Type where reward_code = '"+ RewardType +"'";
-
-                    result = statement.executeQuery(getrewardname);
-                    String rewardname = result.getString("reward_name");
-                       
-
-                    String addRR = "INSERT INTO RRRules VALUES(?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement pstmt = connection.prepareStatement(addRR);
-                    pstmt.setString(1,brandRRRule);
-                    pstmt.setString(2,Tier);
-                    pstmt.setInt(3,Version);
-                    pstmt.setString(4,RewardType);
-                    pstmt.setString(5,rewardname);
-                    pstmt.setInt(6,instances);
-                    pstmt.setInt(7,redeempoints);
-                    pstmt.setString(8,BrandId);
-                    pstmt.setString(9,LoyaltyId);
-                    pstmt.executeQuery();
-                    
-                    System.out.println("RR Rule Addition successful!!! \n");
-                    AddRRRule(BrandId);
-
-                } finally {
-                    result.close();
-                    statement.close();
-                    connection.close();
-                }
-            }
-
-            catch (Throwable oops) {
-                oops.printStackTrace();
-            }
-    }
-
-    public static void RERuleupdate(int number_of_points,String ActivityType, int Version, String brandRERule,String BrandId,String LoyaltyId){
-        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
-        final String password = "abcd1234";
-
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet result = null;
-
-        try {
-
-                Class.forName("oracle.jdbc.OracleDriver");
-
-                try {
-                    System.out.println("Connecting to database...");
-                    connection = DriverManager.getConnection(jdbcURL, user, password);
-                    statement = connection.createStatement();
-               
-                    System.out.println("\t\tNow RE Rule will be updated and version will be stored:\n\n");
-
-                    String getactivity = "Select activity_name from Activity_Type where activity_code='"+ ActivityType +"'";
-                    result = statement.executeQuery(getactivity);
-
-                    String ActivityName = result.getString("activity_name");   
-                    
-                    String updateRE = "INSERT INTO RERules Values('"+ brandRERule +"','"+ Version +"','"+ ActivityType +"','"+ ActivityName +"','"+ number_of_points +"','"+ BrandId +",'"+ LoyaltyId +"')";
-
-                    
-                    statement.executeQuery(updateRE);
-        
-                    
-                    System.out.println("RE Rule Updated successful!!! \n");
-                    UpdateRERule(BrandId);
-
-                } finally {
-                    result.close();
-                    statement.close();
-                    connection.close();
-                }
-            }
-
-            catch (Throwable oops) {
-                oops.printStackTrace();
-            }
-    }
-
-    public static void RRRuleupdate(String brandRRRule,String Tier,String RewardType,int redeempoints,int instances,String LoyaltyId,int Version,String BrandId){
-        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
-        final String password = "abcd1234";
-
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet result = null;
-
-        try {
-
-                Class.forName("oracle.jdbc.OracleDriver");
-
-                try {
-                    System.out.println("Connecting to database...");
-                    connection = DriverManager.getConnection(jdbcURL, user, password);
-                    statement = connection.createStatement();
-               
-                    System.out.println("\t\tNow RR Rule will be added:\n\n");
-
-                    String getrewardname = "Select reward_name from Reward_Type where reward_code = '"+ RewardType +"'";
-
-                    result = statement.executeQuery(getrewardname);
-                    String rewardname = result.getString("reward_name");
-                       
-
-                    String updateRR = "INSERT INTO RRRules VALUES(?,?,?,?,?,?,?,?,?)";
-                    PreparedStatement pstmt = connection.prepareStatement(updateRR);
-                    pstmt.setString(1,brandRRRule);
-                    pstmt.setString(2,Tier);
-                    pstmt.setInt(3,Version);
-                    pstmt.setString(4,RewardType);
-                    pstmt.setString(5,rewardname);
-                    pstmt.setInt(6,instances);
-                    pstmt.setInt(7,redeempoints);
-                    pstmt.setString(8,BrandId);
-                    pstmt.setString(9,LoyaltyId);
-                    pstmt.executeQuery();
-                    
-                    System.out.println("RR Rule Addition successful!!! \n");
-                    UpdateRRRule(BrandId);
-
-                } finally {
-                    result.close();
-                    statement.close();
-                    connection.close();
-                }
-            }
-
-            catch (Throwable oops) {
-                oops.printStackTrace();
-            }
-    }
-
-    public static void Validate(String BrandId){
-        
-        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
-        final String password = "abcd1234";
-
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet result = null;
         ResultSet result1 = null;
+
+        try {
+
+                Class.forName("oracle.jdbc.OracleDriver");
+
+                try {
+                    System.out.println("Connecting to database...");
+                    connection = DriverManager.getConnection(jdbcURL, user, password);
+                    statement = connection.createStatement();
+               
+                    String gettuples = "Select * from Activity_program where loyalty_id='"+ LoyaltyId +"' and activity_code='"+ActivityType+"'";
+                    result1 = statement.executeQuery(gettuples);
+
+                    if(result1.next())
+                    {
+                        System.out.println("\t\tNow RE Rule will be added:\n\n");
+                        String getactivity = "Select * from Activity_Type where activity_code='"+ ActivityType +"'";
+                        result1 = statement.executeQuery(getactivity);
+                        String ActivityName = "";
+                        if(result1.next())
+                            ActivityName = result1.getString("activity_name");
+                        String addRE = "INSERT INTO RERules(RE_rule_code,activity_code,activity_name,activity_points,brand_id) Values(?,?,?,?,?)";
+                        PreparedStatement pstmt = connection.prepareStatement(addRE);
+                        pstmt.setString(1,brandRERule);
+                        pstmt.setString(2,ActivityType);
+                        pstmt.setString(3,ActivityName);
+                        pstmt.setInt(4,number_of_points);
+                        pstmt.setString(5,BrandId);
+                        pstmt.executeQuery();
+                        
+                        System.out.println("RE Rule Addition successful!!! \n");
+                        AddRERule(BrandId,LoyaltyId);
+                    }
+                    else
+                    {
+                        System.out.println("Add Activity First:");
+                        BrandHomeMenu.main(args);
+                    }
+
+                } finally {
+                    //result1.close();
+                    statement.close();
+                    connection.close();
+                }
+            }
+
+            catch (Throwable oops) {
+                oops.printStackTrace();
+            }
+        
+    }
+
+    public static void RRRule(String brandRRRule,String RewardType,int redeempoints,String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
+        final String user = "dmehta3";
+        final String password = "abcd1234";
+
+        Connection connection = null;
+        Statement statement = null;
         ResultSet result2 = null;
 
         try {
 
                 Class.forName("oracle.jdbc.OracleDriver");
+                try {
+                    System.out.println("Connecting to database...");
+                    connection = DriverManager.getConnection(jdbcURL, user, password);
+                    statement = connection.createStatement();
+                    
+                    String gettuples = "Select * from Reward_program where loyalty_id='"+ LoyaltyId +"' and reward_code='"+RewardType+"'";
+                    result2 = statement.executeQuery(gettuples);
+
+                    if(result2.next())
+                    {
+                        System.out.println("\t\tNow RR Rule will be added:\n\n");
+
+                        String getrewardname = "Select * from Reward_Type where reward_code = '"+ RewardType +"'";
+
+                        result2 = statement.executeQuery(getrewardname);
+                        String rewardname = "";
+                        if(result2.next())
+                            rewardname = result2.getString("reward_name");
+
+                        String addRR = "INSERT INTO RRRules(RR_rule_code,reward_code,reward_name,redeem_points,brand_id) VALUES(?,?,?,?,?)";
+                        PreparedStatement pstmt = connection.prepareStatement(addRR);
+                        pstmt.setString(1,brandRRRule);
+                        pstmt.setString(2,RewardType);
+                        pstmt.setString(3,rewardname);
+                        pstmt.setInt(4,redeempoints);
+                        pstmt.setString(5,BrandId);
+                        pstmt.executeQuery();
+                        
+                        System.out.println("RR Rule Addition successful!!! \n");
+                        AddRRRule(BrandId,LoyaltyId);
+                    }
+                    else
+                    {
+                        System.out.println("Add Activity First:");
+                        BrandHomeMenu.main(args);
+                    }
+
+                } finally {
+                    //result2.close();
+                    statement.close();
+                    connection.close();
+                }
+            }
+
+            catch (Throwable oops) {
+                oops.printStackTrace();
+            }
+    }
+
+    public static void RERuleupdate(int number_of_points,String ActivityType,String brandRERule,String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
+        final String user = "dmehta3";
+        final String password = "abcd1234";
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result3 = null;
+        ResultSet result4 = null;
+
+        try {
+
+                Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
                     System.out.println("Connecting to database...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                
-                    String getactivitytuples = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND activity_code IS NOT NULL";
-                    result = statement.executeQuery(getactivitytuples);
-                    
-                    int act = result.getRow();
-                    System.out.println(act);
-
-                    String getrewardtuples = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND reward_code IS NOT NULL";
-                    result1 = statement.executeQuery(getrewardtuples);
-            
-                    int rew = result1.getRow();
-                    System.out.println(rew);
-                    
-                    System.out.println("Is your program tiered? y or n:");
-                    String ans = sc.next();
-
-                    if(ans.equals("y"))
+                    String gettuples = "Select * from Activity_program where loyalty_id='"+ LoyaltyId +"' and activity_code='"+ActivityType+"'";
+                    result3 = statement.executeQuery(gettuples);
+                    if(result3.next())
                     {
-                        String getTier = "Select COUNT(*) from Loyalty_program where brand_id='"+ BrandId +"' AND tier IS NOT NULL";
-                        result2 = statement.executeQuery(getTier);
+                        String gettuples1 = "Select * from RERules where brand_id='"+ BrandId +"' and activity_code='"+ActivityType+"'";
+                        result3 = statement.executeQuery(gettuples1);
 
-                        int tier = result2.getRow();
-
-                        if((rew+act+tier)>=3)
+                    
+                        if(result3.next())
                         {
-                            System.out.println("Your program is active");
-                            BrandHomeMenu.main(null);
-                        }
-                        else
-                        {
-                            System.out.println("Your program is inactive");
-                            BrandHomeMenu.main(null);
+                            System.out.println("\t\tNow RE Rule will be added:\n\n");
+                            String getactivity = "Select * from Activity_Type where activity_code='"+ ActivityType +"'";
+                            result3 = statement.executeQuery(getactivity);
+                            String ActivityName = "";
+                            if(result3.next())
+                                ActivityName = result3.getString("activity_name");
+                            String addRE = "INSERT INTO RERules(RE_rule_code,activity_code,activity_name,activity_points,brand_id) Values(?,?,?,?,?)";
+                            PreparedStatement pstmt = connection.prepareStatement(addRE);
+                            pstmt.setString(1,brandRERule);
+                            pstmt.setString(2,ActivityType);
+                            pstmt.setString(3,ActivityName);
+                            pstmt.setInt(4,number_of_points);
+                            pstmt.setString(5,BrandId);
+                            pstmt.executeQuery();
+                            
+                            System.out.println("RE Rule Addition successful!!! \n");
+                            UpdateRERule(BrandId,LoyaltyId);
                         }
                     }
-                    else if(ans.equals("n"))
+                    else
                     {
-                        if((rew+act)>=2)
-                        {
-                            System.out.println("Your program is active");
-                            BrandHomeMenu.main(null);
-                        }
-                        else
-                        {
-                            System.out.println("Your program is inactive");
-                            BrandHomeMenu.main(null);
-                        }
+                        System.out.println("Add Activity First or Add RE Rule first");
+                        BrandHomeMenu.main(args);
                     }
 
                 } finally {
-                    result.close();
-                    result1.close();
-                    result2.close();
+                    //result.close();
+                    //result4.close();
+                    statement.close();
+                    connection.close();
+                }
+            }
+
+            catch (Throwable oops) {
+                oops.printStackTrace();
+            }
+    }
+
+    public static void RRRuleupdate(String brandRRRule,String RewardType,int redeempoints,String BrandId,String LoyaltyId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
+        final String user = "dmehta3";
+        final String password = "abcd1234";
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result5 = null;
+        ResultSet result6 = null;
+
+        try {
+
+                Class.forName("oracle.jdbc.OracleDriver");
+
+                try {
+                    System.out.println("Connecting to database...");
+                    connection = DriverManager.getConnection(jdbcURL, user, password);
+                    statement = connection.createStatement();
+               
+                    String gettuples = "Select * from Reward_program where loyalty_id='"+ LoyaltyId +"' and reward_code='"+RewardType+"'";
+                    result5 = statement.executeQuery(gettuples);
+                    if(result5.next())
+                    {
+                        String gettuples1 = "Select * from RRRules where brand_id='"+ BrandId +"' and reward_code='"+RewardType+"'";
+                        result5 = statement.executeQuery(gettuples1);
+
+                    
+                        if(result5.next())
+                        {
+                            System.out.println("\t\tNow RR Rule will be added:\n\n");
+
+                            String getrewardname = "Select * from Reward_Type where reward_code = '"+ RewardType +"'";
+
+                            result5 = statement.executeQuery(getrewardname);
+                            String rewardname = "";
+                            if(result5.next())
+                                rewardname = result5.getString("reward_name");
+                            
+
+                            String addRR = "INSERT INTO RRRules(RR_rule_code,reward_code,reward_name,redeem_points,brand_id) VALUES(?,?,?,?,?)";
+                            PreparedStatement pstmt = connection.prepareStatement(addRR);
+                            pstmt.setString(1,brandRRRule);
+                            pstmt.setString(2,RewardType);
+                            pstmt.setString(3,rewardname);
+                            pstmt.setInt(4,redeempoints);
+                            pstmt.setString(5,BrandId);
+                            pstmt.executeQuery();
+                            
+                            System.out.println("RR Rule Addition successful!!! \n");
+                            AddRRRule(BrandId,LoyaltyId);
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("Add Reward First or add RR rule first");
+                        BrandHomeMenu.main(args);
+                    }
+                    
+                } finally {
+                    //result5.close();
+                    statement.close();
+                    connection.close();
+                }
+            }
+
+            catch (Throwable oops) {
+                oops.printStackTrace();
+            }
+    }
+
+    public static void Validate(String LoyaltyId,String BrandId){
+        String[] args = new String[2];
+        args[0] = BrandId;
+        args[1] = LoyaltyId;
+        
+        final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
+        final String user = "dmehta3";
+        final String password = "abcd1234";
+
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result7 = null;
+        ResultSet result8 = null;
+        ResultSet result9 = null;
+        ResultSet result10 = null;
+
+        try {
+
+                Class.forName("oracle.jdbc.OracleDriver");
+
+                try {
+                    System.out.println("Connecting to database...");
+                    connection = DriverManager.getConnection(jdbcURL, user, password);
+                    statement = connection.createStatement();
+               
+                    String getactivitytuples = "Select Count(*) from Activity_program where loyalty_id='"+ LoyaltyId +"'";
+                    result7 = statement.executeQuery(getactivitytuples);
+                    int act = -1;
+                    if(result7.next())
+                        act = result7.getInt(1);
+
+                    String getrewardtuples = "Select count(*) from Reward_program where loyalty_id='"+ LoyaltyId +"'";
+                    result7 = statement.executeQuery(getrewardtuples);
+            
+                    int rew = -1;
+                    if(result7.next())
+                        rew = result7.getInt(1);
+
+                    String getloyaltytuples = "Select count(*) from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
+                    result7 = statement.executeQuery(getloyaltytuples);
+                    
+                    int loy = -1;
+                    if(result7.next())
+                        loy = result7.getInt(1);
+                
+                    String getTier = "Select count(*) from Tier where loyalty_id='"+ LoyaltyId +"'";
+                    result7 = statement.executeQuery(getTier);
+                    int tier = -1;
+                    if(result7.next())
+                        tier = result7.getInt(1);
+
+                    if((rew+act+tier+loy)>=3)
+                    {
+                        System.out.println("Your program is active");
+                        BrandHomeMenu.main(args);
+                    }
+                    else
+                    {
+                        System.out.println("Your program is inactive");
+                        BrandHomeMenu.main(args);
+                    }
+
+                } finally {
+                    //result7.close();
+                    //result8.close();
+                    //result9.close();
+                    //result10.close();
                     statement.close();
                     connection.close();
                 }
