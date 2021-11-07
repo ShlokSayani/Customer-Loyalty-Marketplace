@@ -623,7 +623,6 @@ public class BrandMethods{
                 
                     String getTier = "Select count(*) from Tier where loyalty_id='"+ LoyaltyId +"'";
                     result7 = statement.executeQuery(getTier);
-
                     int tier = -1;
                     if(result7.next())
                         tier = result7.getInt(1);
