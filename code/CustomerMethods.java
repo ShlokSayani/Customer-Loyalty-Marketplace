@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Scanner;
 import java.sql.*;
+import java.text.SimpleDateFormat;  
+import java.util.Date;
 
 public class CustomerMethods {
     
@@ -108,6 +110,15 @@ public class CustomerMethods {
 
                         System.out.println("Enter Transaction ID");
                         String transactionID = sc.nextLine();
+
+                        java.sql.Date expiryDate = result.getDate("expiry_date");
+                        long milsec = System.currentTimeMillis();
+                        java.sql.Date curDate = new java.sql.Date(milsec);
+
+                        if(curDate.after(expiryDate)){
+                            System.out.println("Gift Card Expired!");
+                            rewardActivities(customerID);
+                        }                        
                         
                         String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "')";
                         
