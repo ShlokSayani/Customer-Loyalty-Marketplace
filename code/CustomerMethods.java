@@ -17,6 +17,15 @@ public class CustomerMethods {
     public static Connection connection = null;
     public static Statement statement = null;
     public static ResultSet result = null;
+    public static ResultSet result2 = null;
+    public static ResultSet result3 = null;
+    public static ResultSet result4 = null;
+    public static ResultSet result5 = null;
+    public static ResultSet result6 = null;
+    public static ResultSet result7 = null;
+    public static ResultSet result8 = null;
+    public static ResultSet result9 = null;
+    public static ResultSet result10 = null;
 
     static Scanner sc = new Scanner(System.in);
     static int selection = 0;
@@ -357,13 +366,13 @@ public class CustomerMethods {
                 statement = connection.createStatement();
                 System.out.println("\t\tDisplaying the list of Available rewards to redeem\n\n");
                 
-                String customer_points_list = "select brand_id,loyalty_id,customer_points from Customer_program where customer_id = '"+customerID+"'";
+                String customer_points_list = "select brand_id,loyalty_id,customer_points from Customer_program where customer_id = '"+CustomerID+"'";
                 result = statement.executeQuery(customer_points_list);
                 Map<String, Integer> brand_customer_points = new HashMap<>();
                 while(result.next()){
                     String bi = result.getString("brand_id");
                     String li = result.getString("loyalty_id");
-                    String cp = result.getInt("customer_points");
+                    int cp = result.getInt(3);
                     brand_customer_points.put(bi,cp);
                     System.out.println("Brand Id: "+bi+" Loyalty Id: "+li + " Total Points: "+cp);
                 }
@@ -371,28 +380,30 @@ public class CustomerMethods {
                 System.out.println("Select Brand ID for which you have to redeem points.");
                 String get_brand_id = sc.nextLine();
 
-                String fetchloyaltyid = "select brand_id,loyalty_id,customer_points from Customer_program where customer_id = '"+customerID+"'";
+                String fetchloyaltyid = "select loyalty_id from Customer_program where customer_id = '"+CustomerID+"'";
                 result3 = statement.executeQuery(fetchloyaltyid);
+                String get_loyalty_id = "";
                 while(result3.next()){
-                    String get_loyalty_id = result3.getString("brand_id");
+                    get_loyalty_id = result3.getString("brand_id");
                 }
 
-                String fetchtotalpoints = "select customer_points from Customer_program where customer_id = '"+customerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id ='"+get_loyalty_id+"'";
+                String fetchtotalpoints = "select customer_points from Customer_program where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id ='"+get_loyalty_id+"'";
                 result5 = statement.executeQuery(fetchtotalpoints);
+                int get_total_points = 0;
                 while(result5.next()){
-                    String get_total_points = result3.getString("customer_points");
+                    get_total_points = result3.getInt(1);
                 }
                 
                 String fetch_reward_details = "select reward_code,reward_name, redeem_points from RRRules where brand_id = '"+get_brand_id+"'";
                 result2 = statement.executeQuery(fetch_reward_details);
-                System.out.println("Displaying list of Rewards available for "+get_brand_id+);
+                System.out.println("Displaying list of Rewards available for "+get_brand_id);
                 Map<String, Integer> reward_name_points = new HashMap<>();
                 while(result2.next()){
                     String rc = result2.getString("reward_code");
                     String rn = result2.getString("reward_name");
-                    String rp = result2.getInt("redeem_points");
+                    int rp = result2.getInt(3);
                     reward_name_points.put(rn,rp);
-                    System.out.println("Reward Code: "+ reward_code + " Reward Name: "+ reward_name + " Points required to redeem reward: "+rp);
+                    System.out.println("Reward Code: "+ rc + " Reward Name: "+ rn + " Points required to redeem reward: "+rp);
                 }
                 System.out.println("Select Reward code to redeem that reward.");
                 String get_reward_code = sc.nextLine();
@@ -402,10 +413,11 @@ public class CustomerMethods {
                 String quantity_check = "select quantity from Reward_program where reward_code = '"+get_reward_code+"' and loyalty_id = '"+get_loyalty_id+"'";
                 result4 = statement.executeQuery(quantity_check);
                 //System.out.println("Loading.....");
+                int max_quantity = 0;
                 while(result4.next()){
-                    int max_quantity = result4.getInt("quantity");
+                    max_quantity = result4.getInt("quantity");
                 }
-                int current_amount = get_quantity * reward_name_points(get_reward_name);
+                int current_amount = get_quantity * reward_name_points.get(get_reward_code);
                 if(get_quantity>max_quantity){
                     System.out.println("Unsuccessfull, Maximum Quantity available to redeem is :"+max_quantity);
                     System.out.println("Want to try again ?");
@@ -414,7 +426,7 @@ public class CustomerMethods {
                     int selection = sc.nextInt();
                     switch(selection){
                         case 1: 
-                            RedeemPoints(customerID);
+                            RedeemPoints(CustomerID);
                             break;
                         case 2:
                             CustomerHomeMenu.main(null);
@@ -430,7 +442,7 @@ public class CustomerMethods {
                     int selection = sc.nextInt();
                     switch(selection){
                         case 1: 
-                            RedeemPoints(customerID);
+                            RedeemPoints(CustomerID);
                             break;
                         case 2:
                             CustomerHomeMenu.main(null);
@@ -438,10 +450,11 @@ public class CustomerMethods {
                     }
                 }
                 else{
-                    String fetch_wallet_id = "select wallet_id from Wallet where customer_id = '"+customerID+"'";
+                    String fetch_wallet_id = "select wallet_id from Wallet where customer_id = '"+CustomerID+"'";
                     result6 = statement.executeQuery(fetch_wallet_id);
+                    String get_wallet_id = "";
                     while(result6.next()){
-                        String get_wallet_id = result6.getString("wallet_id");
+                        get_wallet_id = result6.getString("wallet_id");
                     }
                     sc.nextLine();
                     System.out.println("Enter Reward Transaction: ");
@@ -460,7 +473,7 @@ public class CustomerMethods {
                     result8 = statement.executeQuery(add_customer_redeem);
                     
                     int new_customer_points = get_total_points - current_amount;
-                    String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
+                    String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
                     result9 = statement.executeQuery(add_customer_program);
 
                     System.out.println("Enter Gift card Code : ");
@@ -469,8 +482,8 @@ public class CustomerMethods {
                     System.out.println("Enter expiry date: ");
                     String get_expiry_date = sc.nextLine();
 
-                    String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('+"get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+customerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')"
-                    resul10 = statement.executeQuery(add_reward_giftcard);
+                    String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                    result10 = statement.executeQuery(add_reward_giftcard);
 
                     System.out.println("Reward Redeemed suddefully. Thank You!!");                     
                 }
@@ -711,7 +724,7 @@ public class CustomerMethods {
         }
     }
 
-    public static void redeemPoints(){
+    public static void redeemPoints(String customerID){
         System.out.println("1. Redeem Points");
         System.out.println("2. Go Back");
 
@@ -719,14 +732,14 @@ public class CustomerMethods {
 
         switch(selection){
             case 1:
-                RedeemPoints();
+                RedeemPoints(customerID);
                 break;
             case 2:
                 CustomerHomeMenu.main(null);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                redeemPoints();
+                redeemPoints(customerID);
         }
     }
 }

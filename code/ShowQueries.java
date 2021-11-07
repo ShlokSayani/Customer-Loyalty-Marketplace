@@ -10,9 +10,6 @@ public class ShowQueries{
    
     public static void ShowQueries()
     {
-         String[] args = new String[2];
-        args[0] = BrandId;
-        args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
@@ -41,13 +38,13 @@ public class ShowQueries{
                     }
 
                     String query2 = "select customer_id, loyalty_id from Customer_program where customer_id NOT IN (select customer_id from Activity_Transactions);";
-                    result = statement.executeQuery();
+                    result = statement.executeQuery(query2);
 
                     while(result.next())
                     {
                         String customer_id = result.getString("customer_id");
                         String loyalty_id = result.getString("loyalty_id");
-                        System.out.println("Customer Id: " + customer_id + ", Loyalty Id: " + loyalty_id)
+                        System.out.println("Customer Id: " + customer_id + ", Loyalty Id: " + loyalty_id);
                     }
 
                     String query3 = "Select * from Reward_program R JOIN Loyalty_program L where L.loyalty_id = R.loyalty_id AND L.brand_id = 'Brand01'";
@@ -67,7 +64,7 @@ public class ShowQueries{
                     {
                         String Loyalty_id = result.getString("loyalty_id");
                         String Loyalty_Program_Name = result.getString("loyalty_program_name");
-                        System.out.println("Loyalty_Code: " + loyalty_id + ", Loyalty_Program_Name:" + Loyalty_Program_Name);
+                        System.out.println("Loyalty_Code: " + Loyalty_id + ", Loyalty_Program_Name:" + Loyalty_Program_Name);
                     }
 
                     String query5 = "Select COUNT(*),activity_type from Activity_Transactions where brand_id = 'Brand01' GROUP BY activity_type";
@@ -109,7 +106,7 @@ public class ShowQueries{
 
                     }
 
-                } finally {
+                finally {
                     //result.close();
                     statement.close();
                     connection.close();

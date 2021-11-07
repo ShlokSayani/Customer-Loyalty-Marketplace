@@ -34,7 +34,7 @@ public class CustomerHomeMenu {
                 CustomerMethods.viewWallet(customerID);
                 break;
             case 4:
-                customerMethods.redeemPoints(customerID);
+                CustomerMethods.redeemPoints(customerID);
                 break;
             case 5:
                 HomePage.main(null);
