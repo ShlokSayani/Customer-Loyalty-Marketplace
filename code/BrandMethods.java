@@ -12,13 +12,8 @@ public class BrandMethods{
     static int select = 0;
 
     public static void LoyaltyProgram(String BrandId){
-    
-        System.out.println("Enter Loyalty Id:");
-        String LoyaltyId = sc.next();
-        System.out.println("Enter Loyalty Program Name:");
-        String Loyalty_Program_Name = sc.next();
 
-        EnrollLoyaltyProgram(BrandId,LoyaltyId,Loyalty_Program_Name);
+        String LoyaltyId = EnrollLoyaltyProgram(BrandId);
 
         String[] args = new String[2];
         args[0] = BrandId;
@@ -247,10 +242,7 @@ public class BrandMethods{
         }
     }
 
-    public static void EnrollLoyaltyProgram(String BrandId, String LoyaltyId, String Loyalty_Program_Name){
-        String[] args = new String[2];
-        args[0] = BrandId;
-        args[1] = LoyaltyId;
+    public static String EnrollLoyaltyProgram(String BrandId){
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
         final String password = "abcd1234";
@@ -269,18 +261,25 @@ public class BrandMethods{
                     statement = connection.createStatement();
                     System.out.println("\t\t Check if Program already exists Enrolled:\n\n");
 
-                    String gettuples = "Select * from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
+                    String gettuples = "Select * from Loyalty_program where brand_id='"+ BrandId +"'";
                     result = statement.executeQuery(gettuples);
+                    String LoyaltyId = "";
 
                     if(result.next())
                     {
                         System.out.println("Program is already there");
+                        LoyaltyId = result.getString("loyalty_id");
+                        return LoyaltyId;
                     }
                     else
                     {
 
                         System.out.println("\t\tYour Program will be Enrolled:\n\n");
 
+                        System.out.println("Enter Loyalty Id:");
+                        LoyaltyId = sc.next();
+                        System.out.println("Enter Loyalty Program Name:");
+                        String Loyalty_Program_Name = sc.next();
                         
                         String addprogram = "INSERT INTO Loyalty_program Values(?,?,?,?)";
                         PreparedStatement pstmt = connection.prepareStatement(addprogram);
@@ -291,6 +290,7 @@ public class BrandMethods{
                         pstmt.executeQuery();
                         
                         System.out.println("Enrolled in Loyalty Program \n");
+                        return LoyaltyId;
                     }
 
                 } finally {
@@ -303,7 +303,7 @@ public class BrandMethods{
             catch (Throwable oops) {
                 oops.printStackTrace();
             }
-        
+        return "";
     }
 
     public static void RERule(int number_of_points,String ActivityType,String brandRERule,String BrandId,String LoyaltyId){

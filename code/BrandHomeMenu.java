@@ -29,35 +29,37 @@ public class BrandHomeMenu {
         BrandMenuoptions();
         select = sc.nextInt();
         String BrandId = args[0];
-        if(LoyaltyId.equals(null))
+        if(!LoyaltyId.equals(""))
+        {
             LoyaltyId = args[1];
-        switch(select){
-            case 1:
-                BrandMethods.LoyaltyProgram(BrandId);
-                break;
-            case 2:
-                BrandMethods.AddRERule(BrandId,LoyaltyId);
-                break;
-            case 3:
-                BrandMethods.UpdateRERule(BrandId,LoyaltyId);
-                break;
-            case 4:
-                BrandMethods.AddRRRule(BrandId,LoyaltyId);
-                break;
-            case 5:
-                BrandMethods.UpdateRRRule(BrandId,LoyaltyId);
-                break;
-            case 6:
-                BrandMethods.ValidateLoyaltyProgram(BrandId,LoyaltyId);
-                break;
-            case 7:
-                HomePage.main(null);
-                break;
-            
-            default:
-                System.out.println("Invalid Input. Enter your choice again");
-                BrandHomeMenu.main(args);
         }
+            switch(select){
+                case 1:
+                    BrandMethods.LoyaltyProgram(BrandId);
+                    break;
+                case 2:
+                    BrandMethods.AddRERule(BrandId,LoyaltyId);
+                    break;
+                case 3:
+                    BrandMethods.UpdateRERule(BrandId,LoyaltyId);
+                    break;
+                case 4:
+                    BrandMethods.AddRRRule(BrandId,LoyaltyId);
+                    break;
+                case 5:
+                    BrandMethods.UpdateRRRule(BrandId,LoyaltyId);
+                    break;
+                case 6:
+                    BrandMethods.ValidateLoyaltyProgram(BrandId,LoyaltyId);
+                    break;
+                case 7:
+                    HomePage.main(null);
+                    break;
+                
+                default:
+                    System.out.println("Invalid Input. Enter your choice again");
+                    BrandHomeMenu.main(args);
+            }
     }
 
     public static String Check(String BrandId)
@@ -91,7 +93,7 @@ public class BrandHomeMenu {
                     else
                     {
                         System.out.println("Enroll into Program first");
-                        return null;
+                        return "";
                     }
                     
                 } finally {
