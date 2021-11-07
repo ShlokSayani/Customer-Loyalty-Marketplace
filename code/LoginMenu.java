@@ -62,7 +62,7 @@ public class LoginMenu{
                     System.out.println(sqlCustomerCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
-                        CustomerHomeMenu.main(userID);
+                        CustomerHomeMenu.main(new String[]{userID});
                         break;
                     }
                     System.out.println("Enter Valid Credentials!!");

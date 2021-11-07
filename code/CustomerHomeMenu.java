@@ -30,7 +30,7 @@ public class CustomerHomeMenu {
                 customerMethods.rewardActivities(customerID);
                 break;
             case 3:
-                customerMethods.viewWallet();
+                customerMethods.viewWallet(customerID);
                 break;
             case 4:
                 customerMethods.redeemPoints();
