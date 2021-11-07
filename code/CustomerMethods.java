@@ -200,7 +200,7 @@ public class CustomerMethods {
                     customerBrand = result.getString("brand_id");
                 }
 
-                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Review')";
+                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Leave a review')";
                 int customerPoints = 0;
 
                 result = statement.executeQuery(activityPoints);
@@ -300,7 +300,7 @@ public class CustomerMethods {
                     customerBrand = result.getString("brand_id");
                 }
 
-                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Refer')";
+                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Refer a friend')";
                 int customerPoints = 0;
 
                 result = statement.executeQuery(activityPoints);
@@ -320,7 +320,7 @@ public class CustomerMethods {
                 System.out.println("Enter Transaction ID");
                 String transactionID = sc.nextLine();
 
-                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
+                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer a friend', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
                 result = statement.executeQuery(reviewTransaction);
 
                 System.out.println("Referral added Successfully!");
@@ -681,19 +681,19 @@ public class CustomerMethods {
                     cnt++;
                 }
 
-                String reviewPresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Review' AND L.loyalty_id=A.loyalty_id";
+                String reviewPresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Leave a review' AND L.loyalty_id=A.loyalty_id";
                 result = statement.executeQuery(purchasePresent);
                 if(result.next()){
                     System.out.println(cnt + ". Leave a Review");
-                    map.put(cnt, "Review");
+                    map.put(cnt, "Leave a review");
                     cnt++;
                 }
 
-                String referPresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Refer' AND L.loyalty_id=A.loyalty_id";
+                String referPresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Refer a friend' AND L.loyalty_id=A.loyalty_id";
                 result = statement.executeQuery(purchasePresent);
                 if(result.next()){
                     System.out.println(cnt + ". Refer a Friend");
-                    map.put(cnt, "Refer");
+                    map.put(cnt, "Refer a friend");
                     cnt++;
                 }
 
@@ -706,10 +706,10 @@ public class CustomerMethods {
                 if(map.get(choice) == "Purchase"){
                     purchase(customerID, programID);
                 }
-                else if(map.get(choice) == "Review"){
+                else if(map.get(choice) == "Leave a review"){
                     reviewMenu(customerID, programID);
                 }
-                else if(map.get(choice) == "Refer"){
+                else if(map.get(choice) == "Refer a friend"){
                     addReferral(customerID, programID);
                 }
                 else{
