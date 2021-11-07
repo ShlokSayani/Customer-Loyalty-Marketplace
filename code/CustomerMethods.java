@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.Scanner;
 import java.sql.*;
 
-public class customerMethods {
+public class CustomerMethods {
     
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
     private static final String user = "hpatel28";
