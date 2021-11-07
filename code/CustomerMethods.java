@@ -130,7 +130,7 @@ public class CustomerMethods {
                         }                        
                         
                         String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "')";
-                        
+                        statement.executeQuery(cardTransaction);
                     }
                     else{
                         System.out.println("Please select a correct card code.");
@@ -160,7 +160,20 @@ public class CustomerMethods {
                     String transactionID = sc.nextLine();
                     
                     String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
+                    statement.executeQuery(cardTransaction);
                     
+
+                    String Trigger1 = "CREATE OR REPLACE TRIGGER purchase_update 
+                                        AFTER INSERT ON Activity_Transactions
+                                        BEGIN 
+                                            UPDATE Customer_program 
+                                            SET customer_points = customer_points + '"+ customerPoints"'
+                                            Where customer_id = '"+ customerID +"'
+                                        END
+                                        ";
+
+                    statement.executeQuery(Trigger1);
+
                     System.out.println("Product Purchased Successfully!");
                 }
 
@@ -225,6 +238,16 @@ public class CustomerMethods {
 
                 String reviewTable = "insert into Customer_Reviews(loyalty_id, review_date, review_content, transaction_id, customer_id) values ('" + programID + "', 'TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
                 result = statement.executeQuery(reviewTable);
+
+                String Trigger2 = "CREATE OR REPLACE TRIGGER purchase_update 
+                                    AFTER INSERT ON Activity_Transactions
+                                    BEGIN 
+                                        UPDATE Customer_program 
+                                        SET customer_points = customer_points + '"+ customerPoints"'
+                                        Where customer_id = '"+ customerID +"'
+                                    END
+                                    ";
+
                 System.out.println("Review added Successfully!");
 
             } finally {
@@ -322,6 +345,15 @@ public class CustomerMethods {
 
                 String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer a friend', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
                 result = statement.executeQuery(reviewTransaction);
+
+                String Trigger3 = "CREATE OR REPLACE TRIGGER purchase_update 
+                                    AFTER INSERT ON Activity_Transactions
+                                    BEGIN 
+                                        UPDATE Customer_program 
+                                        SET customer_points = customer_points + '"+ customerPoints"'
+                                        Where customer_id = '"+ customerID +"'
+                                    END
+                                    ";
 
                 System.out.println("Referral added Successfully!");
 
