@@ -337,8 +337,144 @@ public class CustomerMethods {
         }
     }
 
-    public static void RedeemPoints(){
-        
+    public static void RedeemPoints(String CustomerID){
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+            try {
+                System.out.println("Connecting to database...");
+                connection = DriverManager.getConnection(jdbcURL, user, password);
+                statement = connection.createStatement();
+                System.out.println("\t\tDisplaying the list of Available rewards to redeem\n\n");
+                
+                String customer_points_list = "select brand_id,loyalty_id,customer_points from Customer_program where customer_id = '"+customerID+"'";
+                result = statement.executeQuery(customer_points_list);
+                Map<String, Integer> brand_customer_points = new HashMap<>();
+                while(result.next()){
+                    String bi = result.getString("brand_id");
+                    String li = result.getString("loyalty_id");
+                    String cp = result.getInt("customer_points");
+                    brand_customer_points.put(bi,cp);
+                    System.out.println("Brand Id: "+bi+" Loyalty Id: "+li + " Total Points: "+cp);
+                }
+                System.out.println();
+                System.out.println("Select Brand ID for which you have to redeem points.");
+                String get_brand_id = sc.nextLine();
+
+                String fetchloyaltyid = "select brand_id,loyalty_id,customer_points from Customer_program where customer_id = '"+customerID+"'";
+                result3 = statement.executeQuery(fetchloyaltyid);
+                while(result3.next()){
+                    String get_loyalty_id = result3.getString("brand_id");
+                }
+
+                String fetchtotalpoints = "select customer_points from Customer_program where customer_id = '"+customerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id ='"+get_loyalty_id+"'";
+                result5 = statement.executeQuery(fetchtotalpoints);
+                while(result5.next()){
+                    String get_total_points = result3.getString("customer_points");
+                }
+                
+                String fetch_reward_details = "select reward_code,reward_name, redeem_points from RRRules where brand_id = '"+get_brand_id+"'";
+                result2 = statement.executeQuery(fetch_reward_details);
+                System.out.println("Displaying list of Rewards available for "+get_brand_id+);
+                Map<String, Integer> reward_name_points = new HashMap<>();
+                while(result2.next()){
+                    String rc = result2.getString("reward_code");
+                    String rn = result2.getString("reward_name");
+                    String rp = result2.getInt("redeem_points");
+                    reward_name_points.put(rn,rp);
+                    System.out.println("Reward Code: "+ reward_code + " Reward Name: "+ reward_name + " Points required to redeem reward: "+rp);
+                }
+                System.out.println("Select Reward code to redeem that reward.");
+                String get_reward_code = sc.nextLine();
+                System.out.println("Enter Quantity: ");
+                int get_quantity = sc.nextInt();
+                
+                String quantity_check = "select quantity from Reward_program where reward_code = '"+get_reward_code+"' and loyalty_id = '"+get_loyalty_id+"'";
+                result4 = statement.executeQuery(quantity_check);
+                //System.out.println("Loading.....");
+                while(result4.next()){
+                    int max_quantity = result4.getInt("quantity");
+                }
+                int current_amount = get_quantity * reward_name_points(get_reward_name);
+                if(get_quantity>max_quantity){
+                    System.out.println("Unsuccessfull, Maximum Quantity available to redeem is :"+max_quantity);
+                    System.out.println("Want to try again ?");
+                    System.out.println("1. Redeem points");
+                    System.out.println("2. Go Back");
+                    int selection = sc.nextInt();
+                    switch(selection){
+                        case 1: 
+                            RedeemPoints(customerID);
+                            break;
+                        case 2:
+                            CustomerHomeMenu.main(null);
+                            break;
+                    }
+
+                }
+                else if (current_amount>get_total_points){
+                    System.out.println("Unsuccessfull, Maximum points available to redeem are :"+get_total_points);
+                    System.out.println("Want to try again ?");
+                    System.out.println("1. Redeem points");
+                    System.out.println("2. Go Back");
+                    int selection = sc.nextInt();
+                    switch(selection){
+                        case 1: 
+                            RedeemPoints(customerID);
+                            break;
+                        case 2:
+                            CustomerHomeMenu.main(null);
+                            break;
+                    }
+                }
+                else{
+                    String fetch_wallet_id = "select wallet_id from Wallet where customer_id = '"+customerID+"'";
+                    result6 = statement.executeQuery(fetch_wallet_id);
+                    while(result6.next()){
+                        String get_wallet_id = result6.getString("wallet_id");
+                    }
+                    sc.nextLine();
+                    System.out.println("Enter Reward Transaction: ");
+                    String get_reward_transaction_id = sc.nextLine();
+
+                    System.out.println("Enter Transaction date: ");
+                    String get_reward_transaction_date = sc.nextLine();
+
+                    System.out.println("Enter Redeem Id: ");
+                    String get_redeem_id = sc.nextLine();
+
+                    String add_reward_transaction = "insert into Reward_Transaction(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('"+get_reward_transaction_id+"',TO_DATE('"+get_reward_transaction_date+"','mm/dd/yyyy'),'"+get_reward_code+"', '"+ current_amount+"', '"+get_loyalty_id+"','"+get_brand_id+"', '"+ get_wallet_id+"')";
+                    result7 = statement.executeQuery(add_reward_transaction);
+                    
+                    String add_customer_redeem = "insert into Customer_Redeem(reward_transaction_id,redeem_id, reward_instances) values('"+get_reward_transaction_id+"','"+get_redeem_id+"', '"+ get_quantity+"')";
+                    result8 = statement.executeQuery(add_customer_redeem);
+                    
+                    int new_customer_points = get_total_points - current_amount;
+                    String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
+                    result9 = statement.executeQuery(add_customer_program);
+
+                    System.out.println("Enter Gift card Code : ");
+                    String get_gift_card_code = sc.nextLine();
+
+                    System.out.println("Enter expiry date: ");
+                    String get_expiry_date = sc.nextLine();
+
+                    String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('+"get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+customerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')"
+                    resul10 = statement.executeQuery(add_reward_giftcard);
+
+                    System.out.println("Reward Redeemed suddefully. Thank You!!");                     
+                }
+
+                CustomerHomeMenu.main(null);
+
+            } finally {
+                result.close();
+                statement.close();
+                connection.close();
+            }
+        }
+        catch (Throwable oops) {
+            oops.printStackTrace();
+        }
     }
 
     public static void showPrograms(String customerID){
