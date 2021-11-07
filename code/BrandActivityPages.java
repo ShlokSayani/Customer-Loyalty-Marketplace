@@ -118,7 +118,7 @@ public class BrandActivityPages{
                     statement = connection.createStatement();
 
 
-                    String getactivitycode = "Select * from Activity_Type where activity_name='Leave a Review'";
+                    String getactivitycode = "Select * from Activity_Type where activity_name='Leave a review'";
 
                     result = statement.executeQuery(getactivitycode);
                     String activity_code = "";
@@ -128,7 +128,7 @@ public class BrandActivityPages{
                     String query = "INSERT INTO Activity_program VALUES (?, ?, ?)";
                     PreparedStatement pstmt = connection.prepareStatement(query);
                     pstmt.setString(1, activity_code);
-                    pstmt.setString(2, "Leave a Review");
+                    pstmt.setString(2, "Leave a review");
                     pstmt.setString(3,LoyaltyId);
                     pstmt.execute();
                     
@@ -168,7 +168,7 @@ public class BrandActivityPages{
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
-                    String getactivitycode = "Select * from Activity_Type where activity_name='Refer a Friend'";
+                    String getactivitycode = "Select * from Activity_Type where activity_name='Refer a friend'";
 
                     result = statement.executeQuery(getactivitycode);
                     String activity_code = "";
