@@ -431,18 +431,20 @@ public class CustomerMethods {
                 result2 = statement.executeQuery(fetch_reward_details);
                 System.out.println("Displaying list of Rewards available for "+get_brand_id);
                 Map<String, Integer> reward_name_points = new HashMap<>();
+                Map<String, String> reward_name_code = new HashMap<>();
                 while(result2.next()){
                     String rc = result2.getString("reward_code");
                     String rn = result2.getString("reward_name");
                     int rp = result2.getInt(3);
                     reward_name_points.put(rc,rp);
+                    reward_name_code.put(rc,rn);
                     System.out.println("Reward Code: "+ rc + " Reward Name: "+ rn + " Points required to redeem reward: "+rp);
                 }
                 System.out.println("Select Reward code to redeem that reward.");
                 String get_reward_code = sc.nextLine();
                 System.out.println("Enter Quantity: ");
                 int get_quantity = sc.nextInt();
-                
+                String get_reward_name = reward_name_points.get(get_reward_code);
                 String quantity_check = "select quantity from Reward_program where reward_code = '"+get_reward_code+"' and loyalty_id = '"+get_loyalty_id+"'";
                 result4 = statement.executeQuery(quantity_check);
                 //System.out.println("Loading.....");
@@ -513,15 +515,16 @@ public class CustomerMethods {
                     String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
                     result9 = statement.executeQuery(add_customer_program);
 
-                    System.out.println("Enter Gift card Code : ");
-                    String get_gift_card_code = sc.nextLine();
+                    if(get_reward_name.equals("Gift Card")){
+                        System.out.println("Enter Gift card Code : ");
+                        String get_gift_card_code = sc.nextLine();
 
-                    System.out.println("Enter expiry date: ");
-                    String get_expiry_date = sc.nextLine();
+                        System.out.println("Enter expiry date: ");
+                        String get_expiry_date = sc.nextLine();
 
-                    String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
-                    result10 = statement.executeQuery(add_reward_giftcard);
-
+                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                        result10 = statement.executeQuery(add_reward_giftcard);
+                    }
                     System.out.println("Reward Redeemed successfully. Thank You!!");                     
                 }
 
