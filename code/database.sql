@@ -49,7 +49,8 @@ CREATE TABLE Activity_program(
 CREATE TABLE Reward_program(
     reward_code VARCHAR2(10),
     reward_name VARCHAR2(20),
-    loyalty_id VARCHAR2(15), 
+    loyalty_id VARCHAR2(15),
+    quantity int, 
     constraint rp_reward_code FOREIGN KEY (reward_code) REFERENCES Reward_Type(reward_code),
     constraint rp_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
     PRIMARY KEY (reward_code,loyalty_id)
