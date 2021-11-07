@@ -13,6 +13,7 @@ public class BrandTierSetUp{
     public static void TierSetUp(String BrandId,int flag,String LoyaltyId){
         System.out.println("1. Enter Tier Information: Maximum 3 Tiers and name in increasing Order");
         System.out.println("2. Go Back");
+        System.out.println("Choose from above options");
 
         select = sc.nextInt();
 
@@ -34,7 +35,7 @@ public class BrandTierSetUp{
         args[0] = BrandId;
         args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -46,7 +47,7 @@ public class BrandTierSetUp{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Setting up Tier...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 

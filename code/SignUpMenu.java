@@ -15,6 +15,8 @@ public class SignUpMenu{
         System.out.println("1. Brand Sign-Up");
         System.out.println("2. Customer Sign-Up");
         System.out.println("3. Go Back");
+        System.out.println("Choose from above options");
+
         selection = sc.nextInt();
         System.out.println();
         switch(selection){

@@ -11,7 +11,7 @@ import java.util.Date;
 public class CustomerMethods {
     
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "sdsayani";
+    private static final String user = "hpatel28";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -34,7 +34,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer Enrollment module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 System.out.println("\t\tEnrolling Customer to a loyalty program\n\n");
@@ -75,7 +75,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer purchase module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 
@@ -179,7 +179,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer add review module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 String walletId = "";
@@ -242,7 +242,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer reveiw menu module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 System.out.println("\t\tLeave a Review!\n\n");
@@ -279,7 +279,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer refer a friend module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 String walletId = "";
@@ -343,6 +343,7 @@ public class CustomerMethods {
         selection = sc.nextInt();
         System.out.println("1. Refer");
         System.out.println("2. Go Back");
+        System.out.println("Choose from above options");
 
         switch(selection){
             case 1:
@@ -361,7 +362,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer Redeem points module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 System.out.println("\t\tDisplaying the list of Available rewards to redeem\n\n");
@@ -423,6 +424,8 @@ public class CustomerMethods {
                     System.out.println("Want to try again ?");
                     System.out.println("1. Redeem points");
                     System.out.println("2. Go Back");
+                    System.out.println("Choose from above options");
+
                     int selection = sc.nextInt();
                     switch(selection){
                         case 1: 
@@ -439,6 +442,8 @@ public class CustomerMethods {
                     System.out.println("Want to try again ?");
                     System.out.println("1. Redeem points");
                     System.out.println("2. Go Back");
+                    System.out.println("Choose from above options");
+
                     int selection = sc.nextInt();
                     switch(selection){
                         case 1: 
@@ -485,7 +490,7 @@ public class CustomerMethods {
                     String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
                     result10 = statement.executeQuery(add_reward_giftcard);
 
-                    System.out.println("Reward Redeemed suddefully. Thank You!!");                     
+                    System.out.println("Reward Redeemed successfully. Thank You!!");                     
                 }
 
                 CustomerHomeMenu.main(null);
@@ -506,7 +511,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer Show Programs module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 System.out.println("\t\tDisplaying the list of Available Loyalty Programs\n\n");
@@ -565,7 +570,7 @@ public class CustomerMethods {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Wallet...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 String walletId = "";
@@ -633,13 +638,14 @@ public class CustomerMethods {
         System.out.println("2. Leave a Review");
         System.out.println("3. Refer a Friend");
         System.out.println("4. Go Back");
+        System.out.println("Choose from above options");
 
         selection = sc.nextInt();
 
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Reward Activities module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 System.out.println("\t\tDisplaying a list of enrolled Loyalty Programs\n\n");
@@ -727,6 +733,7 @@ public class CustomerMethods {
     public static void redeemPoints(String customerID){
         System.out.println("1. Redeem Points");
         System.out.println("2. Go Back");
+        System.out.println("Choose from above options");
 
         selection = sc.nextInt();
 

@@ -15,6 +15,7 @@ public class BrandRewardPages{
         System.out.println("1. Gift Card");
         System.out.println("2. Free Product");
         System.out.println("3. Go Back");
+        System.out.println("Choose from above options");
 
         select = sc.nextInt();
 
@@ -44,7 +45,7 @@ public class BrandRewardPages{
     public static void GiftCard(int flag,String BrandId,String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -57,7 +58,7 @@ public class BrandRewardPages{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading Gift Card module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
@@ -100,7 +101,7 @@ public class BrandRewardPages{
     public static void FreeProduct(int flag,String BrandId, String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -112,7 +113,7 @@ public class BrandRewardPages{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading free product module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 

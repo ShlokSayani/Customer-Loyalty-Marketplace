@@ -17,6 +17,7 @@ public class BrandActivityPages{
         System.out.println("2. Leave a Review");
         System.out.println("3. Refer a Friend");
         System.out.println("4. Go Back");
+        System.out.println("Choose from above options");
 
         select = sc.nextInt();
 
@@ -49,7 +50,7 @@ public class BrandActivityPages{
     public static void Purchase(String BrandId,int flag,String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -61,7 +62,7 @@ public class BrandActivityPages{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading purchase module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
@@ -100,7 +101,7 @@ public class BrandActivityPages{
     public static void LeaveaReview(String BrandId,int flag, String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -112,7 +113,7 @@ public class BrandActivityPages{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("loading leave a review module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
@@ -151,7 +152,7 @@ public class BrandActivityPages{
     public static void ReferaFriend(String BrandId, int flag, String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -163,7 +164,7 @@ public class BrandActivityPages{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("loading refer a friend module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
