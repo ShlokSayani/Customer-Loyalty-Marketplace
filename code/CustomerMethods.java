@@ -139,8 +139,7 @@ public class CustomerMethods {
                     System.out.println("Enter Transaction ID");
                     String transactionID = sc.nextLine();
                     
-                    String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transaction_date + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
-                    
+                    String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
                     
                     System.out.println("Product Purchased Successfully!");
                 }
@@ -201,7 +200,7 @@ public class CustomerMethods {
                 System.out.println("Enter Transaction ID");
                 String transactionID = sc.nextLine();
 
-                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transaction_date + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
+                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
                 result = statement.executeQuery(reviewTransaction);
 
                 String reviewTable = "insert into Customer_Reviews(loyalty_id, review_date, review_content, transaction_id, customer_id) values ('" + programID + "', 'TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
@@ -301,7 +300,7 @@ public class CustomerMethods {
                 System.out.println("Enter Transaction ID");
                 String transactionID = sc.nextLine();
 
-                String reviewTransaction = ;
+                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
                 result = statement.executeQuery(reviewTransaction);
 
                 System.out.println("Referral added Successfully!");
@@ -419,7 +418,7 @@ public class CustomerMethods {
                 System.out.println("Displaying a List of Activity Transactions...");
 
                 String viewActTransaction = "select * from Customer C, Wallet W, Activity_Transactions T where C.customer_id='" + customerID + "', C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
-                result = statement.executeQuery(viewTransaction);
+                result = statement.executeQuery(viewActTransaction);
                 System.out.println("Activity Transaction ID\tTransaction Date\tActivity Type\tGained Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
                     System.out.println(result.getString("activity_transaction_id") + " " + result.getString("transaction_date") + " " + result.getString("activity_type") + " " + result.getString("gained_points") + " " + result.getString("loyalty_id") + " " + result.getString("brand_id") + " " + result.getString("wallet_id"));
@@ -427,8 +426,8 @@ public class CustomerMethods {
 
                 System.out.println("Displaying a List of Reward Transactions...");
 
-                String viewActTransaction = "select * from Customer C, Wallet W, Reward_Transactions T where C.customer_id='" + customerID + "', C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
-                result = statement.executeQuery(viewTransaction);
+                String viewRwdTransaction = "select * from Customer C, Wallet W, Reward_Transactions T where C.customer_id='" + customerID + "' AND C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
+                result = statement.executeQuery(viewRwdTransaction);
                 System.out.println("Reward Transaction ID\tTransaction Date\tReward Code\tRedeemed Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
                     System.out.println(result.getString("reward_transaction_id") + " " + result.getString("reward_transaction_date") + " " + result.getString("reward_code") + " " + result.getString("redeem_points") + " " + result.getString("loyalty_id") + " " + result.getString("brand_id") + " " + result.getString("wallet_id"));
