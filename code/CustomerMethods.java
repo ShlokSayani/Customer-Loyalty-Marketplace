@@ -452,6 +452,15 @@ public class CustomerMethods {
                     String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
                     result9 = statement.executeQuery(add_customer_program);
 
+                    System.out.println("Enter Gift card Code : ");
+                    String get_gift_card_code = sc.nextLine();
+
+                    System.out.println("Enter expiry date: ");
+                    String get_expiry_date = sc.nextLine();
+
+                    String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('+"get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+customerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')"
+                    resul10 = statement.executeQuery(add_reward_giftcard);
+
                     System.out.println("Reward Redeemed suddefully. Thank You!!");                     
                 }
 
