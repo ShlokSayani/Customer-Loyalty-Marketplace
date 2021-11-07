@@ -16,6 +16,7 @@ public class HomePage{
         System.out.println("2. Sign Up");
         System.out.println("3. Show Queries");
         System.out.println("4. Exit");
+        System.out.println("Choose from above options");
         selection = sc.nextInt();
         System.out.println();
         switch(selection){

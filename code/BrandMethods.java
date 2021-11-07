@@ -22,6 +22,7 @@ public class BrandMethods{
         System.out.println("1. Regular");
         System.out.println("2. Tier");
         System.out.println("3. Go Back");
+        System.out.println("Choose from above options");
 
         select = sc.nextInt();
 
@@ -244,7 +245,7 @@ public class BrandMethods{
 
     public static String EnrollLoyaltyProgram(String BrandId){
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -256,7 +257,7 @@ public class BrandMethods{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Enrolling into Loyalty Program...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                     System.out.println("\t\t Check if Program already exists Enrolled:\n\n");
@@ -311,7 +312,7 @@ public class BrandMethods{
         args[0] = BrandId;
         args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -323,7 +324,7 @@ public class BrandMethods{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading RE Rule module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                
@@ -374,7 +375,7 @@ public class BrandMethods{
         args[0] = BrandId;
         args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -385,7 +386,7 @@ public class BrandMethods{
 
                 Class.forName("oracle.jdbc.OracleDriver");
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading RR Rule module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                     
@@ -438,7 +439,7 @@ public class BrandMethods{
         args[0] = BrandId;
         args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -451,7 +452,7 @@ public class BrandMethods{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading Update RE Rule module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                
@@ -508,7 +509,7 @@ public class BrandMethods{
         args[0] = BrandId;
         args[1] = LoyaltyId;
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -521,7 +522,7 @@ public class BrandMethods{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Loading update RR Rule module...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                
@@ -582,7 +583,7 @@ public class BrandMethods{
         args[1] = LoyaltyId;
         
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -597,7 +598,7 @@ public class BrandMethods{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Validating Loyalty Program...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                

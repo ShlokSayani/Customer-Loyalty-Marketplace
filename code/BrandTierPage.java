@@ -16,7 +16,8 @@ public class BrandTierPage{
             System.out.println("2. Activity Types");
             System.out.println("3. Reward Types");
             System.out.println("4. Go Back");
-    
+            System.out.println("Choose from above options");
+             
             select = sc.nextInt();
     
             switch(select){

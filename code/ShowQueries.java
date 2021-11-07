@@ -11,7 +11,7 @@ public class ShowQueries{
     public static void ShowQueries()
     {
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-        final String user = "dmehta3";
+        final String user = "hpatel28";
         final String password = "abcd1234";
 
         Connection connection = null;
@@ -23,7 +23,7 @@ public class ShowQueries{
                 Class.forName("oracle.jdbc.OracleDriver");
 
                 try {
-                    System.out.println("Connecting to database...");
+                    System.out.println("Fetching Sample queries...");
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                     

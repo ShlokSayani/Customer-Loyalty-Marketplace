@@ -25,7 +25,7 @@ public class CustomerSignUpMenu {
             Class.forName("oracle.jdbc.OracleDriver");
 
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Customer Sign Up module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
@@ -68,6 +68,8 @@ public class CustomerSignUpMenu {
 
         System.out.println("1. Customer Sign Up");
         System.out.println("2. Go Back");
+        System.out.println("Choose from above options");
+        
         int option = in.nextInt();
 
         switch(option){

@@ -9,7 +9,7 @@ import java.sql.*;
 public class BrandSignUpMenu {
 
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
-    private static final String user = "dmehta3";
+    private static final String user = "hpatel28";
     private static final String password = "abcd1234";
 
     public static Connection connection = null;
@@ -25,7 +25,7 @@ public class BrandSignUpMenu {
             Class.forName("oracle.jdbc.OracleDriver");
 
             try {
-                System.out.println("Connecting to database...");
+                System.out.println("Loading Brand Sign up module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");

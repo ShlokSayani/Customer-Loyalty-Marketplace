@@ -15,7 +15,7 @@ public class BrandRegularPage{
         System.out.println("1. Activity Types");
         System.out.println("2. Reward Types");
         System.out.println("3. Go Back");
-
+        System.out.println("Choose from above options");
         select = sc.nextInt();
 
         switch(select){
