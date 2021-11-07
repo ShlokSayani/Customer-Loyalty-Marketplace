@@ -41,7 +41,6 @@ public class LoginMenu{
                     String sqlAdminCred = "select username,pass from AdminUser where username = '" + userID
                         + "' and pass='" + userPassword + "'";
                     result = statement.executeQuery(sqlAdminCred);
-                    System.out.println(sqlAdminCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
                         AdminHomeMenu.main(null);
@@ -50,16 +49,16 @@ public class LoginMenu{
                     String sqlBrandCred = "select brand_id,brand_password from Brand where brand_id = '" + userID
                         + "' and brand_password='" + userPassword + "'";
                     result = statement.executeQuery(sqlBrandCred);
-                    System.out.println(sqlBrandCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
-                        BrandHomeMenu.main(null);
+                        String[] args = new String[2];
+                        args[0] = userID;
+                        BrandHomeMenu.main(args);
                         break;
                     }
                     String sqlCustomerCred = "select customer_id,customer_password from Customer where customer_id = '" + userID
                         + "' and customer_password='" + userPassword + "'";
                     result = statement.executeQuery(sqlCustomerCred);
-                    System.out.println(sqlCustomerCred);
                     if(result.next()){
                         System.out.println("Login successful!!! \n");
                         CustomerHomeMenu.main(null);
