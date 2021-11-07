@@ -413,11 +413,11 @@ public class CustomerMethods {
                 System.out.println("Select Brand ID for which you have to redeem points.");
                 String get_brand_id = sc.nextLine();
 
-                String fetchloyaltyid = "select loyalty_id from Customer_program where customer_id = '"+CustomerID+"'";
+                String fetchloyaltyid = "select loyalty_id from Customer_program where customer_id = '"+CustomerID+"' and brand_id='" + get_brand_id + "'";
                 result3 = statement.executeQuery(fetchloyaltyid);
                 String get_loyalty_id = "";
                 while(result3.next()){
-                    get_loyalty_id = result3.getString("brand_id");
+                    get_loyalty_id = result3.getString("loyalty_id");
                 }
 
                 String fetchtotalpoints = "select customer_points from Customer_program where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id ='"+get_loyalty_id+"'";
@@ -435,7 +435,7 @@ public class CustomerMethods {
                     String rc = result2.getString("reward_code");
                     String rn = result2.getString("reward_name");
                     int rp = result2.getInt(3);
-                    reward_name_points.put(rn,rp);
+                    reward_name_points.put(rc,rp);
                     System.out.println("Reward Code: "+ rc + " Reward Name: "+ rn + " Points required to redeem reward: "+rp);
                 }
                 System.out.println("Select Reward code to redeem that reward.");
@@ -448,7 +448,7 @@ public class CustomerMethods {
                 //System.out.println("Loading.....");
                 int max_quantity = 0;
                 while(result4.next()){
-                    max_quantity = result4.getInt("quantity");
+                    max_quantity = result4.getInt(1);
                 }
                 int current_amount = get_quantity * reward_name_points.get(get_reward_code);
                 if(get_quantity>max_quantity){
