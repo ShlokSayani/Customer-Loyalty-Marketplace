@@ -65,52 +65,37 @@ public class BrandTierSetUp{
                         System.out.println("Enter Number of Tiers");
                         int ntier = sc.nextInt();
                         int i = 0;
-                        String Tier = "";
+                        
                         System.out.println("Enter Tier in increasing sequence:");
                         while(i<ntier)
                         {
-                            System.out.println("Enter Tier:"+ i+1);
-                            String temp = sc.next();
-                            if(i>=1)
-                                Tier = Tier.concat(",");
-                            Tier = Tier.concat(temp);
-                            i++;
+                            String Tier = "";
+                            System.out.println("Enter Tier:")
+                            Tier = sc.next();
+                            String multilplier = "";
+                            if(i==0)
+                                multilplier = "1";
+                            else
+                            {
+                                System.out.println("Enter multiplier for this tier: ");
+                                multilplier = sc.next();
+                            }
+                            if(i==0)
+                                points = "0";
+                            else
+                            {
+                                System.out.println("Enter points for this tier: ");
+                                points = sc.next();
+                            }
+                            String query = "INSERT INTO Tier VALUES (?, ?, ?, ?)";
+                            PreparedStatement pstmt = connection.prepareStatement(query);
+                            pstmt.setString(1,Tier);
+                            pstmt.setString(2,multilplier);
+                            pstmt.setString(3,points);
+                            pstmt.setString(4,LoyaltyId);
+                            pstmt.execute();
                         }
-
-                        System.out.println("Enter multipier for respective tiers");
-                        String multilplier = "1,";
-                        i = 1;
-                        while(i<ntier)
-                        {
-                            System.out.println("Enter Multiplier:"+ i+1);
-                            String temp = sc.next();
-                            if(i>=2)
-                                multilplier = multilplier.concat(",");
-                            multilplier = multilplier.concat(temp);
-                            i++;
-                        }
-
-                        System.out.println("Enter points required for respective tiers");
-                        String points = "0,";
-                        i = 1;
-                        while(i<ntier)
-                        {
-                            System.out.println("Enter Points:"+ i+1);
-                            String temp = sc.next();
-                            if(i>=2)
-                                points = points.concat(",");
-                            points = points.concat(temp);
-                            i++;
-                        }
-
-                        String query = "INSERT INTO Tier VALUES (?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1,Tier);
-                        pstmt.setString(2,multilplier);
-                        pstmt.setString(3,points);
-                        pstmt.setString(4,LoyaltyId);
-                        pstmt.execute();
-                
+                        
                         System.out.println("Tiers Added to loyalty program \n");
 
                         BrandHomeMenu.main(args);

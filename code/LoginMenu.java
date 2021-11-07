@@ -68,7 +68,7 @@ public class LoginMenu{
                 }
 
             } finally {
-                //result.close();
+                result.close();
                 statement.close();
                 connection.close();
             }
