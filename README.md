@@ -1,6 +1,6 @@
 # Customer-Loyalty-Marketplace
 
-<>
+![image](https://github.com/ShlokSayani/Customer-Loyalty-Marketplace/blob/main/Images/ER.drawio.png)
 
 ## Installation
 ---
