@@ -10,9 +10,8 @@ public class BrandActivityPages{
     static Scanner sc = new Scanner(System.in);
     static int select = 0;
 
-    public static void ActivityTypes(int flag,String BrandId){
-        
-
+    public static void ActivityTypes(int flag,String LoyaltyId,String BrandId){
+    
         
         System.out.println("1. Purchase");
         System.out.println("2. Leave a Review");
@@ -23,39 +22,31 @@ public class BrandActivityPages{
 
         switch(select){
             case 1:
-                Purchase(BrandId,flag);
+                Purchase(BrandId,flag,LoyaltyId);
                 break;
             case 2:
-                LeaveaReview(BrandId,flag);
+                LeaveaReview(BrandId,flag,LoyaltyId);
                 break;
             case 3:
-                ReferaFriend(BrandId,flag);
+                ReferaFriend(BrandId,flag,LoyaltyId);
                 break;
             case 4:
                 if(flag == 0)
                 {
-                    BrandRegularPage.Regular(BrandId);
+                    BrandRegularPage.Regular(LoyaltyId,BrandId);
                     break;
                 }
                 else{
-                    BrandTierPage.Tier(BrandId);
+                    BrandTierPage.Tier(LoyaltyId,BrandId);
                 }
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                ActivityTypes(flag,BrandId);
+                ActivityTypes(flag,LoyaltyId,BrandId);
         }
 
     }
 
-    public static void Purchase(String BrandId,int flag){
-
-        System.out.println("Enter Loyalty Id: \n");
-        String LoyaltyId = "";
-        LoyaltyId = sc.next();
-
-        System.out.println("Enter Loyalty_Program_Name");
-        String lpname = "";
-        lpname = sc.next();
+    public static void Purchase(String BrandId,int flag,String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
@@ -74,85 +65,24 @@ public class BrandActivityPages{
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
-
-                    String getstatus = "Select COUNT(*) from Loyalty program where loyalty_id = '"+ LoyaltyId +"'";
-                    result1 = statement.executeQuery(getstatus);
-                    String lpstatus = "";
-                    if(result1.getInt(1) >= 3)
-                        lpstatus = "active";
-                    else
-                        lpstatus = "inactive";
-
-
-                    String getactivitycode = "Select activity_code from Activity_Type where activity_name='Purchase'";
+                    String getactivitycode = "Select * from Activity_Type where activity_name='Purchase'";
 
                     result = statement.executeQuery(getactivitycode);
-                    String activity_code = result.getString("activity_code");
+                    String activity_code = "";
+                    if(result.next())
+                        activity_code = result.getString("activity_code");
+
+                    System.out.print(activity_code);
                        
-                    if(flag==0)
-                    {
-                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1, LoyaltyId);
-                        pstmt.setString(2, lpname);
-                        pstmt.setNull(3,Types.NULL);
-                        pstmt.setNull(4,Types.NULL);
-                        pstmt.setNull(5,Types.NULL);
-                        pstmt.setString(6,activity_code);
-                        pstmt.setString(7,"Purchase");
-                        pstmt.setNull(8, Types.NULL);
-                        pstmt.setNull(9,Types.NULL);
-                        pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus);
-                        pstmt.execute();
-                    }
-                    else
-                    {
-                        System.out.println("Enter Tier");
-                        String Tier = "";
-                        Tier = sc.next();
-
-                        String getpoints = "Select tier,multilplier,points_required from Loyalty_program where loyalty_id = '"+ LoyaltyId +"'";
-                        result = statement.executeQuery(getpoints);
-
-                        String gettier = result.getString("tier");
-
-                        String[] str = gettier.split(",");
-                        int i = 0;
-                        int ans = -1;
-                        while(i<str.length)
-                        {
-                            if(str[i]==Tier)
-                                ans = i;
-                            i++;
-                        }
-
-                        String[] points = result.getString("points_required").split(",");
-                        String anspoints = points[ans];
-
-                        String[] multilplier = result.getString("multiplier").split(",");
-                        String ansmulti = multilplier[ans];
-
-                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1, LoyaltyId);
-                        pstmt.setString(2, lpname);
-                        pstmt.setString(3,Tier);
-                        pstmt.setString(4,ansmulti);
-                        pstmt.setString(5,anspoints);
-                        pstmt.setString(6,activity_code);
-                        pstmt.setString(7,"Purchase");
-                        pstmt.setNull(8, Types.NULL);
-                        pstmt.setNull(9,Types.NULL);
-                        pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus);
-                        pstmt.execute();
-
-
-
-                    }
-                
+                    String query = "INSERT INTO Activity_program VALUES (?, ?, ?)";
+                    PreparedStatement pstmt = connection.prepareStatement(query);
+                    pstmt.setString(1, activity_code);
+                    pstmt.setString(2, "Purchase");
+                    pstmt.setString(3,LoyaltyId);
+                    pstmt.execute();
+                                
                     System.out.println("Activity Added to loyalty program \n");
+                    ActivityTypes(flag,LoyaltyId,BrandId);
 
                 } finally {
                     result.close();
@@ -167,14 +97,7 @@ public class BrandActivityPages{
         
     }
 
-    public static void LeaveaReview(String BrandId,int flag){
-        System.out.println("Enter Loyalty Id: \n");
-        String LoyaltyId = "";
-        LoyaltyId = sc.next();
-
-        System.out.println("Enter Loyalty_Program_Name");
-        String lpname = "";
-        lpname = sc.next();
+    public static void LeaveaReview(String BrandId,int flag, String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
@@ -194,87 +117,26 @@ public class BrandActivityPages{
                     statement = connection.createStatement();
 
 
-                    String getstatus = "Select COUNT(*) from Loyalty program where loyalty_id = '"+ LoyaltyId +"'";
-                    result1 = statement.executeQuery(getstatus);
-                    String lpstatus = "";
-                    if(result1.getInt(1) >= 3)
-                        lpstatus = "active";
-                    else
-                        lpstatus = "inactive";
-
-
-                    String getactivitycode = "Select activity_code from Activity_Type where activity_name='Leave a Review'";
+                    String getactivitycode = "Select * from Activity_Type where activity_name='Leave a Review'";
 
                     result = statement.executeQuery(getactivitycode);
-                    String activity_code = result.getString("activity_code");
+                    String activity_code = "";
+                    if(result.next())
+                        activity_code = result.getString("activity_code");
                        
-                    if(flag==0)
-                    {
-                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1, LoyaltyId);
-                        pstmt.setString(2, lpname);
-                        pstmt.setNull(3,Types.NULL);
-                        pstmt.setNull(4,Types.NULL);
-                        pstmt.setNull(5,Types.NULL);
-                        pstmt.setString(6,activity_code);
-                        pstmt.setString(7,"Leave a Review");
-                        pstmt.setNull(8, Types.NULL);
-                        pstmt.setNull(9,Types.NULL);
-                        pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus);
-                        pstmt.execute();
-                    }
-                    else
-                    {
-                        System.out.println("Enter Tier");
-                        String Tier = "";
-                        Tier = sc.next();
-
-                        String getpoints = "Select tier,multilplier,points_required from Loyalty_program where loyalty_id = '"+ LoyaltyId +"'";
-                        result = statement.executeQuery(getpoints);
-
-                        String gettier = result.getString("tier");
-
-                        String[] str = gettier.split(",");
-                        int i = 0;
-                        int ans = -1;
-                        while(i<str.length)
-                        {
-                            if(str[i]==Tier)
-                                ans = i;
-                            i++;
-                        }
-
-                        String[] points = result.getString("points_required").split(",");
-                        String anspoints = points[ans];
-
-                        String[] multilplier = result.getString("multiplier").split(",");
-                        String ansmulti = multilplier[ans];
-
-                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1, LoyaltyId);
-                        pstmt.setString(2, lpname);
-                        pstmt.setString(3,Tier);
-                        pstmt.setString(4,ansmulti);
-                        pstmt.setString(5,anspoints);
-                        pstmt.setString(6,activity_code);
-                        pstmt.setString(7,"Leave a Review");
-                        pstmt.setNull(8, Types.NULL);
-                        pstmt.setNull(9,Types.NULL);
-                        pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus);
-                        pstmt.execute();
-
-
-
-                    }
+                    String query = "INSERT INTO Activity_program VALUES (?, ?, ?)";
+                    PreparedStatement pstmt = connection.prepareStatement(query);
+                    pstmt.setString(1, activity_code);
+                    pstmt.setString(2, "Leave a Review");
+                    pstmt.setString(3,LoyaltyId);
+                    pstmt.execute();
+                    
                 
                     System.out.println("Activity Added to loyalty program \n");
+                    ActivityTypes(flag,LoyaltyId,BrandId);
 
                 } finally {
-                     result.close();
+                    //result.close();
                     statement.close();
                     connection.close();
                 }
@@ -286,15 +148,7 @@ public class BrandActivityPages{
 
     }
 
-    public static void ReferaFriend(String BrandId, int flag){
-
-        System.out.println("Enter Loyalty Id: \n");
-        String LoyaltyId = "";
-        LoyaltyId = sc.next();
-
-        System.out.println("Enter Loyalty_Program_Name");
-        String lpname = "";
-        lpname = sc.next();
+    public static void ReferaFriend(String BrandId, int flag, String LoyaltyId){
 
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "dmehta3";
@@ -313,88 +167,27 @@ public class BrandActivityPages{
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
 
-
-                    String getstatus = "Select COUNT(*) from Loyalty program where loyalty_id = '"+ LoyaltyId +"'";
-                    result1 = statement.executeQuery(getstatus);
-                    String lpstatus = "";
-                    if(result1.getInt(1) >= 3)
-                        lpstatus = "active";
-                    else
-                        lpstatus = "inactive";
-
-
-                    String getactivitycode = "Select activity_code from Activity_Type where activity_name='Refer a Friend'";
+                    String getactivitycode = "Select * from Activity_Type where activity_name='Refer a Friend'";
 
                     result = statement.executeQuery(getactivitycode);
-                    String activity_code = result.getString("activity_code");
+                    String activity_code = "";
+                    if(result.next())
+                        activity_code = result.getString("activity_code");
                        
-                    if(flag==0)
-                    {
-                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1, LoyaltyId);
-                        pstmt.setString(2, lpname);
-                        pstmt.setNull(3,Types.NULL);
-                        pstmt.setNull(4,Types.NULL);
-                        pstmt.setNull(5,Types.NULL);
-                        pstmt.setString(6,activity_code);
-                        pstmt.setString(7,"Refer a Friend");
-                        pstmt.setNull(8, Types.NULL);
-                        pstmt.setNull(9,Types.NULL);
-                        pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus);
-                        pstmt.execute();
-                    }
-                    else
-                    {
-                        System.out.println("Enter Tier");
-                        String Tier = "";
-                        Tier = sc.next();
-
-                        String getpoints = "Select tier,multilplier,points_required from Loyalty_program where loyalty_id = '"+ LoyaltyId +"'";
-                        result = statement.executeQuery(getpoints);
-
-                        String gettier = result.getString("tier");
-
-                        String[] str = gettier.split(",");
-                        int i = 0;
-                        int ans = -1;
-                        while(i<str.length)
-                        {
-                            if(str[i]==Tier)
-                                ans = i;
-                            i++;
-                        }
-
-                        String[] points = result.getString("points_required").split(",");
-                        String anspoints = points[ans];
-
-                        String[] multilplier = result.getString("multiplier").split(",");
-                        String ansmulti = multilplier[ans];
-
-                        String query = "INSERT INTO Loyalty_program VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = connection.prepareStatement(query);
-                        pstmt.setString(1, LoyaltyId);
-                        pstmt.setString(2, lpname);
-                        pstmt.setString(3,Tier);
-                        pstmt.setString(4,ansmulti);
-                        pstmt.setString(5,anspoints);
-                        pstmt.setString(6,activity_code);
-                        pstmt.setString(7,"Refer a Friend");
-                        pstmt.setNull(8, Types.NULL);
-                        pstmt.setNull(9,Types.NULL);
-                        pstmt.setString(10,BrandId);
-                        pstmt.setString(11,lpstatus);
-                        pstmt.execute();
-
-
-
-                    }
                 
+                    String query = "INSERT INTO Activity_program VALUES (?, ?, ?)";
+                    PreparedStatement pstmt = connection.prepareStatement(query);
+                    pstmt.setString(1, activity_code);
+                    pstmt.setString(2, "Refer a friend");
+                    pstmt.setString(3,LoyaltyId);
+                    pstmt.execute();
+                
+            
                     System.out.println("Activity Added to loyalty program \n");
+                    ActivityTypes(flag,LoyaltyId,BrandId);
 
                 } finally {
-                     result.close();
+                    //result.close();
                     statement.close();
                     connection.close();
                 }

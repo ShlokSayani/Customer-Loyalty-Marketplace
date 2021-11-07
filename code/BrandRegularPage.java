@@ -11,7 +11,7 @@ public class BrandRegularPage{
     static Scanner sc = new Scanner(System.in);
     static int select = 0;
 
-    public static void Regular(String BrandId){
+    public static void Regular(String LoyaltyId,String BrandId){
         System.out.println("1. Activity Types");
         System.out.println("2. Reward Types");
         System.out.println("3. Go Back");
@@ -20,17 +20,17 @@ public class BrandRegularPage{
 
         switch(select){
             case 1:
-                BrandActivityPages.ActivityTypes(0,BrandId);
+                BrandActivityPages.ActivityTypes(0,LoyaltyId,BrandId);
                 break;
             case 2:
-                BrandRewardPages.RewardTypes(0,BrandId);
+                BrandRewardPages.RewardTypes(0,LoyaltyId,BrandId);
                 break;
             case 3:
                 BrandMethods.LoyaltyProgram(BrandId);
                 break;
             default:
                 System.out.println("Invalid Input. Enter your choice again");
-                Regular(BrandId);
+                Regular(LoyaltyId,BrandId);
         }
     }
 }
