@@ -11,33 +11,30 @@ public class CustomerHomeMenu {
     static Scanner sc = new Scanner(System.in);
     static int selection = 0;
 
-    public static void CustomerMenuOptions(){
-        System.out.println("Select below options: ");
+    public static void main(String args[]){
+        
+        System.out.println("Select one of the below options: ");
         System.out.println("1. Enroll in Loyalty Program");
         System.out.println("2. Reward Activities");
         System.out.println("3. View Wallet");
         System.out.println("4. Redeem points");
         System.out.println("5. Go Back");
-    } 
-    
 
-    public static void main(String args[]){
-        
-        CustomerMenuOptions();
-
+        String customerID = args[0];
+        sc.nextLine();
         selection = sc.nextInt();
         switch(selection){
             case 1:
-                customerMethods.enrollment();
+                CustomerMethods.showPrograms(customerID);
                 break;
             case 2:
-                customerMethods.customerActivitiesCall();
+                CustomerMethods.rewardActivities(customerID);
                 break;
             case 3:
-                customerMethods.viewWallet();
+                CustomerMethods.viewWallet(customerID);
                 break;
             case 4:
-                customerMethods.redeemPoints();
+                CustomerMethods.redeemPoints();
                 break;
             case 5:
                 HomePage.main(null);

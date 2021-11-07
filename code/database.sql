@@ -31,7 +31,7 @@ CREATE TABLE Brand(
 
 CREATE TABLE Loyalty_program( 
     loyalty_id VARCHAR2(15) PRIMARY KEY,
-    loyalty_program_name VARCHAR2(50),
+    loyalty_program_name VARCHAR2(50) UNIQUE,
     brand_id VARCHAR2(15),  
     lp_status VARCHAR2(10),
     constraint el_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
@@ -97,6 +97,7 @@ CREATE TABLE Reward_Product(
 CREATE TABLE Customer_program(
     customer_id VARCHAR2(15),
     loyalty_id VARCHAR2(15), 
+    brand_id VARCHAR2(15), 
     customer_points int,
     customer_tier VARCHAR2(30),
     constraint cp_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
@@ -141,8 +142,10 @@ CREATE TABLE Reward_GiftCard(
     expiry_date DATE,
     customer_id VARCHAR2(15),
     reward_transaction_id VARCHAR2(15),
+    loyalty_id VARCHAR2(15),
     constraint rg_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
     constraint rg_transaction_id FOREIGN KEY (reward_transaction_id) REFERENCES Reward_Transactions(reward_transaction_id),
+    constraint rg_loylaty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
     PRIMARY KEY (customer_id,giftcard_code) 
 );
 
