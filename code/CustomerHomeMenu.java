@@ -21,16 +21,17 @@ public class CustomerHomeMenu {
         System.out.println("5. Go Back");
 
         String customerID = args[0];
+        sc.nextLine();
         selection = sc.nextInt();
         switch(selection){
             case 1:
-                customerMethods.showPrograms(customerID);
+                CustomerMethods.showPrograms(customerID);
                 break;
             case 2:
-                customerMethods.rewardActivities(customerID);
+                CustomerMethods.rewardActivities(customerID);
                 break;
             case 3:
-                customerMethods.viewWallet(customerID);
+                CustomerMethods.viewWallet(customerID);
                 break;
             case 4:
                 customerMethods.redeemPoints(customerID);

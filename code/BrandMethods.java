@@ -492,7 +492,7 @@ public class BrandMethods{
 
                 } finally {
                     //result.close();
-                    result4.close();
+                    //result4.close();
                     statement.close();
                     connection.close();
                 }
@@ -606,7 +606,6 @@ public class BrandMethods{
                     int act = -1;
                     if(result7.next())
                         act = result7.getInt(1);
-                    System.out.println(act);
 
                     String getrewardtuples = "Select count(*) from Reward_program where loyalty_id='"+ LoyaltyId +"'";
                     result7 = statement.executeQuery(getrewardtuples);
@@ -614,7 +613,6 @@ public class BrandMethods{
                     int rew = -1;
                     if(result7.next())
                         rew = result7.getInt(1);
-                    System.out.println(rew);
 
                     String getloyaltytuples = "Select count(*) from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
                     result7 = statement.executeQuery(getloyaltytuples);
@@ -622,15 +620,12 @@ public class BrandMethods{
                     int loy = -1;
                     if(result7.next())
                         loy = result7.getInt(1);
-                    System.out.println(loy);
                 
                     String getTier = "Select count(*) from Tier where loyalty_id='"+ LoyaltyId +"'";
                     result7 = statement.executeQuery(getTier);
-
                     int tier = -1;
                     if(result7.next())
                         tier = result7.getInt(1);
-                    System.out.println(tier);
 
                     if((rew+act+tier+loy)>=3)
                     {
