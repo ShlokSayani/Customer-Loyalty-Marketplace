@@ -270,7 +270,7 @@ public class BrandMethods{
                     pstmt.setInt(2,Version);
                     pstmt.setString(3,ActivityType);
                     pstmt.setString(4,ActivityName);
-                    pstmt.setString(5,number_of_points);
+                    pstmt.setInt(5,number_of_points);
                     pstmt.setString(6,BrandId);
                     pstmt.setString(7,LoyaltyId);
                     pstmt.executeQuery();
