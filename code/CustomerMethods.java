@@ -39,7 +39,7 @@ public class CustomerMethods {
                 statement = connection.createStatement();
                 System.out.println("\t\tEnrolling Customer to a loyalty program\n\n");
                 
-                String checkEnrollment = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id='" + programID + "')";
+                String checkEnrollment = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id='" + programID + "'";
                 result = statement.executeQuery(checkEnrollment);
                 if(!result.next()){
                     String enrollCustomer = "insert into Customer_program values('" + customerID + "','" + programID + "')";
@@ -80,7 +80,7 @@ public class CustomerMethods {
                 statement = connection.createStatement();
                 
                 String walletId = "";
-                String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
                 result = statement.executeQuery(customerWallet);
                 if(result.next()){
                     walletId = result.getString("wallet_id");
@@ -89,7 +89,7 @@ public class CustomerMethods {
                 String customerTier = "";
                 String customerBrand = "";
 
-                String getCustomerProgram = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id = '" + programID + "')"; 
+                String getCustomerProgram = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id = '" + programID + "'"; 
                 result = statement.executeQuery(getCustomerProgram);
 
                 if(result.next()){
@@ -111,7 +111,7 @@ public class CustomerMethods {
                     }
 
                     String selectedCard = sc.nextLine();
-                    String cardPresent = "select * from Reward_GiftCard where giftcard_code='" + selectedCard + "')";
+                    String cardPresent = "select * from Reward_GiftCard where giftcard_code='" + selectedCard + "'";
                     result = statement.executeQuery(cardPresent);
                     if(result.next()){
                         System.out.println("Enter Transaction Date");
@@ -138,7 +138,7 @@ public class CustomerMethods {
                     }
                 }
                 else{
-                    String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Purchase')";
+                    String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Purchase'";
                     int customerPoints = 0;
 
                     result = statement.executeQuery(activityPoints);
@@ -146,7 +146,7 @@ public class CustomerMethods {
                         customerPoints = Integer.valueOf(result.getString("activity_points"));
                     }
 
-                    String getTier = "select * from Tier where loyalty_id='" + programID + "' AND tier='" + customerTier + "')";
+                    String getTier = "select * from Tier where loyalty_id='" + programID + "' AND tier='" + customerTier + "'";
                     result = statement.executeQuery(getTier);
 
                     if(result.next()){
@@ -198,7 +198,7 @@ public class CustomerMethods {
                 String customerTier = "";
                 String customerBrand = "";
 
-                String getCustomerProgram = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id = '" + programID + "')"; 
+                String getCustomerProgram = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id = '" + programID + "'"; 
                 result = statement.executeQuery(getCustomerProgram);
 
                 if(result.next()){
@@ -206,7 +206,7 @@ public class CustomerMethods {
                     customerBrand = result.getString("brand_id");
                 }
 
-                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Leave a review')";
+                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Leave a review'";
                 int customerPoints = 0;
 
                 result = statement.executeQuery(activityPoints);
@@ -214,7 +214,7 @@ public class CustomerMethods {
                     customerPoints = Integer.valueOf(result.getString("activity_points"));
                 }
 
-                String getTier = "select * from Tier where loyalty_id='" + programID + "' AND tier='" + customerTier + "')";
+                String getTier = "select * from Tier where loyalty_id='" + programID + "' AND tier='" + customerTier + "'";
                 result = statement.executeQuery(getTier);
 
                 if(result.next()){
@@ -292,7 +292,7 @@ public class CustomerMethods {
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 String walletId = "";
-                String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
                 result = statement.executeQuery(customerWallet);
                 if(result.next()){
                     walletId = result.getString("wallet_id");
@@ -301,7 +301,7 @@ public class CustomerMethods {
                 String customerTier = "";
                 String customerBrand = "";
 
-                String getCustomerProgram = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id = '" + programID + "')"; 
+                String getCustomerProgram = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id = '" + programID + "'"; 
                 result = statement.executeQuery(getCustomerProgram);
 
                 if(result.next()){
@@ -309,7 +309,7 @@ public class CustomerMethods {
                     customerBrand = result.getString("brand_id");
                 }
 
-                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Refer a friend')";
+                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Refer a friend'";
                 int customerPoints = 0;
 
                 result = statement.executeQuery(activityPoints);
@@ -317,7 +317,7 @@ public class CustomerMethods {
                     customerPoints = Integer.valueOf(result.getString("activity_points"));
                 }
 
-                String getTier = "select * from Tier where loyalty_id='" + programID + "' AND tier='" + customerTier + "')";
+                String getTier = "select * from Tier where loyalty_id='" + programID + "' AND tier='" + customerTier + "'";
                 result = statement.executeQuery(getTier);
 
                 if(result.next()){
@@ -596,7 +596,7 @@ public class CustomerMethods {
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 String walletId = "";
-                String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
                 result = statement.executeQuery(customerWallet);
                 if(result.next()){
                     walletId = result.getString("wallet_id");
@@ -621,7 +621,7 @@ public class CustomerMethods {
                 }
 
                 System.out.println("Displaying the total number of Points for each Loyalty Program Enrolled");
-                String ptsTotal = "select * from Customer_program where customer_id='" + customerID + "')";
+                String ptsTotal = "select * from Customer_program where customer_id='" + customerID + "'";
                 result = statement.executeQuery(ptsTotal);
 
                 System.out.println("Loyalty Program ID\tPoints\tTier");
@@ -672,7 +672,7 @@ public class CustomerMethods {
                 statement = connection.createStatement();
                 System.out.println("\t\tDisplaying a list of enrolled Loyalty Programs\n\n");
                 
-                String enrolledPrograms = "select C.loyalty_id AS loyaltyId, L.loyalty_program_name AS loyaltyName from Customer_program C, Loyalty_program L where C.customer_id = '" + customerID + "' AND C.loyalty_id=L.loyalty_id)";
+                String enrolledPrograms = "select C.loyalty_id AS loyaltyId, L.loyalty_program_name AS loyaltyName from Customer_program C, Loyalty_program L where C.customer_id = '" + customerID + "' AND C.loyalty_id=L.loyalty_id";
                 result = statement.executeQuery(enrolledPrograms);
 
                 System.out.println("\t\tLoyalty Program ID\tLoyalty Program Name");
@@ -683,7 +683,7 @@ public class CustomerMethods {
                 HashMap<Integer, String> map = new HashMap<>();
                 System.out.println("Select a Loyalty Program ID.");
                 String selectedProgram = sc.next();
-                String programPresent = "select * from Customer_program where loyalty_id='" + selectedProgram + "')";
+                String programPresent = "select * from Customer_program where loyalty_id='" + selectedProgram + "'";
                 result = statement.executeQuery(programPresent);
                 String programID = "";
                 if(!result.next()){

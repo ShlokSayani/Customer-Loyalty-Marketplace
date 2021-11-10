@@ -22,7 +22,6 @@ public class CustomerHomeMenu {
         System.out.println("Choose from above options");
         
         String customerID = args[0];
-        sc.nextLine();
         selection = sc.nextInt();
         switch(selection){
             case 1:
