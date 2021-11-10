@@ -70,8 +70,8 @@ public class BrandTierSetUp{
                         while(i<ntier)
                         {
                             String Tier = "";
-                            System.out.println("Enter Tier:");
-                            Tier = sc.next();
+                            System.out.println("Enter Tier " +(i+1) + ": ");
+                            Tier = sc.nextLine();
                             String multilplier = "";
                             String points = "";
                             if(i==0)
@@ -79,14 +79,14 @@ public class BrandTierSetUp{
                             else
                             {
                                 System.out.println("Enter multiplier for this tier: ");
-                                multilplier = sc.next();
+                                multilplier = sc.nextLine();
                             }
                             if(i==0)
                                 points = "0";
                             else
                             {
                                 System.out.println("Enter points for this tier: ");
-                                points = sc.next();
+                                points = sc.nextLine();
                             }
                             String query = "INSERT INTO Tier VALUES (?, ?, ?, ?)";
                             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -95,6 +95,8 @@ public class BrandTierSetUp{
                             pstmt.setString(3,points);
                             pstmt.setString(4,LoyaltyId);
                             pstmt.execute();
+
+                            i++;
                         }
                         
                         System.out.println("Tiers Added to loyalty program \n");
