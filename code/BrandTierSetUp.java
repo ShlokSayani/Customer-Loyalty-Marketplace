@@ -71,7 +71,7 @@ public class BrandTierSetUp{
                         {
                             String Tier = "";
                             System.out.println("Enter Tier " +(i+1) + ": ");
-                            Tier = sc.nextLine();
+                            Tier = sc.next();
                             String multilplier = "";
                             String points = "";
                             if(i==0)
@@ -79,14 +79,14 @@ public class BrandTierSetUp{
                             else
                             {
                                 System.out.println("Enter multiplier for this tier: ");
-                                multilplier = sc.nextLine();
+                                multilplier = sc.next();
                             }
                             if(i==0)
                                 points = "0";
                             else
                             {
                                 System.out.println("Enter points for this tier: ");
-                                points = sc.nextLine();
+                                points = sc.next();
                             }
                             String query = "INSERT INTO Tier VALUES (?, ?, ?, ?)";
                             PreparedStatement pstmt = connection.prepareStatement(query);
