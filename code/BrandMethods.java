@@ -12,12 +12,6 @@ public class BrandMethods{
     static int select = 0;
 
     public static void LoyaltyProgram(String BrandId){
-
-        String LoyaltyId = EnrollLoyaltyProgram(BrandId);
-
-        String[] args = new String[2];
-        args[0] = BrandId;
-        args[1] = LoyaltyId;
         
         System.out.println("1. Regular");
         System.out.println("2. Tier");
@@ -26,11 +20,23 @@ public class BrandMethods{
 
         select = sc.nextInt();
 
+        String[] args = new String[2];
+        args[0] = BrandId;
+        String LoyaltyId = "";
+
         switch(select){
             case 1:
+                LoyaltyId = EnrollLoyaltyProgram(BrandId,1);
+
+                args[0] = BrandId;
+                args[1] = LoyaltyId;
                 BrandRegularPage.Regular(LoyaltyId,BrandId);
                 break;
             case 2:
+                LoyaltyId = EnrollLoyaltyProgram(BrandId,2);
+
+                args[0] = BrandId;
+                args[1] = LoyaltyId;
                 BrandTierPage.Tier(LoyaltyId,BrandId);
                 break;
             case 3:
@@ -47,7 +53,7 @@ public class BrandMethods{
         String[] args = new String[2];
         args[0] = BrandId;
         args[1] = LoyaltyId;
-        if(LoyaltyId.equals(null))
+        if(LoyaltyId.equals(""))
         {
             System.out.println("Please Enroll in Loyalty Program first");
         }
@@ -92,7 +98,7 @@ public class BrandMethods{
         String[] args = new String[2];
         args[0] = BrandId;
         args[1] = LoyaltyId;
-        if(LoyaltyId.equals(null))
+        if(LoyaltyId.equals(""))
         {
             System.out.println("Please Enroll in Loyalty Program first");
         }
@@ -135,7 +141,7 @@ public class BrandMethods{
         String[] args = new String[2];
         args[0] = BrandId;
         args[1] = LoyaltyId;
-        if(LoyaltyId.equals(null))
+        if(LoyaltyId.equals(""))
         {
             System.out.println("Please Enroll in Loyalty Program first");
         }
@@ -180,7 +186,7 @@ public class BrandMethods{
         String[] args = new String[2];
         args[0] = BrandId;
         args[1] = LoyaltyId;
-        if(LoyaltyId.equals(null))
+        if(LoyaltyId.equals(""))
         {
             System.out.println("Please Enroll in Loyalty Program first");
         }
@@ -243,7 +249,7 @@ public class BrandMethods{
         }
     }
 
-    public static String EnrollLoyaltyProgram(String BrandId){
+    public static String EnrollLoyaltyProgram(String BrandId,int select){
         final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl01";
         final String user = "hpatel28";
         final String password = "abcd1234";
@@ -281,13 +287,20 @@ public class BrandMethods{
                         LoyaltyId = sc.next();
                         System.out.println("Enter Loyalty Program Name:");
                         String Loyalty_Program_Name = sc.next();
+
+                        String program_type = "";
+                        if(select == 1)
+                            program_type = "Regular";
+                        else
+                            program_type = "Tier";
                         
-                        String addprogram = "INSERT INTO Loyalty_program Values(?,?,?,?)";
+                        String addprogram = "INSERT INTO Loyalty_program Values(?,?,?,?,?)";
                         PreparedStatement pstmt = connection.prepareStatement(addprogram);
                         pstmt.setString(1,LoyaltyId);
                         pstmt.setString(2,Loyalty_Program_Name);
                         pstmt.setString(3,BrandId);
                         pstmt.setString(4,"inactive");
+                        pstmt.setString(5,program_type);
                         pstmt.executeQuery();
                         
                         System.out.println("Enrolled in Loyalty Program \n");
@@ -295,7 +308,7 @@ public class BrandMethods{
                     }
 
                 } finally {
-                    //result.close();
+                    // result.close();
                     statement.close();
                     connection.close();
                 }
@@ -358,7 +371,7 @@ public class BrandMethods{
                     }
 
                 } finally {
-                    //result1.close();
+                    result1.close();
                     statement.close();
                     connection.close();
                 }
@@ -423,7 +436,7 @@ public class BrandMethods{
                     }
 
                 } finally {
-                    //result2.close();
+                    result2.close();
                     statement.close();
                     connection.close();
                 }
@@ -492,8 +505,8 @@ public class BrandMethods{
                     }
 
                 } finally {
-                    //result.close();
-                    //result4.close();
+                    result3.close();
+                    result4.close();
                     statement.close();
                     connection.close();
                 }
@@ -606,35 +619,49 @@ public class BrandMethods{
                     result7 = statement.executeQuery(getactivitytuples);
                     if(result7.next())
                     {
-
-                        String getrewardtuples = "Select count(*) from Reward_program where loyalty_id='"+ LoyaltyId +"'";
+                        String getrewardtuples = "Select * from Reward_program where loyalty_id='"+ LoyaltyId +"'";
                         result7 = statement.executeQuery(getrewardtuples);
             
                         if(result7.next())
                         {
+                            
 
-                            String getloyaltytuples = "Select count(*) from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
+                            String gettype = "Select * from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
+                            result7 = statement.executeQuery(gettype);
+                            String type = "";
+                            if(result7.next())
+                                type = result7.getString("program_type");
+                            String getloyaltytuples = "Select * from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
                             result7 = statement.executeQuery(getloyaltytuples);
                         
                             if(result7.next())
                             {
-                        
-                                String getTier = "Select count(*) from Tier where loyalty_id='"+ LoyaltyId +"'";
-                                result7 = statement.executeQuery(getTier);
-                                if(result7.next())
+                                if(type.equals("Tier"))
                                 {
+                                    String getTier = "Select * from Tier where loyalty_id='"+ LoyaltyId +"'";
+                                    result7 = statement.executeQuery(getTier);
+                                    if(result7.next())
+                                    {
 
-                                    System.out.println("Your program is active");
-                                    String updatestatus = "UPDATE Loyalty_program SET lpstatus = 'active' Where loyalty_id='"+ LoyaltyId +"'";
-                                    statement.executeQuery(updatestatus);
-                                    
-                                    BrandHomeMenu.main(args);
+                                        System.out.println("Your program is active");
+                                        String updatestatus = "UPDATE Loyalty_program SET lp_status = 'active' Where loyalty_id='"+ LoyaltyId +"'";
+                                        statement.executeQuery(updatestatus);
+                                        
+                                        BrandHomeMenu.main(args);
+                                    }
+                                    else
+                                    {
+                                        System.out.println("Your program is inactive");
+                                        BrandHomeMenu.main(args);
+                                    } 
                                 }
                                 else
                                 {
-                                    System.out.println("Your program is inactive");
+                                    System.out.println("Your program is active");
+                                    String updatestatus = "UPDATE Loyalty_program SET lp_status = 'active' Where loyalty_id='"+ LoyaltyId +"'";
+                                    statement.executeQuery(updatestatus);
                                     BrandHomeMenu.main(args);
-                                } 
+                                }
                             }
                             else
                             {
@@ -656,10 +683,10 @@ public class BrandMethods{
 
 
                 } finally {
-                    //result7.close();
-                    //result8.close();
-                    //result9.close();
-                    //result10.close();
+                    result7.close();
+                    // result8.close();
+                    // result9.close();
+                    // result10.close();
                     statement.close();
                     connection.close();
                 }
