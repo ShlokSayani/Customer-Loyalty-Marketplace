@@ -34,6 +34,7 @@ CREATE TABLE Loyalty_program(
     loyalty_program_name VARCHAR2(50) UNIQUE,
     brand_id VARCHAR2(15),  
     lp_status VARCHAR2(10),
+    program_type VARCHAR2(30),
     constraint el_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
 );
 
