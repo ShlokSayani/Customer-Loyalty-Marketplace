@@ -27,12 +27,13 @@ public class BrandHomeMenu {
     {
         String LoyaltyId = Check(args[0]);
         BrandMenuoptions();
+        // System.out.println(LoyaltyId);
         select = sc.nextInt();
         String BrandId = args[0];
-        if(!LoyaltyId.equals(""))
-        {
-            LoyaltyId = args[1];
-        }
+        // if(!LoyaltyId.equals(""))
+        // {
+        //     LoyaltyId = args[1];
+        // }
             switch(select){
                 case 1:
                     BrandMethods.LoyaltyProgram(BrandId);
@@ -97,7 +98,7 @@ public class BrandHomeMenu {
                     }
                     
                 } finally {
-                    //result.close();
+                    result.close();
                     statement.close();
                     connection.close();
                 }
