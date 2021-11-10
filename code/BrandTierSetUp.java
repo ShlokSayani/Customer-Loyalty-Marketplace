@@ -70,9 +70,10 @@ public class BrandTierSetUp{
                         while(i<ntier)
                         {
                             String Tier = "";
-                            System.out.println("Enter Tier:")
+                            System.out.println("Enter Tier:");
                             Tier = sc.next();
                             String multilplier = "";
+                            String points = "";
                             if(i==0)
                                 multilplier = "1";
                             else
