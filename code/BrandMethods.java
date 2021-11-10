@@ -625,6 +625,9 @@ public class BrandMethods{
                                 {
 
                                     System.out.println("Your program is active");
+                                    String updatestatus = "UPDATE Loyalty_program SET lpstatus = 'active' Where loyalty_id='"+ LoyaltyId +"'";
+                                    statement.executeQuery(updatestatus);
+                                    
                                     BrandHomeMenu.main(args);
                                 }
                                 else

@@ -127,7 +127,7 @@ public class BrandRewardPages{
                     System.out.println("Enter quantity of rewards:");
                     int quantity = sc.nextInt();
                        
-                    String query = "INSERT INTO Reward_program VALUES (?, ?, ?)";
+                    String query = "INSERT INTO Reward_program VALUES (?, ?, ?, ?)";
                     PreparedStatement pstmt = connection.prepareStatement(query);
                     pstmt.setString(1, reward_code);
                     pstmt.setString(2, "Free Product");
