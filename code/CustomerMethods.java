@@ -239,7 +239,7 @@ public class CustomerMethods {
                 String reviewTable = "insert into Customer_Reviews(loyalty_id, review_date, review_content, transaction_id, customer_id) values ('" + programID + "', 'TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
                 result = statement.executeQuery(reviewTable);
 
-                String Trigger2 = "CREATE OR REPLACE TRIGGER purchase_update 
+                String Trigger2 = "CREATE OR REPLACE TRIGGER review_update 
                                     AFTER INSERT ON Activity_Transactions
                                     BEGIN 
                                         UPDATE Customer_program 
@@ -346,7 +346,7 @@ public class CustomerMethods {
                 String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer a friend', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
                 result = statement.executeQuery(reviewTransaction);
 
-                String Trigger3 = "CREATE OR REPLACE TRIGGER purchase_update 
+                String Trigger3 = "CREATE OR REPLACE TRIGGER refer_update 
                                     AFTER INSERT ON Activity_Transactions
                                     BEGIN 
                                         UPDATE Customer_program 
@@ -512,8 +512,24 @@ public class CustomerMethods {
                     result8 = statement.executeQuery(add_customer_redeem);
                     
                     int new_customer_points = get_total_points - current_amount;
-                    String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
-                    result9 = statement.executeQuery(add_customer_program);
+                    // String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
+                    // result9 = statement.executeQuery(add_customer_program);
+
+                    String Trigger4 = "CREATE OR REPLACE TRIGGER redeem_update
+                                        AFTER INSERT ON Customer_Redeem
+                                        BEGIN
+                                            update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'""
+                                        END";
+
+                    statement.executeQuery(Trigger4);
+                    int updatedQuantity = max_quantity - get_quantity;
+                    String Trigger5 = "CREATE OR REPLACE TRIGGER instance_update
+                                        AFTER INSERT ON Customer_Redeem
+                                        BEGIN
+                                            UPDATE Reward_program SET quantity='"+ updatedQuantity +"'
+                                        END";
+
+                    statement.executeQuery(Trigger5);
 
                     if(get_reward_name.equals("Gift Card")){
                         System.out.println("Enter Gift card Code : ");

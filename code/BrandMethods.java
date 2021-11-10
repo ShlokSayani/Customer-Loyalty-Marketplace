@@ -602,42 +602,55 @@ public class BrandMethods{
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                
-                    String getactivitytuples = "Select Count(*) from Activity_program where loyalty_id='"+ LoyaltyId +"'";
+                    String getactivitytuples = "Select * from Activity_program where loyalty_id='"+ LoyaltyId +"'";
                     result7 = statement.executeQuery(getactivitytuples);
-                    int act = -1;
                     if(result7.next())
-                        act = result7.getInt(1);
-
-                    String getrewardtuples = "Select count(*) from Reward_program where loyalty_id='"+ LoyaltyId +"'";
-                    result7 = statement.executeQuery(getrewardtuples);
-            
-                    int rew = -1;
-                    if(result7.next())
-                        rew = result7.getInt(1);
-
-                    String getloyaltytuples = "Select count(*) from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
-                    result7 = statement.executeQuery(getloyaltytuples);
-                    
-                    int loy = -1;
-                    if(result7.next())
-                        loy = result7.getInt(1);
-                
-                    String getTier = "Select count(*) from Tier where loyalty_id='"+ LoyaltyId +"'";
-                    result7 = statement.executeQuery(getTier);
-                    int tier = -1;
-                    if(result7.next())
-                        tier = result7.getInt(1);
-
-                    if((rew+act+tier+loy)>=3)
                     {
-                        System.out.println("Your program is active");
-                        BrandHomeMenu.main(args);
+
+                        String getrewardtuples = "Select count(*) from Reward_program where loyalty_id='"+ LoyaltyId +"'";
+                        result7 = statement.executeQuery(getrewardtuples);
+            
+                        if(result7.next())
+                        {
+
+                            String getloyaltytuples = "Select count(*) from Loyalty_program where loyalty_id='"+ LoyaltyId +"'";
+                            result7 = statement.executeQuery(getloyaltytuples);
+                        
+                            if(result7.next())
+                            {
+                        
+                                String getTier = "Select count(*) from Tier where loyalty_id='"+ LoyaltyId +"'";
+                                result7 = statement.executeQuery(getTier);
+                                if(result7.next())
+                                {
+
+                                    System.out.println("Your program is active");
+                                    BrandHomeMenu.main(args);
+                                }
+                                else
+                                {
+                                    System.out.println("Your program is inactive");
+                                    BrandHomeMenu.main(args);
+                                } 
+                            }
+                            else
+                            {
+                                System.out.println("Your program is inactive");
+                                BrandHomeMenu.main(args);
+                            }
+                        }
+                        else
+                        {
+                            System.out.println("Your program is inactive");
+                            BrandHomeMenu.main(args);
+                        }
                     }
                     else
                     {
                         System.out.println("Your program is inactive");
                         BrandHomeMenu.main(args);
                     }
+
 
                 } finally {
                     //result7.close();
