@@ -142,7 +142,7 @@ public class AdminMethods {
                     String b_name = result.getString("brand_name");
                     String b_address = result.getString("brand_address");
                     java.sql.Date date = result.getDate("join_date");
-                    System.out.println("Brand Id: " + b_id + ", Customer Name: " + b_name + ", Customer Address: " + b_address+ ", Joining date: " + date);
+                    System.out.println("Brand Id: " + b_id + ", Brand Name: " + b_name + ", Brand Address: " + b_address+ ", Joining date: " + date);
                 }
                 System.out.println();
                 AdminHomeMenu.main(null);
