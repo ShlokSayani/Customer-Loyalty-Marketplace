@@ -39,10 +39,26 @@ public class CustomerMethods {
                 statement = connection.createStatement();
                 System.out.println("\t\tEnrolling Customer to a loyalty program\n\n");
                 
+                String brandQuery = "select * from Loyalty_program where loyalty_id='" + programID + "'";
+                result = statement.executeQuery(brandQuery);
+                String brandId = "";
+                String getTier = "";
+                if(result.next()){
+                    brandId = result.getString("brand_id");
+                    getTier = result.getString("program_type");
+                }
                 String checkEnrollment = "select * from Customer_program where customer_id='" + customerID + "' AND loyalty_id='" + programID + "'";
                 result = statement.executeQuery(checkEnrollment);
+                String tierVal = "Regular";
+                if(getTier.equals("Tier")){
+                    String baseTier = "select * from Tier where loyalty_id='" + programID + "' and multiplier='1'";
+                    result = statement.executeQuery(baseTier);
+                    if(result.next()){
+                        tierVal = result.getString("tier");
+                    }
+                }
                 if(!result.next()){
-                    String enrollCustomer = "insert into Customer_program values('" + customerID + "','" + programID + "')";
+                    String enrollCustomer = "insert into Customer_program values('" + customerID + "','" + programID + "', '" + brandId + "', " + 0 + ", '" + tierVal + "')";
                     result = statement.executeQuery(enrollCustomer);
                     System.out.println("\t\tCustomer Successfully Enrolled");
                 }
@@ -50,14 +66,16 @@ public class CustomerMethods {
                     System.out.println("Customer already enrolled in the program.");
                 }
 
-                // String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
-                // result = statement.executeQuery(customerWallet);
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
+                result = statement.executeQuery(customerWallet);
 
-                // if(!result.next()){
-                //     System.out.println("Adding Customer Wallet...");
-                //     String createWallet = "insert into Wallet values ('" + customerID + "')";
-                //     System.out.println("Wallet created Successfully for Customer");
-                // }
+                if(!result.next()){
+                    System.out.println("Adding Customer Wallet...");
+                    String walletId = "W" + customerID.substring(1, customerID.length());
+                    String createWallet = "insert into Wallet values ('" + customerID + "', '" + walletId + "')";
+                    result = statement.executeQuery(createWallet);
+                    System.out.println("Wallet created Successfully for Customer");
+                }
 
                 CustomerHomeMenu.main(new String[]{customerID});
             } finally {
@@ -72,6 +90,7 @@ public class CustomerMethods {
     }
 
     public static void purchase(String customerID, String programID){
+        //AfterInsertOn();
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
@@ -98,9 +117,10 @@ public class CustomerMethods {
                 }
 
                 System.out.println("Press (Y/N) if you want to use a Gift Card.");
+                sc.next();
                 String useGiftCard = sc.nextLine();
 
-                if(useGiftCard=="Y"){
+                if(useGiftCard.equals("Y")){
                     System.out.println("\t\tSelect a Gift Card to use.\n\n");
                     String displayGiftCard = "select * from Reward_GiftCard where customer_id = '" + customerID + "' AND loyalty_id='" + programID;
                     result = statement.executeQuery(displayGiftCard);
@@ -129,7 +149,7 @@ public class CustomerMethods {
                             rewardActivities(customerID);
                         }                        
                         
-                        String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "')";
+                        String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points,customer_id) values ('" + transactionID + "', " + walletId + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "','"+ customerID +"')";
                         statement.executeQuery(cardTransaction);
                     }
                     else{
@@ -138,7 +158,7 @@ public class CustomerMethods {
                     }
                 }
                 else{
-                    String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Purchase'";
+                    String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Purchase'";
                     int customerPoints = 0;
 
                     result = statement.executeQuery(activityPoints);
@@ -159,13 +179,9 @@ public class CustomerMethods {
                     System.out.println("Enter Transaction ID");
                     String transactionID = sc.nextLine();
                     
-                    String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
+                    String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points,customer_id) values ('" + transactionID + "', '" + walletId + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + ",'"+customerID +"')";
                     statement.executeQuery(cardTransaction);
                     
-
-                    String Trigger1 = "CREATE OR REPLACE TRIGGER purchase_update AFTER INSERT ON Activity_Transactions BEGIN UPDATE Customer_program SET customer_points = customer_points + '"+ customerPoints+"' Where customer_id = '"+ customerID +"' END ";
-
-                    statement.executeQuery(Trigger1);
 
                     System.out.println("Product Purchased Successfully!");
                 }
@@ -182,6 +198,7 @@ public class CustomerMethods {
     }
 
     public static void addReview(String customerID, String programID, String reviewContent){
+        //AfterInsertOn();
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
@@ -206,7 +223,7 @@ public class CustomerMethods {
                     customerBrand = result.getString("brand_id");
                 }
 
-                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Leave a review'";
+                String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Leave a review'";
                 int customerPoints = 0;
 
                 result = statement.executeQuery(activityPoints);
@@ -226,13 +243,11 @@ public class CustomerMethods {
                 System.out.println("Enter Transaction ID");
                 String transactionID = sc.nextLine();
 
-                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
+                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points, customer_id) values ('" + transactionID + "', " + customerWallet + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "','"+customerID+"')";
                 result = statement.executeQuery(reviewTransaction);
 
-                String reviewTable = "insert into Customer_Reviews(loyalty_id, review_date, review_content, transaction_id, customer_id) values ('" + programID + "', 'TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
+                String reviewTable = "insert into Customer_Reviews(loyalty_id, review_date, review_content, transaction_id, customer_id) values ('" + programID + "', TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
                 result = statement.executeQuery(reviewTable);
-
-                String Trigger2 = "CREATE OR REPLACE TRIGGER review_update AFTER INSERT ON Activity_Transactions BEGIN UPDATE Customer_program SET customer_points = customer_points + '"+ customerPoints+"' Where customer_id = '"+ customerID +"' END ";
 
                 System.out.println("Review added Successfully!");
 
@@ -285,6 +300,7 @@ public class CustomerMethods {
     }
 
     public static void addReferral(String customerID, String programID){
+        //AfterInsertOn();
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             try {
@@ -309,7 +325,7 @@ public class CustomerMethods {
                     customerBrand = result.getString("brand_id");
                 }
 
-                String activityPoints = "select activity_points from RERules where loyalty_id='" + programID + "' AND brand_id='" + customerBrand + "' AND activity_name='Refer a friend'";
+                String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Refer a friend'";
                 int customerPoints = 0;
 
                 result = statement.executeQuery(activityPoints);
@@ -325,14 +341,13 @@ public class CustomerMethods {
                 }
 
                 System.out.println("Enter Transaction Date");
-                String transactionDate = sc.nextLine();
+                String transactionDate = sc.next();
+                
                 System.out.println("Enter Transaction ID");
-                String transactionID = sc.nextLine();
+                String transactionID = sc.next();
 
-                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points) values ('" + transactionID + "', " + customerWallet + "', 'TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer a friend', '" + programID + "', '" + customerBrand + "', " + customerPoints + "')";
-                result = statement.executeQuery(reviewTransaction);
-
-                String Trigger3 = "CREATE OR REPLACE TRIGGER refer_update AFTER INSERT ON Activity_Transactions BEGIN UPDATE Customer_program SET customer_points = customer_points + '"+ customerPoints+"' Where customer_id = '"+ customerID +"' END";
+                String referralTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points,customer_id) values ('" + transactionID + "', '" + walletId + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Refer a friend', '" + programID + "', '" + customerBrand + "', " + customerPoints + ",'"+customerID+"')";
+                result = statement.executeQuery(referralTransaction);
 
                 System.out.println("Referral added Successfully!");
 
@@ -509,7 +524,7 @@ public class CustomerMethods {
                         System.out.println("Enter expiry date: ");
                         String get_expiry_date = sc.nextLine();
 
-                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"','TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
                         result10 = statement.executeQuery(add_reward_giftcard);
                     }
                     System.out.println("Reward Redeemed successfully. Thank You!!");                     
@@ -604,11 +619,11 @@ public class CustomerMethods {
                 
                 System.out.println("Displaying a List of Activity Transactions...");
 
-                String viewActTransaction = "select * from Customer C, Wallet W, Activity_Transactions T where C.customer_id='" + customerID + "', C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
+                String viewActTransaction = "select * from Customer C, Wallet W, Activity_Transactions T where C.customer_id='" + customerID + "' AND C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
                 result = statement.executeQuery(viewActTransaction);
                 System.out.println("Activity Transaction ID\tTransaction Date\tActivity Type\tGained Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
-                    System.out.println(result.getString("activity_transaction_id") + " " + result.getString("transaction_date") + " " + result.getString("activity_type") + " " + result.getString("gained_points") + " " + result.getString("loyalty_id") + " " + result.getString("brand_id") + " " + result.getString("wallet_id"));
+                    System.out.println(result.getString("activity_transaction_id") + " " + result.getString("activity_transaction_date") + " " + result.getString("activity_type") + " " + result.getString("gained_points") + " " + result.getString("loyalty_id") + " " + result.getString("brand_id") + " " + result.getString("wallet_id"));
                 }
 
                 System.out.println("Displaying a List of Reward Transactions...");
@@ -656,13 +671,13 @@ public class CustomerMethods {
     }
 
     public static void rewardActivities(String customerID){
-        System.out.println("1. Purchase");
-        System.out.println("2. Leave a Review");
-        System.out.println("3. Refer a Friend");
-        System.out.println("4. Go Back");
-        System.out.println("Choose from above options");
+        // System.out.println("1. Purchase");
+        // System.out.println("2. Leave a Review");
+        // System.out.println("3. Refer a Friend");
+        // System.out.println("4. Go Back");
+        // System.out.println("Choose from above options");
 
-        selection = sc.nextInt();
+        // selection = sc.nextInt();
 
         try {
             Class.forName("oracle.jdbc.OracleDriver");
@@ -694,7 +709,7 @@ public class CustomerMethods {
                     programID = result.getString("loyalty_id");
                 }
 
-                String purchasePresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Purchase' AND L.loyalty_id=A.loyalty_id";
+                String purchasePresent = "select * from Activity_program where loyalty_id='" + selectedProgram + "' and activity_name='Purchase'";
                 result = statement.executeQuery(purchasePresent);
                 int cnt = 1;
                 if(result.next()){
@@ -703,16 +718,16 @@ public class CustomerMethods {
                     cnt++;
                 }
 
-                String reviewPresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Leave a review' AND L.loyalty_id=A.loyalty_id";
-                result = statement.executeQuery(purchasePresent);
+                String reviewPresent = "select * from Activity_program where loyalty_id='" + selectedProgram + "' and activity_name='Leave a review'";
+                result = statement.executeQuery(reviewPresent);
                 if(result.next()){
                     System.out.println(cnt + ". Leave a Review");
                     map.put(cnt, "Leave a review");
                     cnt++;
                 }
 
-                String referPresent = "select * from Loyalty_program L, Activity_program A where L.loyalty_id='" + selectedProgram + "' AND A.activity_name='Refer a friend' AND L.loyalty_id=A.loyalty_id";
-                result = statement.executeQuery(purchasePresent);
+                String referPresent = "select * from Activity_program where loyalty_id='" + selectedProgram + "' and activity_name='Refer a friend'";
+                result = statement.executeQuery(referPresent);
                 if(result.next()){
                     System.out.println(cnt + ". Refer a Friend");
                     map.put(cnt, "Refer a friend");
@@ -725,13 +740,13 @@ public class CustomerMethods {
                 System.out.println("Enter your Choice: ");
                 int choice = sc.nextInt();
 
-                if(map.get(choice) == "Purchase"){
+                if(map.get(choice).equals("Purchase")){
                     purchase(customerID, programID);
                 }
-                else if(map.get(choice) == "Leave a review"){
+                else if(map.get(choice).equals("Leave a review")){
                     reviewMenu(customerID, programID);
                 }
-                else if(map.get(choice) == "Refer a friend"){
+                else if(map.get(choice).equals("Refer a friend")){
                     addReferral(customerID, programID);
                 }
                 else{
@@ -771,4 +786,5 @@ public class CustomerMethods {
                 redeemPoints(customerID);
         }
     }
+
 }
