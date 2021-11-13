@@ -37,7 +37,7 @@ public class CustomerMethods {
                 System.out.println("Loading Customer Enrollment module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
-                System.out.println("\t\tEnrolling Customer to a loyalty program\n\n");
+                System.out.println("\t\tEnrolling Customer to a loyalty program\n");
                 
                 String brandQuery = "select * from Loyalty_program where loyalty_id='" + programID + "'";
                 result = statement.executeQuery(brandQuery);
@@ -60,7 +60,8 @@ public class CustomerMethods {
                 if(!result.next()){
                     String enrollCustomer = "insert into Customer_program values('" + customerID + "','" + programID + "', '" + brandId + "', " + 0 + ", '" + tierVal + "')";
                     result = statement.executeQuery(enrollCustomer);
-                    System.out.println("\t\tCustomer Successfully Enrolled");
+                    System.out.println("Customer Successfully Enrolled");
+                    System.out.println();
                 }
                 else{
                     System.out.println("Customer already enrolled in the program.");
@@ -206,7 +207,7 @@ public class CustomerMethods {
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 String walletId = "";
-                String customerWallet = "select * from Wallet where customer_id='" + customerID + "')";
+                String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
                 result = statement.executeQuery(customerWallet);
                 if(result.next()){
                     walletId = result.getString("wallet_id");
@@ -239,14 +240,18 @@ public class CustomerMethods {
                 }
 
                 System.out.println("Enter Transaction Date");
+                sc.nextLine();
                 String transactionDate = sc.nextLine();
                 System.out.println("Enter Transaction ID");
                 String transactionID = sc.nextLine();
 
-                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points, customer_id) values ('" + transactionID + "', " + customerWallet + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "', " + customerPoints + "','"+customerID+"')";
+                String reviewTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points, customer_id) values ('" + transactionID + "', '" + walletId + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Leave a review', '" + programID + "', '" + customerBrand + "', " + customerPoints + ",'"+customerID+"')";
                 result = statement.executeQuery(reviewTransaction);
 
-                String reviewTable = "insert into Customer_Reviews(loyalty_id, review_date, review_content, transaction_id, customer_id) values ('" + programID + "', TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
+                System.out.println("Enter Review Id: ");
+                String get_review_id = sc.nextLine();
+
+                String reviewTable = "insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values ('"+get_review_id+"','" + programID + "', TO_DATE('" + transactionDate +  "','MM/DD/YYYY'), '" + reviewContent + "', '" + transactionID + "', '" + customerID + "')";
                 result = statement.executeQuery(reviewTable);
 
                 System.out.println("Review added Successfully!");
@@ -270,13 +275,16 @@ public class CustomerMethods {
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
                 System.out.println("\t\tLeave a Review!\n\n");
-                
+
+                System.out.println("\n Enter review: ");
+                sc.nextLine();
                 String reviewContent = sc.nextLine();
 
-                selection = sc.nextInt();
+                
                 System.out.println("1. Leave a Review");
                 System.out.println("2. Go Back");
-
+                System.out.println("Choose from above options");
+                selection = sc.nextInt();
                 switch(selection){
                     case 1:
                         addReview(customerID, programID, reviewContent);
@@ -405,6 +413,7 @@ public class CustomerMethods {
                 }
                 System.out.println();
                 System.out.println("Select Brand ID for which you have to redeem points.");
+                sc.nextLine();
                 String get_brand_id = sc.nextLine();
 
                 String fetchloyaltyid = "select loyalty_id from Customer_program where customer_id = '"+CustomerID+"' and brand_id='" + get_brand_id + "'";
@@ -418,7 +427,7 @@ public class CustomerMethods {
                 result5 = statement.executeQuery(fetchtotalpoints);
                 int get_total_points = 0;
                 while(result5.next()){
-                    get_total_points = result3.getInt(1);
+                    get_total_points = result5.getInt(1);
                 }
                 
                 String fetch_reward_details = "select reward_code,reward_name, redeem_points from RRRules where brand_id = '"+get_brand_id+"'";
@@ -460,7 +469,7 @@ public class CustomerMethods {
                             RedeemPoints(CustomerID);
                             break;
                         case 2:
-                            CustomerHomeMenu.main(null);
+                            CustomerHomeMenu.main(new String[]{CustomerID});
                             break;
                     }
 
@@ -478,7 +487,7 @@ public class CustomerMethods {
                             RedeemPoints(CustomerID);
                             break;
                         case 2:
-                            CustomerHomeMenu.main(null);
+                            CustomerHomeMenu.main(new String[]{CustomerID});
                             break;
                     }
                 }
@@ -490,7 +499,7 @@ public class CustomerMethods {
                         get_wallet_id = result6.getString("wallet_id");
                     }
                     sc.nextLine();
-                    System.out.println("Enter Reward Transaction: ");
+                    System.out.println("Enter Reward Transaction ID: ");
                     String get_reward_transaction_id = sc.nextLine();
 
                     System.out.println("Enter Transaction date: ");
@@ -499,7 +508,7 @@ public class CustomerMethods {
                     System.out.println("Enter Redeem Id: ");
                     String get_redeem_id = sc.nextLine();
 
-                    String add_reward_transaction = "insert into Reward_Transaction(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('"+get_reward_transaction_id+"',TO_DATE('"+get_reward_transaction_date+"','mm/dd/yyyy'),'"+get_reward_code+"', '"+ current_amount+"', '"+get_loyalty_id+"','"+get_brand_id+"', '"+ get_wallet_id+"')";
+                    String add_reward_transaction = "insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id, customer_id) values('"+get_reward_transaction_id+"',TO_DATE('"+get_reward_transaction_date+"','mm/dd/yyyy'),'"+get_reward_code+"', '"+ current_amount+"', '"+get_loyalty_id+"','"+get_brand_id+"', '"+ get_wallet_id+"','"+CustomerID+"')";
                     result7 = statement.executeQuery(add_reward_transaction);
                     
                     String add_customer_redeem = "insert into Customer_Redeem(reward_transaction_id,redeem_id, reward_instances) values('"+get_reward_transaction_id+"','"+get_redeem_id+"', '"+ get_quantity+"')";
@@ -509,13 +518,12 @@ public class CustomerMethods {
                     // String add_customer_program = "update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"'";
                     // result9 = statement.executeQuery(add_customer_program);
 
-                    String Trigger4 = "CREATE OR REPLACE TRIGGER redeem_update AFTER INSERT ON Customer_Redeem BEGIN update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"' END";
-
-                    statement.executeQuery(Trigger4);
+                    // String Trigger4 = "CREATE OR REPLACE TRIGGER redeem_update AFTER INSERT ON Customer_Redeem BEGIN update Customer_program set customer_points ="+new_customer_points+" where customer_id = '"+CustomerID+"' and brand_id = '"+get_brand_id+"' and loyalty_id = '"+get_loyalty_id+"' END";
+                    // statement.executeQuery(Trigger4);
                     int updatedQuantity = max_quantity - get_quantity;
-                    String Trigger5 = "CREATE OR REPLACE TRIGGER instance_update AFTER INSERT ON Customer_Redeem BEGIN UPDATE Reward_program SET quantity='"+ updatedQuantity +"' END";
+                    // String Trigger5 = "CREATE OR REPLACE TRIGGER instance_update AFTER INSERT ON Customer_Redeem BEGIN UPDATE Reward_program SET quantity='"+ updatedQuantity +"' END";
 
-                    statement.executeQuery(Trigger5);
+                    // statement.executeQuery(Trigger5);
 
                     if(get_reward_name.equals("Gift Card")){
                         System.out.println("Enter Gift card Code : ");
@@ -530,7 +538,7 @@ public class CustomerMethods {
                     System.out.println("Reward Redeemed successfully. Thank You!!");                     
                 }
 
-                CustomerHomeMenu.main(null);
+                CustomerHomeMenu.main(new String[]{CustomerID});
 
             } finally {
                 result.close();
@@ -551,19 +559,20 @@ public class CustomerMethods {
                 System.out.println("Loading Customer Show Programs module...");
                 connection = DriverManager.getConnection(jdbcURL, user, password);
                 statement = connection.createStatement();
-                System.out.println("\t\tDisplaying the list of Available Loyalty Programs\n\n");
+                System.out.println("\t\tDisplaying the list of Available Loyalty Programs\n");
                 
                 String programList = "select loyalty_id, loyalty_program_name from Loyalty_program where lp_status = 'active'";
                 result = statement.executeQuery(programList);
-
-                System.out.println("\t\tLoyalty Program ID\t\tLoalty Program Name");
+                System.out.println("Loyalty Program ID\tLoalty Program Name");
+                System.out.println();
                 int cnt = 1;
                 while(result.next()){
-                    System.out.println("\t\t" + result.getString("loyalty_id") + "\t\t" + result.getString("loyalty_program_name"));
+                    System.out.println(result.getString("loyalty_id") + "\t\t" + result.getString("loyalty_program_name"));
                 }
-
+                System.out.println();
                 System.out.println("1. Enroll in Loyalty Program");
                 System.out.println("2. Go Back");
+                System.out.println("Choose from above options");
 
                 selection = sc.nextInt();
 
@@ -618,32 +627,34 @@ public class CustomerMethods {
                 }
                 
                 System.out.println("Displaying a List of Activity Transactions...");
-
+                System.out.println();
                 String viewActTransaction = "select * from Customer C, Wallet W, Activity_Transactions T where C.customer_id='" + customerID + "' AND C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
                 result = statement.executeQuery(viewActTransaction);
                 System.out.println("Activity Transaction ID\tTransaction Date\tActivity Type\tGained Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
-                    System.out.println(result.getString("activity_transaction_id") + " " + result.getString("activity_transaction_date") + " " + result.getString("activity_type") + " " + result.getString("gained_points") + " " + result.getString("loyalty_id") + " " + result.getString("brand_id") + " " + result.getString("wallet_id"));
+                    System.out.println(result.getString("activity_transaction_id") + "\t" + result.getString("activity_transaction_date") + "\t" + result.getString("activity_type") + "\t" + result.getString("gained_points") + "\t" + result.getString("loyalty_id") + "\t" + result.getString("brand_id") + "\t" + result.getString("wallet_id"));
                 }
-
+                System.out.println();
                 System.out.println("Displaying a List of Reward Transactions...");
-
+                System.out.println();
                 String viewRwdTransaction = "select * from Customer C, Wallet W, Reward_Transactions T where C.customer_id='" + customerID + "' AND C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
                 result = statement.executeQuery(viewRwdTransaction);
                 System.out.println("Reward Transaction ID\tTransaction Date\tReward Code\tRedeemed Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
-                    System.out.println(result.getString("reward_transaction_id") + " " + result.getString("reward_transaction_date") + " " + result.getString("reward_code") + " " + result.getString("redeem_points") + " " + result.getString("loyalty_id") + " " + result.getString("brand_id") + " " + result.getString("wallet_id"));
+                    System.out.println(result.getString("reward_transaction_id") + "\t" + result.getString("reward_transaction_date") + "\t" + result.getString("reward_code") + "\t" + result.getString("redeem_points") + "\t" + result.getString("loyalty_id") + "\t" + result.getString("brand_id") + "\t" + result.getString("wallet_id"));
                 }
-
+                System.out.println();
                 System.out.println("Displaying the total number of Points for each Loyalty Program Enrolled");
+                System.out.println();
                 String ptsTotal = "select * from Customer_program where customer_id='" + customerID + "'";
                 result = statement.executeQuery(ptsTotal);
-
+                System.out.println();
                 System.out.println("Loyalty Program ID\tPoints\tTier");
+                System.out.println();
                 while(result.next()){
-                    System.out.println(result.getString("loyalty_id") + " " + result.getString("customer_points") + " " + result.getString("customer_tier"));
+                    System.out.println(result.getString("loyalty_id") + "\t" + result.getString("customer_points") + "\t" + result.getString("customer_tier"));
                 }
-
+                System.out.println();
                 CustomerHomeMenu.main(new String[]{customerID});
 
             } finally {
