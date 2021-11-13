@@ -20,7 +20,7 @@ begin
                 select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints2;
                 update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
             ELSE
-                select TO_NUMBER(points_required) into getpoints1 from Tier where points_required NOT IN (select MAX(points_required) from Tier where loyalty_id=:new.loyalty_id) AND points_required <> 0;
+                select TO_NUMBER(points_required) into getpoints1 from Tier where points_required NOT IN (select MAX(points_required) from Tier where loyalty_id=:new.loyalty_id) AND loyalty_id=:new.loyalty_id AND points_required <> 0;
                 IF(currentpoints > getpoints1) THEN
                     select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints1;
                     update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
