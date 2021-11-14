@@ -532,7 +532,7 @@ public class CustomerMethods {
                         System.out.println("Enter expiry date: ");
                         String get_expiry_date = sc.nextLine();
 
-                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date, giftcard_quantity, customer_id, reward_transaction_id, loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"',"+ get_quantity +",'mm/dd/yyyy'),'"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date, giftcard_quantity, customer_id, reward_transaction_id, loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"','mm/dd/yyyy'),'"+get_quantity+"','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
                         result10 = statement.executeQuery(add_reward_giftcard);
 
                         String update_quantity = "update Reward_program set quantity="+updatedQuantity+" where reward_code='"+get_reward_code+"' and loyalty_id='"+get_loyalty_id+"'";
