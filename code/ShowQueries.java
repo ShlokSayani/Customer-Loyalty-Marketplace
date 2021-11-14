@@ -102,8 +102,8 @@ public class ShowQueries{
                     System.out.println();
                     System.out.println("Query7: All brands where total number of points redeemed overall is less than 500 points");
                     System.out.println();
-                    String query7 = "Select brand_id from Reward_Transactions GROUP BY brand_id HAVING SUM(redeem_points)<500";
-                    result = statement.executeQuery(query6);
+                    String query7 = "select B.brand_id from Brand B where B.brand_id NOT IN (select R.brand_id from Reward_Transactions R GROUP BY R.brand_id HAVING SUM(R.redeem_points)>500)";
+                    result = statement.executeQuery(query7);
 
                     while(result.next())
                     {
