@@ -55,18 +55,18 @@ insert into Tier(tier, multiplier, points_required, loyalty_id) values('Premium'
 
 
 /*RRRules*/
-insert into RRRules(RR_rule_code, rr_rule_version, reward_code, reward_name, redeem_points, brand_id) values('RB1234', 1,'R01','Gift Card', 80,'Brand01');
-insert into RRRules(RR_rule_code, rr_rule_version, reward_code, reward_name, redeem_points, brand_id) values('RB1235', 1,'R02','Free Product',70 ,'Brand01');
-insert into RRRules(RR_rule_code, rr_rule_version, reward_code, reward_name, redeem_points, brand_id) values('RB2234',1 ,'R01','Gift Card', 120,'Brand02');
-insert into RRRules(RR_rule_code, rr_rule_version, reward_code, reward_name, redeem_points, brand_id) values('RB2235',1 ,'R02','Free Product', 90,'Brand02');
-insert into RRRules(RR_rule_code, rr_rule_version, reward_code, reward_name, redeem_points, brand_id) values('RB3234',1 ,'R01','Gift Card',100 ,'Brand03');
+insert into RRRules(RR_rule_code, reward_code, reward_name, redeem_points, brand_id) values('RB1234','R01','Gift Card', 80,'Brand01');
+insert into RRRules(RR_rule_code, reward_code, reward_name, redeem_points, brand_id) values('RB1235','R02','Free Product',70 ,'Brand01');
+insert into RRRules(RR_rule_code, reward_code, reward_name, redeem_points, brand_id) values('RB2234','R01','Gift Card', 120,'Brand02');
+insert into RRRules(RR_rule_code, reward_code, reward_name, redeem_points, brand_id) values('RB2235','R02','Free Product', 90,'Brand02');
+insert into RRRules(RR_rule_code, reward_code, reward_name, redeem_points, brand_id) values('RB3234','R01','Gift Card',100 ,'Brand03');
 
 /*RERules*/
-insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR1234', 1,'A01','Purchase',15 ,'Brand01');
-insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR1235', 1,'A02','Leave a review', 10,'Brand01');
-insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR2234', 1,'A01','Purchase', 40,'Brand02');
-insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR2235', 1,'A03','Refer a friend',30 ,'Brand02');
-insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR3234', 1,'A03','Refer a friend', 10,'Brand03');
+insert into RERules(RE_rule_code, activity_code, activity_name, activity_points, brand_id) values('BR1234','A01','Purchase',15 ,'Brand01');
+insert into RERules(RE_rule_code, activity_code, activity_name, activity_points, brand_id) values('BR1235','A02','Leave a review', 10,'Brand01');
+insert into RERules(RE_rule_code, activity_code, activity_name, activity_points, brand_id) values('BR2234','A01','Purchase', 40,'Brand02');
+insert into RERules(RE_rule_code, activity_code, activity_name, activity_points, brand_id) values('BR2235','A03','Refer a friend',30 ,'Brand02');
+insert into RERules(RE_rule_code, activity_code, activity_name, activity_points, brand_id) values('BR3234','A03','Refer a friend', 10,'Brand03');
 
 /*Reward_product*/
 insert into Reward_product(product_code,product_quantity,customer_id,reward_transaction_id, loyalty_id) values('C1FP01',1,'C0001','C1B2RTFP01','TLP02');
