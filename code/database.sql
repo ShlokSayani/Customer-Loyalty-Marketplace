@@ -102,7 +102,8 @@ CREATE TABLE Customer_program(
     customer_points int,
     customer_tier VARCHAR2(30),
     constraint cp_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
-    constraint cp_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+    constraint cp_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    PRIMARY KEY (customer_id, loyalty_id)
 );
 
 CREATE TABLE Wallet(
@@ -115,27 +116,31 @@ CREATE TABLE Wallet(
 CREATE TABLE Activity_Transactions(
     activity_transaction_id VARCHAR2(15) PRIMARY KEY,
 	activity_transaction_date DATE NOT NULL,
-    activity_type VARCHAR2(10) NOT NULL,
+    activity_type VARCHAR2(20) NOT NULL,
     gained_points int,
     loyalty_id VARCHAR2(15) NOT NULL,
     brand_id VARCHAR2(15),
     wallet_id VARCHAR2(15),
+    customer_id VARCHAR2(15),
     constraint at_wallet_id FOREIGN KEY (wallet_id) REFERENCES Wallet(wallet_id),
 	constraint at_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
-    constraint at_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id) 
+    constraint at_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
+    constraint at_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
 CREATE TABLE Reward_Transactions(
     reward_transaction_id VARCHAR2(15) PRIMARY KEY,
 	reward_transaction_date DATE NOT NULL,
-    reward_code VARCHAR2(10),
+    reward_code VARCHAR2(20),
    	redeem_points int,
     loyalty_id VARCHAR2(15) NOT NULL,
     brand_id VARCHAR2(15),
     wallet_id VARCHAR2(15),
+    customer_id VARCHAR2(15),
     constraint rt_wallet_id FOREIGN KEY (wallet_id) REFERENCES Wallet(wallet_id),
 	constraint rt_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
-    constraint rt_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id) 
+    constraint rt_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
+    constraint rt_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
 CREATE TABLE Reward_GiftCard(
@@ -169,3 +174,79 @@ CREATE TABLE Customer_Reviews(
     constraint rev_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
     PRIMARY KEY (review_id,customer_id)
 );
+
+
+CREATE OR REPLACE FUNCTION givesu(ps number, q number)
+return number is
+BEGIN
+   return ps + q;
+END;
+/
+
+create or replace trigger insert_update
+after insert on Activity_Transactions
+for each row
+declare 
+    currentpoints number; 
+begin
+    select TO_NUMBER(customer_points) into currentpoints from Customer_program where customer_id = :new.customer_id AND loyalty_id = :new.loyalty_id;
+    update Customer_program set customer_points = givesu(currentpoints, TO_NUMBER(:new.gained_points)) where customer_id = :new.customer_id and loyalty_id = :new.loyalty_id;
+end;
+/
+
+create or replace trigger check_tier
+after insert on Activity_Transactions
+for each row
+    follows insert_update
+declare
+    currentpoints number;
+    getpoints1 number;
+    getpoints2 number;
+    totaltuples number;
+    tier1 VARCHAR2(30);
+    updatetier VARCHAR2(30);
+begin
+    select program_type into tier1 from Loyalty_program where loyalty_id = :new.loyalty_id;
+    select TO_NUMBER(customer_points) into currentpoints from Customer_program where loyalty_id = :new.loyalty_id and customer_id = :new.customer_id;
+    IF(tier1 = 'Tier') THEN
+        select count(*) into totaltuples from Tier where loyalty_id = :new.loyalty_id;
+        IF(totaltuples = 3) THEN
+            select TO_NUMBER(MAX(points_required)) into getpoints2 from Tier where loyalty_id=:new.loyalty_id;
+            IF(currentpoints > getpoints2) THEN
+                select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints2;
+                update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
+            ELSE
+                select TO_NUMBER(points_required) into getpoints1 from Tier where points_required NOT IN (select MAX(points_required) from Tier where loyalty_id=:new.loyalty_id) AND loyalty_id=:new.loyalty_id AND points_required <> 0;
+                IF(currentpoints > getpoints1) THEN
+                    select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints1;
+                    update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
+                END IF;
+            END IF;
+        ELSE 
+            select MAX(points_required) into getpoints2 from Tier where loyalty_id=:new.loyalty_id;
+            IF(currentpoints > getpoints2) THEN
+                select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints2;
+                update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
+            END IF;
+        END IF;
+    END IF;
+END;
+
+CREATE OR REPLACE FUNCTION givesubtr(ps number, q number)
+return number is
+BEGIN
+   return ps - q;
+END;
+/
+
+create or replace trigger after_redeem
+after insert on Reward_Transactions
+for each row
+declare 
+    currentpoints number; 
+begin
+    select TO_NUMBER(customer_points) into currentpoints from Customer_program where customer_id = :new.customer_id AND loyalty_id = :new.loyalty_id;
+    update Customer_program set customer_points = givesubtr(currentpoints, TO_NUMBER(:new.redeem_points)) where customer_id = :new.customer_id and loyalty_id = :new.loyalty_id;
+end;
+/
+
