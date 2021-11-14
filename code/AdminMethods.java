@@ -31,7 +31,7 @@ public class AdminMethods {
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tEnter the details to add a brand:\n\n");
-                sc.nextLine();
+                // sc.nextLine();
                 System.out.println("Enter brand id: ");
                 String brand_id = sc.nextLine();
                 System.out.println("Enter brand name: ");
@@ -56,15 +56,23 @@ public class AdminMethods {
 
                 System.out.println("Enter brand password: ");
                 String brand_password = sc.nextLine();
-                String checkcred = "INSERT INTO Brand(brand_id, brand_name, brand_address, join_date, brand_password) VALUES ('"+brand_id+"','"+brand_name+"','"+brand_address+"',TO_DATE('"+join_date+"','mm/dd/yyyy'),'"+brand_password+"')";
-                statement.executeQuery(checkcred);
-                
-                System.out.println("Brand added successfully!!! \n");
 
-                AdminHomeMenu.main(null);
+                String checkBrand = "select * from Brand where brand_id='" + brand_id + "'";
+                result = statement.executeQuery(checkBrand);
 
+                if(result.next()){
+                    System.out.println("Brand Already Exists!");
+                    // sc.next();
+                    AddBrand();
+                }
+                else{
+                    String checkcred = "INSERT INTO Brand(brand_id, brand_name, brand_address, join_date, brand_password) VALUES ('"+brand_id+"','"+brand_name+"','"+brand_address+"',TO_DATE('"+join_date+"','mm/dd/yyyy'),'"+brand_password+"')";
+                    statement.executeQuery(checkcred);
+                    System.out.println("Brand added successfully!!! \n");
+                    AdminHomeMenu.main(null);
+                }
             } finally {
-                //result.close();
+                result.close();
                 statement.close();
                 connection.close();
             }
@@ -87,7 +95,7 @@ public class AdminMethods {
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tEnter the details to add a Customer:\n\n");
-                sc.nextLine();
+                // sc.nextLine();
                 System.out.println("Enter customer id: ");
                 String customer_id = sc.nextLine();
                 System.out.println("Enter customer name: ");
@@ -99,15 +107,22 @@ public class AdminMethods {
                 System.out.println("Enter customer password: ");
                 String customer_password = sc.nextLine();
 
-                String checkcred = "INSERT INTO Customer(customer_id, customer_name, customer_address, phone_number, customer_password) VALUES ('"+customer_id+"','"+customer_name+"','"+customer_address+"','"+phone_number+"','"+customer_password+"')";
-                statement.executeQuery(checkcred);
-                
-                System.out.println("Customer added successfully!!! \n");
+                String checkCustomer = "select * from Customer where customer_id = '" + customer_id + "'";
+                result = statement.executeQuery(checkCustomer);
 
-                AdminHomeMenu.main(null);
+                if(result.next()){
+                    System.out.println("Customer ID Already Taken!");
+                    AddCustomer();
+                }
+                else{
+                    String checkcred = "INSERT INTO Customer(customer_id, customer_name, customer_address, phone_number, customer_password) VALUES ('"+customer_id+"','"+customer_name+"','"+customer_address+"','"+phone_number+"','"+customer_password+"')";
+                    statement.executeQuery(checkcred);    
+                    System.out.println("Customer added successfully!!! \n");
+                    AdminHomeMenu.main(null);
+                }
 
             } finally {
-                //result.close();
+                result.close();
                 statement.close();
                 connection.close();
             }
@@ -283,6 +298,7 @@ public class AdminMethods {
 
         switch(selection){
             case 1:
+                sc.nextLine();
                 AddBrand();
                 break;
             case 2:
@@ -302,6 +318,7 @@ public class AdminMethods {
 
         switch(selection){
             case 1:
+                sc.nextLine();
                 AddCustomer();
                 break;
             case 2:
