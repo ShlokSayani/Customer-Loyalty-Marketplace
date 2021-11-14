@@ -118,21 +118,30 @@ public class CustomerMethods {
                 }
 
                 System.out.println("Press (Y/N) if you want to use a Gift Card.");
-                sc.next();
                 String useGiftCard = sc.nextLine();
+                // System.out.println("Use Gift Card: " + useGiftCard);
+                // HomePage.main(null);
 
                 if(useGiftCard.equals("Y")){
-                    System.out.println("\t\tSelect a Gift Card to use.\n\n");
-                    String displayGiftCard = "select * from Reward_GiftCard where customer_id = '" + customerID + "' AND loyalty_id='" + programID;
+                    System.out.println("Displaying Available Gift Cards.\n");
+                    String displayGiftCard = "select * from Reward_GiftCard where customer_id = '" + customerID + "' AND loyalty_id='" + programID + "' AND giftcard_quantity>0";
                     result = statement.executeQuery(displayGiftCard);
 
-                    System.out.println("\t\tGiftCard Code\t\tExpiryDate");
-                    while(result.next()){
-                        System.out.println(result.getString("giftcard_code") + "\t\t" + result.getString("expiry_date"));
+                    if(!result.next()){
+                        System.out.println("No Gift Cards Available.");
+                        CustomerHomeMenu.main(new String[]{customerID});
                     }
 
+                    System.out.println("GiftCard Code\t\tExpiryDate");
+                    while(result.next()){
+                        System.out.println(result.getString("giftcard_code") + "\t\t" + result.getDate("expiry_date"));
+                    }
+
+                    
+                    System.out.println("Enter Gift Card Code to Purchase.\n");
+
                     String selectedCard = sc.nextLine();
-                    String cardPresent = "select * from Reward_GiftCard where giftcard_code='" + selectedCard + "'";
+                    String cardPresent = "select * from Reward_GiftCard where giftcard_code='" + selectedCard + "' AND giftcard_quantity>0";
                     result = statement.executeQuery(cardPresent);
                     if(result.next()){
                         System.out.println("Enter Transaction Date");
@@ -150,15 +159,21 @@ public class CustomerMethods {
                             rewardActivities(customerID);
                         }                        
                         
-                        String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points,customer_id) values ('" + transactionID + "', " + walletId + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "','"+ customerID +"')";
+                        String cardTransaction = "insert into Activity_Transactions(activity_transaction_id, wallet_id, activity_transaction_date, activity_type, loyalty_id, brand_id, gained_points,customer_id) values ('" + transactionID + "', '" + walletId + "', TO_DATE('" + transactionDate + "','MM/DD/YYYY'), 'Purchase', '" + programID + "', '" + customerBrand + "',0,'"+ customerID +"')";
                         statement.executeQuery(cardTransaction);
+
+                        String removeCard = "update Reward_GiftCard set giftcard_quantity = giftcard_quantity-1 where customer_id = '" + customerID + "' and loyalty_id='" + programID + "'";
+                        result = statement.executeQuery(removeCard);
+
+                        System.out.println("Product Pruchased Successfully with GiftCard!");
+                        CustomerHomeMenu.main(new String[]{customerID});
                     }
                     else{
                         System.out.println("Please select a correct card code.");
                         CustomerHomeMenu.main(new String[]{customerID});
                     }
                 }
-                else{
+                else if(useGiftCard.equals("N")){
                     String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Purchase'";
                     int customerPoints = 0;
 
@@ -185,6 +200,11 @@ public class CustomerMethods {
                     
 
                     System.out.println("Product Purchased Successfully!");
+                    CustomerHomeMenu.main(new String[]{customerID});
+                }
+                else{
+                    System.out.println("Please Enter (Y/N)");
+                    purchase(customerID, programID);
                 }
 
             } finally {
@@ -759,6 +779,7 @@ public class CustomerMethods {
 
                 System.out.println("Enter your Choice: ");
                 int choice = sc.nextInt();
+                sc.nextLine();
 
                 if(map.get(choice).equals("Purchase")){
                     purchase(customerID, programID);
