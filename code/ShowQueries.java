@@ -28,8 +28,10 @@ public class ShowQueries{
                     statement = connection.createStatement();
                     
                     System.out.println("Query1");
+                    
+                    String query1 = "Select DISTINCT C.customer_id,C.customer_name from Customer C where C.customer_id NOT IN (Select P.customer_id from Customer_program P, Loyalty_program L where P.loyalty_id = L.loyalty_id and P.brand_id = 'Brand02')";
 
-                    String query1 = "Select DISTINCT C.customer_id,C.customer_name From Customer C,Customer_program P,Loyalty_program L where P.loyalty_id = L.loyalty_id AND C.customer_id = P.customer_id AND P.brand_id <> 'Brand02'";
+                    //String query1 = "Select DISTINCT C.customer_id,C.customer_name From Customer C,Customer_program P,Loyalty_program L where P.loyalty_id = L.loyalty_id AND C.customer_id = P.customer_id AND P.brand_id <> 'Brand02'";
                     result = statement.executeQuery(query1);
 
                     while(result.next())
