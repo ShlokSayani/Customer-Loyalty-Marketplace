@@ -51,7 +51,7 @@ CREATE TABLE Reward_program(
     reward_code VARCHAR2(10),
     reward_name VARCHAR2(20),
     loyalty_id VARCHAR2(15),
-    quantity int, 
+    quantity int CHECK (quantity>=0), 
     constraint rp_reward_code FOREIGN KEY (reward_code) REFERENCES Reward_Type(reward_code),
     constraint rp_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
     PRIMARY KEY (reward_code,loyalty_id)
@@ -59,8 +59,8 @@ CREATE TABLE Reward_program(
 
 CREATE TABLE Tier(
     tier VARCHAR2(30),
-    multiplier VARCHAR2(50),
-    points_required VARCHAR2(20),
+    multiplier VARCHAR2(50) CHECK (multiplier>=1),
+    points_required VARCHAR2(20) CHECK (points_required>=0),
     loyalty_id VARCHAR2(15), 
     constraint tier_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
     PRIMARY KEY (tier,loyalty_id)
@@ -71,7 +71,7 @@ CREATE TABLE RRRules(
     rr_rule_version NUMBER GENERATED ALWAYS AS IDENTITY,
     reward_code VARCHAR2(10),
     reward_name VARCHAR2(20),
-    redeem_points int,
+    redeem_points int CHECK (redeem_points>=0),
     brand_id VARCHAR2(15),
     constraint rrrule_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
     PRIMARY KEY (RR_rule_code, brand_id) 
@@ -82,29 +82,17 @@ CREATE TABLE RERules(
     re_rule_version NUMBER GENERATED ALWAYS AS IDENTITY,
     activity_code VARCHAR2(10),
     activity_name VARCHAR2(20),
-    activity_points int,
+    activity_points int CHECK (activity_points>=0),
     brand_id VARCHAR2(15),
     constraint rerule_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
     PRIMARY KEY (RE_rule_code,brand_id) 
-);
-
-CREATE TABLE Reward_Product(
-    product_code VARCHAR2(6),
-    product_quantity int,
-    customer_id VARCHAR2(15),
-    reward_transaction_id VARCHAR2(15),
-    loyalty_id VARCHAR2(15),
-    constraint rp_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-    constraint rp_transaction_id FOREIGN KEY (reward_transaction_id) REFERENCES Reward_Transactions(reward_transaction_id),
-    constraint rp_loylaty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
-    PRIMARY KEY (customer_id,product_code)
 );
 
 CREATE TABLE Customer_program(
     customer_id VARCHAR2(15),
     loyalty_id VARCHAR2(15), 
     brand_id VARCHAR2(15), 
-    customer_points int,
+    customer_points int CHECK (customer_points>=0),
     customer_tier VARCHAR2(30),
     constraint cp_loyalty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
     constraint cp_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
@@ -122,7 +110,7 @@ CREATE TABLE Activity_Transactions(
     activity_transaction_id VARCHAR2(15) PRIMARY KEY,
 	activity_transaction_date DATE NOT NULL,
     activity_type VARCHAR2(20) NOT NULL,
-    gained_points int,
+    gained_points int CHECK (gained_points>=0),
     loyalty_id VARCHAR2(15) NOT NULL,
     brand_id VARCHAR2(15),
     wallet_id VARCHAR2(15),
@@ -137,7 +125,7 @@ CREATE TABLE Reward_Transactions(
     reward_transaction_id VARCHAR2(15) PRIMARY KEY,
 	reward_transaction_date DATE NOT NULL,
     reward_code VARCHAR2(20),
-   	redeem_points int,
+   	redeem_points int CHECK (redeem_points>=0),
     loyalty_id VARCHAR2(15) NOT NULL,
     brand_id VARCHAR2(15),
     wallet_id VARCHAR2(15),
@@ -148,10 +136,22 @@ CREATE TABLE Reward_Transactions(
     constraint rt_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
+CREATE TABLE Reward_Product(
+    product_code VARCHAR2(6),
+    product_quantity int,
+    customer_id VARCHAR2(15),
+    reward_transaction_id VARCHAR2(15),
+    loyalty_id VARCHAR2(15),
+    constraint rp_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    constraint rp_transaction_id FOREIGN KEY (reward_transaction_id) REFERENCES Reward_Transactions(reward_transaction_id),
+    constraint rp_loylaty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
+    PRIMARY KEY (customer_id,product_code)
+);
+
 CREATE TABLE Reward_GiftCard(
     giftcard_code VARCHAR2(6),
     expiry_date DATE,
-    giftcard_quantity int,
+    giftcard_quantity int CHECK (giftcard_quantity>=0),
     customer_id VARCHAR2(15),
     reward_transaction_id VARCHAR2(15),
     loyalty_id VARCHAR2(15),
@@ -164,7 +164,7 @@ CREATE TABLE Reward_GiftCard(
 CREATE TABLE Customer_Redeem(
     reward_transaction_id VARCHAR2(15),
     redeem_id VARCHAR2(15) PRIMARY KEY,
-    reward_instances VARCHAR2(15),
+    reward_instances VARCHAR2(15) CHECK (reward_instances>=0),
     constraint rd_transaction_id FOREIGN KEY (reward_transaction_id) REFERENCES Reward_Transactions(reward_transaction_id)
 );
 
