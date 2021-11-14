@@ -47,6 +47,12 @@ public class CustomerSignUpMenu {
 
                 result = statement.executeQuery(sqlCred);
 
+                System.out.println("Adding Customer Wallet...");
+                String walletId = "W" + customerID.substring(1, customerID.length());
+                String createWallet = "insert into Wallet values ('" + customerID + "', '" + walletId + "')";
+                result = statement.executeQuery(createWallet);
+                System.out.println("Wallet created Successfully for Customer");
+
                 System.out.println("SignUp successful!!! \n");
 
                 LoginMenu.main(null);

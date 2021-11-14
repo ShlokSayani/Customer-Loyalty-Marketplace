@@ -67,16 +67,16 @@ public class CustomerMethods {
                     System.out.println("Customer already enrolled in the program.");
                 }
 
-                String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
-                result = statement.executeQuery(customerWallet);
+                // String customerWallet = "select * from Wallet where customer_id='" + customerID + "'";
+                // result = statement.executeQuery(customerWallet);
 
-                if(!result.next()){
-                    System.out.println("Adding Customer Wallet...");
-                    String walletId = "W" + customerID.substring(1, customerID.length());
-                    String createWallet = "insert into Wallet values ('" + customerID + "', '" + walletId + "')";
-                    result = statement.executeQuery(createWallet);
-                    System.out.println("Wallet created Successfully for Customer");
-                }
+                // if(!result.next()){
+                //     System.out.println("Adding Customer Wallet...");
+                //     String walletId = "W" + customerID.substring(1, customerID.length());
+                //     String createWallet = "insert into Wallet values ('" + customerID + "', '" + walletId + "')";
+                //     result = statement.executeQuery(createWallet);
+                //     System.out.println("Wallet created Successfully for Customer");
+                // }
 
                 CustomerHomeMenu.main(new String[]{customerID});
             } finally {
@@ -532,7 +532,7 @@ public class CustomerMethods {
                         System.out.println("Enter expiry date: ");
                         String get_expiry_date = sc.nextLine();
 
-                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"','mm/dd/yyyy')','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"','mm/dd/yyyy'),'"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
                         result10 = statement.executeQuery(add_reward_giftcard);
                     }
                     System.out.println("Reward Redeemed successfully. Thank You!!");                     
