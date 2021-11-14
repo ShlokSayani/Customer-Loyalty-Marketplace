@@ -491,6 +491,9 @@ public class CustomerMethods {
                         case 2:
                             CustomerHomeMenu.main(new String[]{CustomerID});
                             break;
+                        default:
+                            System.out.println("Invalid Input!");
+                            RedeemPoints(CustomerID);
                     }
 
                 }
@@ -509,6 +512,9 @@ public class CustomerMethods {
                         case 2:
                             CustomerHomeMenu.main(new String[]{CustomerID});
                             break;
+                        default:
+                            System.out.println("Invalid Input!");
+                            RedeemPoints(CustomerID);
                     }
                 }
                 else{

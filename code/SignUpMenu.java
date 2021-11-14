@@ -29,6 +29,9 @@ public class SignUpMenu{
             case 3:
                 HomePage.main(null);
                 break;
+            default:
+                System.out.println("Invalid Input!");
+                main(null);
         }
     } 
 }

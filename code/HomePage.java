@@ -32,6 +32,9 @@ public class HomePage{
             case 4:
                 System.exit(0);
                 break;
+            default:
+                System.out.println("Invalid Input!");
+                main(null);
         }
    } 
 }
