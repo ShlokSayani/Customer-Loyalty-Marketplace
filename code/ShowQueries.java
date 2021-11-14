@@ -91,7 +91,7 @@ public class ShowQueries{
                     System.out.println();
                     System.out.println("Query6: List customers of Brand01 that have redeemed at least twice.");
                     System.out.println();
-                    String query6 = "Select C.customer_id from Customer_Redeem C,Reward_Transactions R,Customer C where R.reward_transaction_id = C.reward_transaction_id AND R.brand_id = 'Brand01' GROUP BY C.customer_id HAVING COUNT(*) > 1 ";
+                    String query6 = "Select C.customer_id from Customer C where C.customer_id IN (Select R.customer_id from Reward_Transactions R where R.brand_id = 'Brand01' GROUP BY R.customer_id HAVING COUNT(*) > 1)";
                     result = statement.executeQuery(query6);
                     
                     while(result.next())
