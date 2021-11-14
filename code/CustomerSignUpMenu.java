@@ -30,7 +30,6 @@ public class CustomerSignUpMenu {
                 statement = connection.createStatement();
                 // Runtime.getRuntime().exec("clear");
                 System.out.println("\t\tWelcome to Customer Sign Up\n\n");
-                in.nextLine();
                 System.out.println("Please enter your Customer ID: ");
                 Scanner in = new Scanner(System.in);
                 String customerID = in.nextLine();
@@ -43,7 +42,7 @@ public class CustomerSignUpMenu {
                 System.out.println("Please enter your Password: ");
                 String customerPassword = in.nextLine();
 
-                String sqlCred = "INSERT INTO CustomerUsers(customer_id , customer_name, customer_address, phone_number, customer_password) VALUES ('"+customerID+"','"+customerName+"','"+customerAddress+"','"+customerPhone+"','"+customerPassword+"')";
+                String sqlCred = "INSERT INTO Customer(customer_id , customer_name, customer_address, phone_number, customer_password) VALUES ('"+customerID+"','"+customerName+"','"+customerAddress+"','"+customerPhone+"','"+customerPassword+"')";
 
                 result = statement.executeQuery(sqlCred);
 

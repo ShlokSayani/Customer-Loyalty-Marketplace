@@ -90,7 +90,7 @@ public class LoginMenu{
             case 1:
                 UserLogin();
                 break;
-            case 3:
+            case 2:
                 HomePage.main(null);
                 break;
         }
