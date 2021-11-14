@@ -113,7 +113,7 @@ public class ShowQueries{
                     System.out.println();
                     System.out.println("Query8: For CustomerC0003, and Brand02, number of activitiesthey have done in the period of 08/1/2021 and 9/30/2021.");
                     System.out.println();
-                    String query8 = "Select COUNT(*) from Activity_Transactions A,Wallet W where A.customer_id = W.customer_id AND A.wallet_id=W.wallet_id AND W.customer_id = 'C0003' AND A.brand_id = 'Brand02' AND A.activity_transaction_date between '26-AUG-2021' AND '30-SEP-2021'";
+                    String query8 = "Select COUNT(*) from Activity_Transactions A where  A.customer_id = 'C0003' AND A.brand_id = 'Brand02' AND A.activity_transaction_date between '01-AUG-2021' AND '30-SEP-2021'";
                     result = statement.executeQuery(query8);
 
                     while(result.next())
