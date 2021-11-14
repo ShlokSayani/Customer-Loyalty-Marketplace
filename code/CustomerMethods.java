@@ -542,6 +542,15 @@ public class CustomerMethods {
 
             } finally {
                 result.close();
+                result2.close();
+                result3.close();
+                result4.close();
+                result5.close();
+                result6.close();
+                result7.close();
+                result8.close();
+                // sresult9.close();
+                result10.close();
                 statement.close();
                 connection.close();
             }
