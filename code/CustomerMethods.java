@@ -174,7 +174,14 @@ public class CustomerMethods {
                     }
                 }
                 else if(useGiftCard.equals("N")){
-                    String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Purchase'";
+                    String getversion = "Select MAX(re_rule_version) from RERules where brand_id ='"+customerBrand+"' AND activity_name='Purchase' group by brand_id ";
+                    result = statement.executeQuery(getversion);
+                    int maxversion = 0;
+                    if(result.next()){
+                        maxversion = result.getInt(1);
+                    }
+
+                    String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Purchase' AND re_rule_version ="+ maxversion +"";
                     int customerPoints = 0;
 
                     result = statement.executeQuery(activityPoints);
@@ -242,6 +249,13 @@ public class CustomerMethods {
                 if(result.next()){
                     customerTier = result.getString("customer_tier");
                     customerBrand = result.getString("brand_id");
+                }
+
+                String getversion = "Select MAX(re_rule_version) from RERules where brand_id ='"+customerBrand+"' AND activity_name='Leave a review' group by brand_id ";
+                result = statement.executeQuery(getversion);
+                int maxversion = 0;
+                if(result.next()){
+                    maxversion = result.getInt(1);
                 }
 
                 String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Leave a review'";
@@ -351,6 +365,13 @@ public class CustomerMethods {
                 if(result.next()){
                     customerTier = result.getString("customer_tier");
                     customerBrand = result.getString("brand_id");
+                }
+
+                String getversion = "Select MAX(re_rule_version) from RERules where brand_id ='"+customerBrand+"' AND activity_name='Refer a friend' group by brand_id ";
+                result = statement.executeQuery(getversion);
+                int maxversion = 0;
+                if(result.next()){
+                    maxversion = result.getInt(1);
                 }
 
                 String activityPoints = "select activity_points from RERules where brand_id='" + customerBrand + "' AND activity_name='Refer a friend'";
