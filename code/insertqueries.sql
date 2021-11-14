@@ -68,10 +68,10 @@ insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name,
 insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR2235', 1,'A03','Refer a friend',30 ,'Brand02');
 insert into RERules(RE_rule_code, re_rule_version, activity_code, activity_name, activity_points, brand_id) values('BR3234', 1,'A03','Refer a friend', 10,'Brand03');
 
-/*Reward_product*/
-insert into Reward_product(product_name, brand_id) values('','');
-insert into Reward_product(product_name, brand_id) values('','');
-insert into Reward_product(product_name, brand_id) values('','');
+-- /*Reward_product*/
+-- insert into Reward_product(product_name, brand_id) values('','');
+-- insert into Reward_product(product_name, brand_id) values('','');
+-- insert into Reward_product(product_name, brand_id) values('','');
 
 /*Customer_program*/
 insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0001','TLP01','Brand01', 0,'Bronze');
@@ -79,8 +79,8 @@ insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points,
 insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0002','TLP01','Brand01', 0,'Bronze');
 insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0003','TLP02','Brand02', 0,'Special');
 insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0003','RLP01','Brand03', 0,'');
-insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0005','TLP01','Brand01', 0,'');
-insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0005','TLP02','Brand02', 0,'');
+insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0005','TLP01','Brand01', 0,'Bronze');
+insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0005','TLP02','Brand02', 0,'Special');
 insert into Customer_program(customer_id, loyalty_id, brand_id, customer_points, customer_tier) values('C0005','RLP01','Brand03', 0,'');
 
 /*Wallet*/
@@ -91,22 +91,22 @@ insert into Wallet(customer_id, wallet_id) values('C0004','W0004');
 insert into Wallet(customer_id, wallet_id) values('C0005','W0005');
 
 /*Activity_Transactions*/
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
 
 /*Reward_Transactions*/
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('',TO_DATE('',''),'', ,'','','');
 
 /*Reward_GiftCard*/
 insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('',TO_DATE('',''),'','','');

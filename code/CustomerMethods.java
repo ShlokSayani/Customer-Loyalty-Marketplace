@@ -552,9 +552,24 @@ public class CustomerMethods {
                         System.out.println("Enter expiry date: ");
                         String get_expiry_date = sc.nextLine();
 
-                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date,customer_id,reward_transaction_id,loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"','mm/dd/yyyy'),'"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                        String add_reward_giftcard = "insert into Reward_GiftCard(giftcard_code, expiry_date, giftcard_quantity, customer_id, reward_transaction_id, loyalty_id) values('"+get_gift_card_code+"',TO_DATE('"+get_expiry_date+"','mm/dd/yyyy'),'"+get_quantity+"','"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
                         result10 = statement.executeQuery(add_reward_giftcard);
+
+                        String update_quantity = "update Reward_program set quantity="+updatedQuantity+" where reward_code='"+get_reward_code+"' and loyalty_id='"+get_loyalty_id+"'";
+                        result10 = statement.executeQuery(update_quantity);
                     }
+
+                    if(get_reward_name.equals("Free Product")){
+                        System.out.println("Enter Product Code : ");
+                        String get_product_code = sc.nextLine();
+
+                        String add_reward_product = "insert into Reward_Product(product_code, product_quantity, customer_id, reward_transaction_id, loyalty_id) values('"+get_product_code+"',"+get_quantity+",'"+CustomerID+"','"+get_reward_transaction_id+"','"+get_loyalty_id+"')";
+                        result10 = statement.executeQuery(add_reward_product);
+
+                        String update_quantity = "update Reward_program set quantity="+updatedQuantity+" where reward_code='"+get_reward_code+"' and loyalty_id='"+get_loyalty_id+"'";
+                        result10 = statement.executeQuery(update_quantity);
+                    }
+
                     System.out.println("Reward Redeemed successfully. Thank You!!");                     
                 }
 

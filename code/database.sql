@@ -89,10 +89,15 @@ CREATE TABLE RERules(
 );
 
 CREATE TABLE Reward_Product(
-    product_name VARCHAR2(50),
-    brand_id VARCHAR2(15), 
-    constraint rp_brand_id FOREIGN KEY (brand_id) REFERENCES Brand(brand_id),
-    PRIMARY KEY (brand_id,product_name) 
+    product_code VARCHAR2(6),
+    product_quantity int,
+    customer_id VARCHAR2(15),
+    reward_transaction_id VARCHAR2(15),
+    loyalty_id VARCHAR2(15),
+    constraint rp_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    constraint rp_transaction_id FOREIGN KEY (reward_transaction_id) REFERENCES Reward_Transactions(reward_transaction_id),
+    constraint rp_loylaty_id FOREIGN KEY (loyalty_id) REFERENCES Loyalty_program(loyalty_id),
+    PRIMARY KEY (customer_id,product_code)
 );
 
 CREATE TABLE Customer_program(
@@ -146,6 +151,7 @@ CREATE TABLE Reward_Transactions(
 CREATE TABLE Reward_GiftCard(
     giftcard_code VARCHAR2(6),
     expiry_date DATE,
+    giftcard_quantity int,
     customer_id VARCHAR2(15),
     reward_transaction_id VARCHAR2(15),
     loyalty_id VARCHAR2(15),
