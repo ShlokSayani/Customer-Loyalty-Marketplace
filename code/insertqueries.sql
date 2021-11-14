@@ -6,11 +6,11 @@ Run this queries after successfull execution of database.sql file.
 insert into AdminUser(username,pass) values('admin','admin1234');
 
 /*Customer*/
-insert into Customer(customer_id, customer_name, customer_address, phone_number, customer_password) values('C0001','Peter Parker','8636368778','20 Ingram Street, NY','c0001pwd');
-insert into Customer(customer_id, customer_name, customer_address, phone_number, customer_password) values('C0002','Steve Rogers','8972468552','569 Leaman Place, NY','c0002pwd');
-insert into Customer(customer_id, customer_name, customer_address, phone_number, customer_password) values('C0003','Diana Prince','8547963210','1700 Broadway St, NY','c0003pwd');
-insert into Customer(customer_id, customer_name, customer_address, phone_number, customer_password) values('C0004','Billy Batson','8974562583','5015 Broad St, Philadelphia, PA','c0004pwd');
-insert into Customer(customer_id, customer_name, customer_address, phone_number, customer_password) values('C0005','Tony Stark','8731596464','10880 Malibu Point, CA','c0005pwd');
+insert into Customer(customer_id, customer_address, customer_name, phone_number, customer_password) values('C0001','Peter Parker','8636368778','20 Ingram Street, NY','c0001pwd');
+insert into Customer(customer_id, customer_address, customer_name, phone_number, customer_password) values('C0002','Steve Rogers','8972468552','569 Leaman Place, NY','c0002pwd');
+insert into Customer(customer_id, customer_address, customer_name, phone_number, customer_password) values('C0003','Diana Prince','8547963210','1700 Broadway St, NY','c0003pwd');
+insert into Customer(customer_id, customer_address, customer_name, phone_number, customer_password) values('C0004','Billy Batson','8974562583','5015 Broad St, Philadelphia, PA','c0004pwd');
+insert into Customer(customer_id, customer_address, customer_name, phone_number, customer_password) values('C0005','Tony Stark','8731596464','10880 Malibu Point, CA','c0005pwd');
 
 /*Activity_Type*/
 insert into Activity_Type(activity_code, activity_name) values('A01','Purchase');
@@ -18,8 +18,8 @@ insert into Activity_Type(activity_code, activity_name) values('A02','Leave a re
 insert into Activity_Type(activity_code, activity_name) values('A03','Refer a friend');
 
 /*Reward_Type*/
-insert into Reward_Type(reward_code, reward_type) values('R01','Gift Card');
-insert into Reward_Type(reward_code, reward_type) values('R02','Free Product');
+insert into Reward_Type(reward_code, reward_name) values('R01','Gift Card');
+insert into Reward_Type(reward_code, reward_name) values('R02','Free Product');
 
 /*Brand*/
 insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand01','Brand X','503 Rolling Creek Dr Austin, AR',TO_DATE('04/01/2021','mm/dd/yyyy'),'brand01pwd');
