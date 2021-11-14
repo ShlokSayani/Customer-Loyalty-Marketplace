@@ -2,7 +2,7 @@
 
 ## ER Model for CLMP
 
-![image](https://github.com/ShlokSayani/Customer-Loyalty-Marketplace/blob/main/Images/ER.drawio.png)
+![image](https://github.com/ShlokSayani/Customer-Loyalty-Marketplace/blob/main/Images/ER.png)
 
 ## Installation
 ---
