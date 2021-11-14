@@ -549,7 +549,7 @@ public class CustomerMethods {
                 result6.close();
                 result7.close();
                 result8.close();
-                // sresult9.close();
+                // result9.close();
                 result10.close();
                 statement.close();
                 connection.close();
