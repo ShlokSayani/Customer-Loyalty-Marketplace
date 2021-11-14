@@ -211,12 +211,12 @@ begin
     IF(tier1 = 'Tier') THEN
         select count(*) into totaltuples from Tier where loyalty_id = :new.loyalty_id;
         IF(totaltuples = 3) THEN
-            select MAX(points_required) into getpoints2 from Tier where loyalty_id=:new.loyalty_id;
+            select TO_NUMBER(MAX(points_required)) into getpoints2 from Tier where loyalty_id=:new.loyalty_id;
             IF(currentpoints > getpoints2) THEN
                 select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints2;
                 update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
             ELSE
-                select TO_NUMBER(points_required) into getpoints1 from Tier where points_required NOT IN (select MAX(points_required) from Tier where loyalty_id=:new.loyalty_id) AND points_required <> 0;
+                select TO_NUMBER(points_required) into getpoints1 from Tier where points_required NOT IN (select MAX(points_required) from Tier where loyalty_id=:new.loyalty_id) AND loyalty_id=:new.loyalty_id AND points_required <> 0;
                 IF(currentpoints > getpoints1) THEN
                     select tier into updatetier from Tier where loyalty_id = :new.loyalty_id AND points_required = getpoints1;
                     update Customer_program set customer_tier = updatetier where loyalty_id = :new.loyalty_id AND customer_id = :new.customer_id;
@@ -231,4 +231,22 @@ begin
         END IF;
     END IF;
 END;
-/                
+
+CREATE OR REPLACE FUNCTION givesubtr(ps number, q number)
+return number is
+BEGIN
+   return ps - q;
+END;
+/
+
+create or replace trigger after_redeem
+after insert on Reward_Transactions
+for each row
+declare 
+    currentpoints number; 
+begin
+    select TO_NUMBER(customer_points) into currentpoints from Customer_program where customer_id = :new.customer_id AND loyalty_id = :new.loyalty_id;
+    update Customer_program set customer_points = givesubtr(currentpoints, TO_NUMBER(:new.redeem_points)) where customer_id = :new.customer_id and loyalty_id = :new.loyalty_id;
+end;
+/
+
