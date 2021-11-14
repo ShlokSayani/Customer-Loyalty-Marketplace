@@ -639,18 +639,18 @@ public class CustomerMethods {
                 System.out.println();
                 String viewActTransaction = "select * from Customer C, Wallet W, Activity_Transactions T where C.customer_id='" + customerID + "' AND C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
                 result = statement.executeQuery(viewActTransaction);
-                System.out.println("Activity Transaction ID\tTransaction Date\tActivity Type\tGained Points\tLoyalty Program ID\tBrand ID\tWallet ID");
+                System.out.println("Activity Transaction ID\tTransaction Date\t\tActivity Type\t\tGained Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
-                    System.out.println(result.getString("activity_transaction_id") + "\t" + result.getString("activity_transaction_date") + "\t" + result.getString("activity_type") + "\t" + result.getString("gained_points") + "\t" + result.getString("loyalty_id") + "\t" + result.getString("brand_id") + "\t" + result.getString("wallet_id"));
+                    System.out.println(result.getString("activity_transaction_id") + "\t\t" + result.getString("activity_transaction_date") + "\t\t" + result.getString("activity_type") + "\t\t" + result.getString("gained_points") + "\t\t\t" + result.getString("loyalty_id") + "\t\t" + result.getString("brand_id") + "\t\t" + result.getString("wallet_id"));
                 }
                 System.out.println();
                 System.out.println("Displaying a List of Reward Transactions...");
                 System.out.println();
                 String viewRwdTransaction = "select * from Customer C, Wallet W, Reward_Transactions T where C.customer_id='" + customerID + "' AND C.customer_id=W.customer_id AND T.wallet_id=W.wallet_id";
                 result = statement.executeQuery(viewRwdTransaction);
-                System.out.println("Reward Transaction ID\tTransaction Date\tReward Code\tRedeemed Points\tLoyalty Program ID\tBrand ID\tWallet ID");
+                System.out.println("Reward Transaction ID\tTransaction Date\t\tReward Code\tRedeemed Points\tLoyalty Program ID\tBrand ID\tWallet ID");
                 while(result.next()){
-                    System.out.println(result.getString("reward_transaction_id") + "\t" + result.getString("reward_transaction_date") + "\t" + result.getString("reward_code") + "\t" + result.getString("redeem_points") + "\t" + result.getString("loyalty_id") + "\t" + result.getString("brand_id") + "\t" + result.getString("wallet_id"));
+                    System.out.println(result.getString("reward_transaction_id") + "\t\t" + result.getString("reward_transaction_date") + "\t\t" + result.getString("reward_code") + "\t\t" + result.getString("redeem_points") + "\t\t\t" + result.getString("loyalty_id") + "\t\t" + result.getString("brand_id") + "\t\t" + result.getString("wallet_id"));
                 }
                 System.out.println();
                 System.out.println("Displaying the total number of Points for each Loyalty Program Enrolled");
@@ -661,7 +661,7 @@ public class CustomerMethods {
                 System.out.println("Loyalty Program ID\tPoints\tTier");
                 System.out.println();
                 while(result.next()){
-                    System.out.println(result.getString("loyalty_id") + "\t" + result.getString("customer_points") + "\t" + result.getString("customer_tier"));
+                    System.out.println(result.getString("loyalty_id") + "\t\t\t" + result.getString("customer_points") + "\t" + result.getString("customer_tier"));
                 }
                 System.out.println();
                 CustomerHomeMenu.main(new String[]{customerID});
