@@ -22,9 +22,9 @@ insert into Reward_Type(reward_code, reward_type) values('R01','Gift Card');
 insert into Reward_Type(reward_code, reward_type) values('R02','Free Product');
 
 /*Brand*/
-insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand01','Brand X','503 Rolling Creek Dr Austin, AR',TO_DATE('04/01/2021','04/01/2021'),'brand01pwd');
-insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand02','Brand Y','939 Orange AveCoronado, CA',TO_DATE('03/25/2021','03/25/2021'),'brand02pwd');
-insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand03','Brand Z','20 Roszel Rd Princeton, NJ',TO_DATE('05/08/2021','05/08/2021'),'brand03pwd');
+insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand01','Brand X','503 Rolling Creek Dr Austin, AR',TO_DATE('04/01/2021','mm/dd/yyyy'),'brand01pwd');
+insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand02','Brand Y','939 Orange AveCoronado, CA',TO_DATE('03/25/2021','mm/dd/yyyy'),'brand02pwd');
+insert into Brand(brand_id, brand_name, brand_address, join_date, brand_password) values('Brand03','Brand Z','20 Roszel Rd Princeton, NJ',TO_DATE('05/08/2021','mm/dd/yyyy'),'brand03pwd');
 
 /*Loyalty_program*/
 insert into Loyalty_program(loyalty_id, loyalty_program_name, brand_id, lp_status, program_type) values('TLP01','SportGoods','Brand01','inactive','Tier');
@@ -147,21 +147,21 @@ insert into Activity_Transactions(activity_transaction_id, activity_transaction_
 insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B2CP03',TO_DATE('10/10/2021','10/10/2021'),'A01',40 ,'TLP02','Brand02','W0005','C0005');
 insert into Activity_Transactions(activity_transaction_id, activity_transaction_date, activity_type, gained_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B2CP04',TO_DATE('10/10/2021','10/10/2021'),'A01',40 ,'TLP02','Brand02','W0005','C0005');
 /*Reward_Transactions*/
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C1B1RTGC01',TO_DATE('07/02/2021','07/02/2021'),'R01', 80,'TLP01','Brand01','W0001','C0001');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C1B2RTGC01',TO_DATE('08/25/2021','08/25/2021'),'R01', 120,'TLP02','Brand02','W0001','C0001');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C1B2RTFP01',TO_DATE('10/20/2021','10/20/2021'),'R02', 90,'TLP02','Brand02','W0001','C0001');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C2B1RTFP01',TO_DATE('09/01/2021','09/01/2021'),'R02', 70,'TLP01','Brand01','W0002','C0002');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C3B2RTFP01',TO_DATE('08/26/2021','08/26/2021'),'R02', 90,'TLP02','Brand02','W0003','C0003');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C3B2RTFP02',TO_DATE('10/18/2021','10/18/2021'),'R02', 90,'TLP02','Brand02','W0003','C0003');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B2RTGC01',TO_DATE('10/11/2021','10/11/2021'),'R01', 120,'TLP02','Brand02','W0005','C0005');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B1RTGC01',TO_DATE('10/11/2021','10/11/2021'),'R01', 80,'TLP01','Brand01','W0005','C0005');
-insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B1RTFP01',TO_DATE('10/17/2021','10/17/2021'),'R02', 70,'TLP01','Brand01','W0005','C0005');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C1B1RTGC01',TO_DATE('07/02/2021','mm/dd/yyyy'),'R01', 80,'TLP01','Brand01','W0001','C0001');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C1B2RTGC01',TO_DATE('08/25/2021','mm/dd/yyyy'),'R01', 120,'TLP02','Brand02','W0001','C0001');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C1B2RTFP01',TO_DATE('10/20/2021','mm/dd/yyyy'),'R02', 90,'TLP02','Brand02','W0001','C0001');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C2B1RTFP01',TO_DATE('09/01/2021','mm/dd/yyyy'),'R02', 70,'TLP01','Brand01','W0002','C0002');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C3B2RTFP01',TO_DATE('08/26/2021','mm/dd/yyyy'),'R02', 90,'TLP02','Brand02','W0003','C0003');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C3B2RTFP02',TO_DATE('10/18/2021','mm/dd/yyyy'),'R02', 90,'TLP02','Brand02','W0003','C0003');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B2RTGC01',TO_DATE('10/11/2021','mm/dd/yyyy'),'R01', 120,'TLP02','Brand02','W0005','C0005');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B1RTGC01',TO_DATE('10/11/2021','mm/dd/yyyy'),'R01', 80,'TLP01','Brand01','W0005','C0005');
+insert into Reward_Transactions(reward_transaction_id, reward_transaction_date, reward_code, redeem_points, loyalty_id, brand_id, wallet_id,customer_id) values('C5B1RTFP01',TO_DATE('10/17/2021','mm/dd/yyyy'),'R02', 70,'TLP01','Brand01','W0005','C0005');
 
 /*Reward_GiftCard*/
-insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C1GC01',TO_DATE('07/02/2021','07/02/2021'),'C0001','C1B1RTGC01','TLP01');
-insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C1GC02',TO_DATE('08/25/2021','08/25/2021'),'C0001','C1B2RTGC01','TLP02');
-insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C5GC01',TO_DATE('10/11/2021','10/11/2021'),'C0005','C5B2RTGC01','TLP02');
-insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C5GC02',TO_DATE('10/11/2021','10/11/2021'),'C0005','C5B1RTGC01','TLP01');
+insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C1GC01',TO_DATE('07/02/2021','mm/dd/yyyy'),'C0001','C1B1RTGC01','TLP01');
+insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C1GC02',TO_DATE('08/25/2021','mm/dd/yyyy'),'C0001','C1B2RTGC01','TLP02');
+insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C5GC01',TO_DATE('10/11/2021','mm/dd/yyyy'),'C0005','C5B2RTGC01','TLP02');
+insert into Reward_GiftCard(giftcard_code, expiry_date, customer_id, reward_transaction_id, loyalty_id) values('C5GC02',TO_DATE('10/11/2021','mm/dd/yyyy'),'C0005','C5B1RTGC01','TLP01');
 
 /*Customer_Redeem*/
 insert into Customer_Redeem(reward_transaction_id, redeem_id, reward_instances) values('C1B1RTGC01','C1RD01','1');
@@ -175,15 +175,15 @@ insert into Customer_Redeem(reward_transaction_id, redeem_id, reward_instances) 
 insert into Customer_Redeem(reward_transaction_id, redeem_id, reward_instances) values('C5B1RTGC01','C5RD03','1');
 
 /*Customer_Reviews*/
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C1RV01','TLP01',TO_DATE('06/18/2021','06/18/2021'),'Good','C1B1CLR01','C0001');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C1RV02','TLP01',TO_DATE('06/18/2021','06/18/2021'),'Fantastic','C1B1CLR02','C0001');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C2RV01','TLP01',TO_DATE('08/05/2021','08/05/2021'),'Awesome','C2B1CLR01','C0002');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV01','TLP01',TO_DATE('09/30/2021','09/30/2021'),'Bad','C5B1CLR01','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV02','TLP01',TO_DATE('09/30/2021','09/30/2021'),'Awesome','C5B1CLR02','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV03','TLP01',TO_DATE('09/30/2021','09/30/2021'),'Fantastic','C5B1CLR03','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV04','TLP01',TO_DATE('09/30/2021','09/30/2021'),'Good','C5B1CLR04','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV05','TLP01',TO_DATE('09/30/2021','09/30/2021'),'Bad','C5B1CLR05','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV06','TLP01',TO_DATE('10/15/2021','10/15/2021'),'Awesome','C5B1CLR06','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV07','TLP01',TO_DATE('10/15/2021','10/15/2021'),'Good','C5B1CLR07','C0005');
-insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV08','TLP01',TO_DATE('10/15/2021','10/15/2021'),'Fantastic','C5B1CLR08','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C1RV01','TLP01',TO_DATE('06/18/2021','mm/dd/yyyy'),'Good','C1B1CLR01','C0001');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C1RV02','TLP01',TO_DATE('06/18/2021','mm/dd/yyyy'),'Fantastic','C1B1CLR02','C0001');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C2RV01','TLP01',TO_DATE('08/05/2021','mm/dd/yyyy'),'Awesome','C2B1CLR01','C0002');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV01','TLP01',TO_DATE('09/30/2021','mm/dd/yyyy'),'Bad','C5B1CLR01','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV02','TLP01',TO_DATE('09/30/2021','mm/dd/yyyy'),'Awesome','C5B1CLR02','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV03','TLP01',TO_DATE('09/30/2021','mm/dd/yyyy'),'Fantastic','C5B1CLR03','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV04','TLP01',TO_DATE('09/30/2021','mm/dd/yyyy'),'Good','C5B1CLR04','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV05','TLP01',TO_DATE('09/30/2021','mm/dd/yyyy'),'Bad','C5B1CLR05','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV06','TLP01',TO_DATE('10/15/2021','mm/dd/yyyy'),'Awesome','C5B1CLR06','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV07','TLP01',TO_DATE('10/15/2021','mm/dd/yyyy'),'Good','C5B1CLR07','C0005');
+insert into Customer_Reviews(review_id, loyalty_id, review_date, review_content, activity_transaction_id, customer_id) values('C5RV08','TLP01',TO_DATE('10/15/2021','mm/dd/yyyy'),'Fantastic','C5B1CLR08','C0005');
 
