@@ -93,6 +93,9 @@ public class LoginMenu{
             case 2:
                 HomePage.main(null);
                 break;
+            default:
+                System.out.println("Invalid Input!");
+                main(null);
         }
     } 
 }
