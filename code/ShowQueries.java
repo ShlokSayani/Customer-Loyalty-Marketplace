@@ -27,7 +27,7 @@ public class ShowQueries{
                     connection = DriverManager.getConnection(jdbcURL, user, password);
                     statement = connection.createStatement();
                     System.out.println();
-                    System.out.println("Query1");
+                    System.out.println("Query1: List all customers that are not part of Brand02’s program.");
                     System.out.println();
                     String query1 = "Select DISTINCT C.customer_id,C.customer_name from Customer C where C.customer_id NOT IN (Select P.customer_id from Customer_program P, Loyalty_program L where P.loyalty_id = L.loyalty_id and P.brand_id = 'Brand02')";
 
@@ -41,7 +41,7 @@ public class ShowQueries{
                         System.out.println("Customer Id: " + c_id + ", Customer Name: " + c_name);
                     }
                     System.out.println();
-                    System.out.println("Query2");
+                    System.out.println("Query2: List customers that have joined a loyalty program but have not participated in any activityin that program (list the customerid and the loyalty program id).");
                     System.out.println();
                     String query2 = "select customer_id, loyalty_id from Customer_program where customer_id NOT IN (select customer_id from Activity_Transactions)";
                     result = statement.executeQuery(query2);
@@ -53,7 +53,7 @@ public class ShowQueries{
                         System.out.println("Customer Id: " + customer_id + ", Loyalty Id: " + loyalty_id);
                     }
                     System.out.println();
-                    System.out.println("Query3");
+                    System.out.println("Query3: List the rewards that are part of Brand01 loyalty program.");
                     System.out.println();
                     String query3 = "Select * from Reward_program R,Loyalty_program L where L.loyalty_id = R.loyalty_id AND L.brand_id = 'Brand01'";
                     result = statement.executeQuery(query3);
@@ -65,7 +65,7 @@ public class ShowQueries{
                         System.out.println("Reward Code: " + reward_code + ", Reward Name: " + reward_name);
                     }
                     System.out.println();
-                    System.out.println("Query4");
+                    System.out.println("Query4: List all the loyalty programs that include “refer a friend” as an activity in at least one oftheir reward rules.");
                     System.out.println();
                     String query4 = "Select DISTINCT * from Loyalty_program L,Activity_program A where L.loyalty_id = A.loyalty_id AND A.activity_name = 'Refer a friend'";
                     result = statement.executeQuery(query4);
@@ -77,7 +77,7 @@ public class ShowQueries{
                         System.out.println("Loyalty_Code: " + Loyalty_id + ", Loyalty_Program_Name:" + Loyalty_Program_Name);
                     }
                     System.out.println();
-                    System.out.println("Query5");
+                    System.out.println("Query5: For Brand01, list for each activity type in their loyalty program, the number instances thathave occurred.");
                     System.out.println();
                     String query5 = "Select COUNT(*),activity_type from Activity_Transactions where brand_id = 'Brand01' GROUP BY activity_type";
                     result = statement.executeQuery(query5);
@@ -89,7 +89,7 @@ public class ShowQueries{
                         System.out.println("Activity_Type: " + activity_type + ", Number of Instanes:" +instances);
                     }
                     System.out.println();
-                    System.out.println("Query6");
+                    System.out.println("Query6: List customers of Brand01 that have redeemed at least twice.");
                     System.out.println();
                     String query6 = "Select C.customer_id from Customer_Redeem C,Reward_Transactions R,Customer C where R.reward_transaction_id = C.reward_transaction_id AND R.brand_id = 'Brand01' GROUP BY C.customer_id HAVING COUNT(*) > 1 ";
                     result = statement.executeQuery(query6);
@@ -100,7 +100,7 @@ public class ShowQueries{
                         System.out.println("Customer_Id: " + customer_id);
                     }
                     System.out.println();
-                    System.out.println("Query7");
+                    System.out.println("Query7: All brands where total number of points redeemed overall is less than 500 points");
                     System.out.println();
                     String query7 = "Select brand_id from Reward_Transactions GROUP BY brand_id HAVING SUM(redeem_points)<500";
                     result = statement.executeQuery(query6);
@@ -111,7 +111,7 @@ public class ShowQueries{
                         System.out.println("Brand_Id: " + brand_id);
                     }
                     System.out.println();
-                    System.out.println("Query8");
+                    System.out.println("Query8: For CustomerC0003, and Brand02, number of activitiesthey have done in the period of 08/1/2021 and 9/30/2021.");
                     System.out.println();
                     String query8 = "Select COUNT(*) from Activity_Transactions A,Wallet W where A.customer_id = W.customer_id AND A.wallet_id=W.wallet_id AND W.customer_id = 'C0003' AND A.brand_id = 'Brand02' AND A.activity_transaction_date between '26-AUG-2021' AND '30-SEP-2021'";
                     result = statement.executeQuery(query8);
@@ -121,7 +121,7 @@ public class ShowQueries{
                         int numberact = result.getInt(1);
                         System.out.println("Number of Activities: "+ numberact);
                     }
-
+                    System.out.println();
                     }
 
                 finally {
