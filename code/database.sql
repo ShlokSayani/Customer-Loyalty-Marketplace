@@ -237,6 +237,7 @@ begin
         END IF;
     END IF;
 END;
+/
 
 CREATE OR REPLACE FUNCTION givesubtr(ps number, q number)
 return number is
